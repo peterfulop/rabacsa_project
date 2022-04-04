@@ -1,0 +1,32 @@
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: aliceblue;
+}
+
+.pagination .pages {
+  margin-left: 0.5rem;
+}
+
+.pagination button {
+  font-size: 0.75rem;
+  background-color: transparent;
+  border: none;
+  padding: 1rem;
+  border-left: 1px solid rgb(209, 209, 209);
+}
+.pagination button:hover {
+  cursor: pointer;
+  color: white;
+  background-color: #0288d1;
+}
+
+.pagination button:first-child {
+  border: none;
+}
+
+.active {
+  background-color: #2f2f2f !important;
+  color: white !important;
+}

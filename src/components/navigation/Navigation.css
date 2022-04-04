@@ -1,0 +1,17 @@
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: rgb(47, 47, 47);
+}
+
+.navigation h1 {
+  color: white;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  text-transform: uppercase;
+}
+
+.navigation button {
+  margin: 0.5rem 1rem;
+}
