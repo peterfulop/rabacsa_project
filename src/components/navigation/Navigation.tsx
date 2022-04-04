@@ -8,7 +8,7 @@ export default function Navigation(props: {
   return (
     <section className="navigation">
       <h1>Products Page</h1>
-      <div className="actions">
+      <div>
         <Button
           variant="contained"
           color="info"

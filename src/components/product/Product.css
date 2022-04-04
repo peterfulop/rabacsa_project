@@ -1,0 +1,37 @@
+.products {
+  display: block;
+  background-color: rgb(228, 228, 228);
+}
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  /* background-color: rgb(47, 47, 47); */
+}
+
+.actions .main {
+  display: flex;
+}
+
+.main button {
+  margin: 10px;
+}
+
+.meta-data,
+.item-deatils {
+  margin: 1rem;
+}
+
+.meta-data h2 {
+  margin: 1rem 0;
+}
+.meta-data h4 {
+  margin: 0.5rem 0;
+}
+.meta-data small {
+  margin: 0.5rem 0;
+}
+
+.item-deatils {
+}

@@ -1,22 +1,61 @@
-import { Product } from "../../interfaces/product.interface";
+import { CardMedia } from "@mui/material";
+import { Product, ProductDetails } from "../../interfaces/product.interface";
+import ProductDeleteDialog from "./actions/ProductDeleteDialog";
+import ProductEditDialog from "./actions/ProductEditDialog";
+import DetailsTable from "./details/ProductDetails";
 
-export default function ProductItem(props: { product: Product | null }) {
+import "./Product.css";
+
+export default function ProductItem(props: { product: Product }) {
   console.log(props.product);
 
+  const editProductHandler = () => {};
+  const deleteProductHandler = () => {};
+
+  const rows: ProductDetails = {
+    title: props.product.title,
+    brand: props.product.brand,
+    category: props.product.category,
+    discountPercentage: props.product.discountPercentage,
+    price: props.product.price,
+    stock: props.product.stock,
+    rating: props.product.rating,
+  };
+
   return (
-    <section>
+    <section className="products">
+      <CardMedia
+        component="img"
+        height={"300px"}
+        image={props.product.thumbnail}
+        alt="green iguana"
+      />
       <div className="meta-data">
-        <p>{props.product?.title}</p>
-        <p>{props.product?.brand}</p>
-        <p>{props.product?.description}</p>
+        <h2>{props.product.title}</h2>
+        <h4>{props.product.brand}</h4>
+        <small>{props.product.description}</small>
       </div>
-      <div className="item-deatils">minden...</div>
+      <div className="item-deatils">
+        <DetailsTable rows={rows} />
+      </div>
+
       <div className="actions">
         <div className="main">
-          <button>Tétel módosítása</button>
-          <button>Tétel törlése</button>
+          <ProductEditDialog
+            productName={props.product.title}
+            productPrice={props.product.price}
+            productDescription={props.product.description}
+            submitAction={editProductHandler}
+          />
+          <ProductDeleteDialog
+            productName={props.product.title}
+            submitAction={editProductHandler}
+          />
         </div>
-        <button>Új tétel</button>
+        <ProductDeleteDialog
+          productName={props.product.title}
+          submitAction={deleteProductHandler}
+        />
       </div>
     </section>
   );

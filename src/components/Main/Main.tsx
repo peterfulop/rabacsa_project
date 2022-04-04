@@ -59,7 +59,6 @@ function Main() {
   const handleSelectItem = (id: string) => {
     const activeProduct = products.find((product) => product.id === id);
     setActiveProduct(activeProduct as Product);
-    console.log(activeProduct);
   };
 
   return (
