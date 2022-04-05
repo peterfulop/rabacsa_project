@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PRODUCT_PER_PAGE } from "../utils/constans";
 
 import "./UsePagination.css";
@@ -11,6 +11,14 @@ export default function usePagination(props: { data: any[] }) {
   for (let i = 1; i <= Math.ceil(props.data.length) / itemsPerPage; i++) {
     pages.push(i);
   }
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }, [currentPage]);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -66,7 +74,7 @@ export default function usePagination(props: { data: any[] }) {
       >
         <button
           className="pagination-nav"
-          hidden={currentPage === 1 ? true : false}
+          hidden={currentPage === 1 || pages.length === 0 ? true : false}
           onClick={prevBtnHandler}
         >
           Prev
@@ -85,8 +93,10 @@ export default function usePagination(props: { data: any[] }) {
     );
   }
 
+  const data = pages.length === 0 ? [...props.data] : [...currentItems];
+
   return {
-    currentItems,
+    currentItems: data,
     renderPagination,
   };
 }

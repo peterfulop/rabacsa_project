@@ -10,36 +10,39 @@ export default function ProductAsListItem(props: {
   activeCategory: string;
 }) {
   const [products, setProducts] = useState<Product[]>([]);
+  const { currentItems, renderPagination } = usePagination({
+    data: products,
+  });
 
   useEffect(() => {
     setProducts(props.product);
   }, [props.product]);
 
-  const { currentItems, renderPagination } = usePagination({ data: products });
-
-  const productItem = currentItems.map((product: Product) => {
-    return (
-      <div className="product-list-item" key={product.id}>
-        <div className="product-image">
-          <img src={product.thumbnail} alt={product.title} />
+  function renderProductItem(data: Product[]) {
+    return data.map((product: Product) => {
+      return (
+        <div className="product-list-item" key={product.id}>
+          <div className="product-image">
+            <img src={product.thumbnail} alt={product.title} />
+          </div>
+          <div className="product-details">
+            <h4>{product.title}</h4>
+            <p>{product.rating}</p>
+            <small>{product.description}</small>
+          </div>
+          <div className="product-actions">
+            <h2>${product.price}</h2>
+            <ProductEditDialog
+              productName={product.title}
+              productPrice={product.price}
+              productDescription={product.description}
+              submitAction={() => {}}
+            />
+          </div>
         </div>
-        <div className="product-details">
-          <h4>{product.title}</h4>
-          <p>{product.rating}</p>
-          <small>{product.description}</small>
-        </div>
-        <div className="product-actions">
-          <h2>${product.price}</h2>
-          <ProductEditDialog
-            productName={product.title}
-            productPrice={product.price}
-            productDescription={product.description}
-            submitAction={() => {}}
-          />
-        </div>
-      </div>
-    );
-  });
+      );
+    });
+  }
 
   return (
     <section className="product-list">
@@ -50,7 +53,7 @@ export default function ProductAsListItem(props: {
       <section className="product-list-pagination">
         {renderPagination()}
       </section>
-      {productItem}
+      {renderProductItem(currentItems)}
       <section className="product-list-pagination">
         {renderPagination()}
       </section>

@@ -14,7 +14,6 @@ import ProductAsListItem from "../Product/productList/ProductAsListItem";
 function Main() {
   const productContext = useContext(ProductContext);
 
-  /** REBUILD   */
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
 
@@ -22,8 +21,6 @@ function Main() {
   const [isCategoryList, setIsCategoryList] = useState<boolean>(false);
   const [isTopList, setIsTopList] = useState<boolean>(false);
   const [isActiveCategory, setIsActiveCategory] = useState<boolean>(false);
-  const [isEnabledAllProducts, setIsEnabledAllProducts] =
-    useState<boolean>(false);
 
   const [location, setLocation] = useState<string>("Products");
   const [activeProduct, setActiveProduct] = useState<Product | null>(
@@ -33,9 +30,12 @@ function Main() {
 
   useEffect(() => {
     setProducts(productContext);
-  }, [productContext]);
+  }, [productContext, activeProduct]);
 
   const getProductsHandler: MouseEventHandler = (event) => {
+    console.log("getProductsHandler");
+    setIsProductList(false);
+
     setLocation(event.currentTarget.textContent as string);
     setProducts(productContext);
     setIsProductList(true);
@@ -46,12 +46,17 @@ function Main() {
   };
 
   const getCategoriesHandler: MouseEventHandler = (event) => {
+    console.log("getCategoriesHandler");
+
     setActiveCategory("");
     setProducts(productContext);
+
     setLocation(event.currentTarget.textContent as string);
+
     const categories = [...productContext].map(
       (product: Product) => product.category
     );
+
     const uniques = categories.reduce(function (prev: any, cur: any) {
       prev[cur] = (prev[cur] || 0) + 1;
       return prev;
@@ -73,7 +78,6 @@ function Main() {
 
     setIsCategoryList(true);
     setIsActiveCategory(true);
-    setIsEnabledAllProducts(true);
     setIsProductList(false);
     setIsTopList(false);
     setActiveProduct(null);
@@ -100,8 +104,8 @@ function Main() {
   const selectProductsByCategoryHandler = (category: string) => {
     setActiveCategory(category);
     if (category.toLowerCase() === "all products") {
+      console.log("productContext", productContext);
       setProducts(productContext);
-      setIsActiveCategory(true);
     } else {
       const productsByCategory = [...productContext].filter(
         (product) => product.category === category
