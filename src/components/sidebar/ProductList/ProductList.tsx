@@ -6,8 +6,11 @@ import {
   ListItemText,
   Divider,
 } from "@mui/material";
-import { Fragment, MouseEventHandler, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Product } from "../../../interfaces/product.interface";
+import usePagination from "../../hooks/usePagination";
+
+import "../Sidebar.css";
 
 export default function ProductList(props: {
   products: Product[];
@@ -15,6 +18,7 @@ export default function ProductList(props: {
 }) {
   const [products, setProducts] = useState<Product[]>([]);
   const [isProducts, setIsProducts] = useState<boolean>(false);
+  const { currentItems, renderPagination } = usePagination({ data: products });
 
   useEffect(() => {
     if (props.products.length > 0) {
@@ -22,8 +26,6 @@ export default function ProductList(props: {
       setProducts(props.products);
     }
   }, [props.products]);
-
-  console.log(products);
 
   const renderProducts = (products: Product[]) => {
     return (
@@ -51,76 +53,11 @@ export default function ProductList(props: {
     );
   };
 
-  /** PAGINATION SECTION */
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
-
-  const pages: number[] = [...Array(products.length / itemsPerPage).keys()].map(
-    (num: number) => num + 1
-  );
-
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
-
-  const [pageNumberLimit, setPageNumberLimit] = useState(3);
-  const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(3);
-  const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
-
-  const paginationClickHandler = (number: number) => {
-    setCurrentPage(number);
-  };
-  const prevBtnHandler = () => {
-    if (currentPage === 1) return;
-    setCurrentPage(currentPage - 1);
-    if ((currentPage - 1) % pageNumberLimit === 0) {
-      setMaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit);
-      setMinPageNumberLimit(minPageNumberLimit - pageNumberLimit);
-    }
-  };
-
-  const nextBtnHandler = () => {
-    if (currentPage === pages.length - 1) return;
-    setCurrentPage(currentPage + 1);
-    if (currentPage + 1 > maxPageNumberLimit) {
-      setMaxPageNumberLimit(maxPageNumberLimit + pageNumberLimit);
-      setMinPageNumberLimit(minPageNumberLimit + pageNumberLimit);
-    }
-  };
-
-  const renderPageNumbers = pages.map((number) => {
-    if (number < maxPageNumberLimit + 1 && number > minPageNumberLimit) {
-      return (
-        <button
-          className={currentPage === number ? "active" : ""}
-          key={number}
-          onClick={() => paginationClickHandler(number)}
-        >
-          {number}
-        </button>
-      );
-    } else {
-      return null;
-    }
-  });
-
   return (
     <section>
       <p className="location-heading">{props.location}</p>
+      {renderPagination()}
       {isProducts && renderProducts(currentItems)}
-      <button
-        hidden={currentPage === 1 ? true : false}
-        onClick={prevBtnHandler}
-      >
-        Prev
-      </button>
-      {renderPageNumbers}
-      <button
-        hidden={currentPage === pages.length - 1 ? true : false}
-        onClick={nextBtnHandler}
-      >
-        Next
-      </button>
     </section>
   );
 }

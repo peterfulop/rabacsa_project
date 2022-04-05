@@ -1,8 +1,10 @@
 .pagination {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   background-color: aliceblue;
+  border: 1px solid rgb(209, 209, 209);
+  border-top: none;
 }
 
 .pagination .pages {
@@ -22,8 +24,13 @@
   background-color: #0288d1;
 }
 
-.pagination button:first-child {
+.pagination button:nth-child(2) {
   border: none;
+}
+
+.pagination-nav:nth-child(1) {
+  border-left: none;
+  border-right: 1px solid rgb(209, 209, 209) !important;
 }
 
 .active {

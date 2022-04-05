@@ -1,8 +1,4 @@
-.sidebar {
-  /* background-color: blue; */
-}
-
-.sidebar .heading {
+.sidebar .location-heading {
   text-transform: uppercase;
   text-align: center;
   background-color: rgb(139, 139, 139);
