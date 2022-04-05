@@ -1,5 +1,6 @@
 import { CardMedia } from "@mui/material";
 import { Product, ProductDetails } from "../../interfaces/product.interface";
+import ProductAddDialog from "./actions/ProductAddDialog";
 import ProductDeleteDialog from "./actions/ProductDeleteDialog";
 import ProductEditDialog from "./actions/ProductEditDialog";
 import DetailsTable from "./details/ProductDetails";
@@ -11,6 +12,7 @@ export default function ProductItem(props: { product: Product }) {
 
   const editProductHandler = () => {};
   const deleteProductHandler = () => {};
+  const addProductHandler = () => {};
 
   const rows: ProductDetails = {
     title: props.product.title,
@@ -40,6 +42,7 @@ export default function ProductItem(props: { product: Product }) {
       </div>
 
       <div className="actions">
+        <ProductAddDialog submitAction={addProductHandler} />
         <div className="main">
           <ProductEditDialog
             productName={props.product.title}
@@ -49,13 +52,9 @@ export default function ProductItem(props: { product: Product }) {
           />
           <ProductDeleteDialog
             productName={props.product.title}
-            submitAction={editProductHandler}
+            submitAction={deleteProductHandler}
           />
         </div>
-        <ProductDeleteDialog
-          productName={props.product.title}
-          submitAction={deleteProductHandler}
-        />
       </div>
     </section>
   );

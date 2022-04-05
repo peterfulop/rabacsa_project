@@ -7,19 +7,19 @@ export default function Navigation(props: {
 }) {
   return (
     <section className="navigation">
-      <h1>Products Page</h1>
+      <h1>Rabacsa Project</h1>
       <div>
         <Button
           variant="contained"
           color="info"
-          onClick={() => props.onGetAllProducts()}
+          onClick={(e) => props.onGetAllProducts(e)}
         >
           Products
         </Button>
         <Button
           variant="contained"
           color="info"
-          onClick={() => props.onGetAllCategories()}
+          onClick={(e) => props.onGetAllCategories(e)}
         >
           Categories
         </Button>

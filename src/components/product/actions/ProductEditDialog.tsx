@@ -52,14 +52,14 @@ export default function ProjectEditDialog(props: {
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
     e.preventDefault();
-    setInputName(e.target.value);
+    setInputPrice(Number(e.target.value));
   };
 
   const setDescriptionHandler = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
     e.preventDefault();
-    setInputName(e.target.value);
+    setInputDescription(e.target.value);
   };
 
   return (
