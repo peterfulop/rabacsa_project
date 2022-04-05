@@ -2,9 +2,11 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  background-color: aliceblue;
   border: 1px solid rgb(209, 209, 209);
-  border-top: none;
+}
+
+[hidden].pagination {
+  border: none !important;
 }
 
 .pagination .pages {
@@ -15,13 +17,13 @@
   font-size: 0.75rem;
   background-color: transparent;
   border: none;
-  padding: 1rem;
+  padding: 0.75rem;
   border-left: 1px solid rgb(209, 209, 209);
 }
 .pagination button:hover {
   cursor: pointer;
   color: white;
-  background-color: #0288d1;
+  background-color: #2f2f2f;
 }
 
 .pagination button:nth-child(2) {
@@ -34,6 +36,6 @@
 }
 
 .active {
-  background-color: #0288d1 !important;
+  background-color: #2f2f2f !important;
   color: white !important;
 }

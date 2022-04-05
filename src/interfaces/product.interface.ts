@@ -13,7 +13,7 @@ export type Product = {
 };
 export interface Category {
   title: string;
-  id: number;
+  count?: number;
 }
 
 export interface ProductDetails {

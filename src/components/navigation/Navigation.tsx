@@ -4,6 +4,7 @@ import "./Navigation.css";
 export default function Navigation(props: {
   onGetAllProducts: Function;
   onGetAllCategories: Function;
+  onGetTopList: Function;
 }) {
   return (
     <section className="navigation">
@@ -22,6 +23,13 @@ export default function Navigation(props: {
           onClick={(e) => props.onGetAllCategories(e)}
         >
           Categories
+        </Button>
+        <Button
+          variant="contained"
+          color="info"
+          onClick={(e) => props.onGetTopList(e)}
+        >
+          TopList
         </Button>
       </div>
     </section>

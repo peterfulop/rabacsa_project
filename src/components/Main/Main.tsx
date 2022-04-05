@@ -1,149 +1,165 @@
-import {
-  MouseEventHandler,
-  ReactEventHandler,
-  ReactHTMLElement,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { MouseEventHandler, useContext, useEffect, useState } from "react";
 import ProductContext from "../../contexts/product.context";
 import { Category, Product } from "../../interfaces/product.interface";
-import { PRODUCT_PER_PAGE } from "../../utils/constans";
-import Navigation from "../navigation/Navigation";
-import Pagination from "../Pagination/Pagination";
-import Sidebar from "../sidebar/Sidebar";
-import PaginationComponent from "../Pagination/PaginationComponent";
+import Navigation from "../Navigation/Navigation";
+import ProductItem from "../Product/Product";
+import ProductList from "../Sidebar/ProductList/ProductList";
+import CategoryList from "../Sidebar/CategoryList/CategoryList";
+import Content from "../Content/Content";
 
 /**MUI */
-import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import ProductItem from "../product/Product";
-import ProductList from "../sidebar/ProductList/ProductList";
-import CategoryList from "../sidebar/CategoryList/CategoryList";
-
-/** */
+import ProductAsListItem from "../Product/productList/ProductAsListItem";
 
 function Main() {
   const productContext = useContext(ProductContext);
-  const [totalPages, setTotalPages] = useState<number>(1);
-  const [page, setPage] = useState<number>(1);
-  const [data, setData] = useState<Product[] | Category[]>([]);
-  // const [activeProduct, setActiveProduct] = useState<Product | null>(null);
 
   /** REBUILD   */
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
 
-  const [isProductList, setIsProductList] = useState<boolean>(false);
+  const [isProductList, setIsProductList] = useState<boolean>(true);
   const [isCategoryList, setIsCategoryList] = useState<boolean>(false);
+  const [isTopList, setIsTopList] = useState<boolean>(false);
+  const [isActiveCategory, setIsActiveCategory] = useState<boolean>(false);
+  const [isEnabledAllProducts, setIsEnabledAllProducts] =
+    useState<boolean>(false);
 
   const [location, setLocation] = useState<string>("Products");
-  // useEffect(() => {
-  //   setProducts(productContext);
-  // }, [productContext]);
+  const [activeProduct, setActiveProduct] = useState<Product | null>(
+    productContext[0]
+  );
+  const [activeCategory, setActiveCategory] = useState<string>("smartphones");
 
-  /** */
+  useEffect(() => {
+    setProducts(productContext);
+  }, [productContext]);
 
-  // useEffect(() => {
-  //   setProducts(productContext);
-  //   setData(productContext);
-  //   setLocation("products");
-  //   setTotalPages(Math.ceil(productContext.length / PRODUCT_PER_PAGE));
-  // }, [productContext]);
-
-  const getProductsHandler: MouseEventHandler = async (event) => {
+  const getProductsHandler: MouseEventHandler = (event) => {
     setLocation(event.currentTarget.textContent as string);
     setProducts(productContext);
     setIsProductList(true);
     setIsCategoryList(false);
+    setIsActiveCategory(false);
+    setIsTopList(false);
+    setActiveProduct(productContext[0]);
   };
 
-  const getCategoriesHandler: MouseEventHandler = async (event) => {
+  const getCategoriesHandler: MouseEventHandler = (event) => {
+    setActiveCategory("");
+    setProducts(productContext);
     setLocation(event.currentTarget.textContent as string);
+    const categories = [...productContext].map(
+      (product: Product) => product.category
+    );
+    const uniques = categories.reduce(function (prev: any, cur: any) {
+      prev[cur] = (prev[cur] || 0) + 1;
+      return prev;
+    }, {});
 
-    const categories = products.map((product: Product) => product.category);
-    let uniqueCategories = categories
-      .filter((element: string, index: number) => {
-        return categories.indexOf(element) === index;
-      })
-      .map((categorie, index: number) => {
-        return { title: categorie, id: index };
+    let uniqueCategories: Category[] = [];
+    for (const key in uniques) {
+      uniqueCategories.push({
+        title: key,
+        count: uniques[key],
       });
-    setIsCategoryList(true);
-    setIsProductList(false);
+    }
+    uniqueCategories.push({
+      title: "All Products",
+      count: categories.length,
+    });
     setCategories(uniqueCategories);
+    setActiveCategory("All Products");
+
+    setIsCategoryList(true);
+    setIsActiveCategory(true);
+    setIsEnabledAllProducts(true);
+    setIsProductList(false);
+    setIsTopList(false);
+    setActiveProduct(null);
   };
 
-  // const getAllCategoriesHandler = async () => {
-  //   const categories = products.map((product: Product) => product.category);
-  //   let uniqueCategories = categories
-  //     .filter((element: string, index: number) => {
-  //       return categories.indexOf(element) === index;
-  //     })
-  //     .map((categorie, index: number) => {
-  //       return { title: categorie, id: index };
-  //     });
-  //   setTotalPages(Math.ceil(uniqueCategories.length / PRODUCT_PER_PAGE));
-  //   setData(uniqueCategories);
-  //   setLocation("categorires");
+  const getTopListHandler: MouseEventHandler = (event) => {
+    setLocation(event.currentTarget.textContent as string);
+    const topList = [...productContext]
+      .sort((a, b) => b.price - a.price)
+      .slice(0, 25);
+    setIsCategoryList(false);
+    setIsProductList(false);
+    setIsActiveCategory(false);
+    setIsTopList(true);
+    setProducts(topList);
+    setActiveProduct(topList[0]);
+  };
 
-  //   setPage(1);
-  // };
+  const selectProductHandler = (id: string) => {
+    const activeProduct = [...products].find((product) => product.id === id);
+    setActiveProduct(activeProduct as Product);
+  };
 
-  // const handlePaginationClick = (number: number) => {
-  //   setPage(number);
-  // };
-
-  // const handleSelectItem = (id: string) => {
-  //   const activeProduct = products.find((product) => product.id === id);
-  //   setActiveProduct(activeProduct as Product);
-  // };
+  const selectProductsByCategoryHandler = (category: string) => {
+    setActiveCategory(category);
+    if (category.toLowerCase() === "all products") {
+      setProducts(productContext);
+      setIsActiveCategory(true);
+    } else {
+      const productsByCategory = [...productContext].filter(
+        (product) => product.category === category
+      );
+      setProducts(productsByCategory);
+    }
+    setIsActiveCategory(true);
+  };
 
   return (
-    <Box>
-      <Grid container>
-        <Grid item xs={12}>
-          <Navigation
-            onGetAllProducts={getProductsHandler}
-            onGetAllCategories={getCategoriesHandler}
-          />
-        </Grid>
-        <Grid
-          item
-          xs={3}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-          }}
-          className="sidebar"
-        >
-          <section className="sidebar">
-            {isProductList && (
-              <ProductList location={location} products={products} />
-            )}
-            {isCategoryList && (
-              <CategoryList location={location} categories={categories} />
-            )}
-          </section>
-          {/* <Sidebar
-            location={location}
-            data={data}
-            page={page}
-            activeProduct={activeProduct?.id}
-            onClickHandler={handleSelectItem}
-          />
-          <Pagination
-            page={page}
-            totalPages={totalPages}
-            onClickHandler={handlePaginationClick}
-          /> */}
-        </Grid>
-        <Grid item xs={9}>
-          {/* {activeProduct && <ProductItem product={activeProduct} />} */}
-        </Grid>
+    <Grid container>
+      <Grid item xs={12}>
+        <Navigation
+          onGetAllProducts={getProductsHandler}
+          onGetAllCategories={getCategoriesHandler}
+          onGetTopList={getTopListHandler}
+        />
       </Grid>
-    </Box>
+      <Grid item xs={3} className="sidebar">
+        {isProductList && (
+          <ProductList
+            location={location}
+            products={products}
+            onSelectProduct={selectProductHandler}
+            activeProductId={activeProduct?.id}
+          />
+        )}
+        {isCategoryList && (
+          <CategoryList
+            location={location}
+            categories={categories}
+            products={products}
+            onSelectCategory={selectProductsByCategoryHandler}
+            activeCategory={activeCategory}
+          />
+        )}
+        {isTopList && (
+          <ProductList
+            location={location}
+            products={products}
+            onSelectProduct={selectProductHandler}
+            activeProductId={activeProduct?.id}
+          />
+        )}
+      </Grid>
+      <Grid item xs={9}>
+        <Content>
+          {activeProduct && <ProductItem product={activeProduct} />}
+          {isActiveCategory && (
+            <ProductAsListItem
+              product={products}
+              onGetAllProducts={getCategoriesHandler}
+              activeCategory={activeCategory}
+            />
+          )}
+        </Content>
+      </Grid>
+    </Grid>
   );
 }
 

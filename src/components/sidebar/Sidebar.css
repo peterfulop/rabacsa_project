@@ -5,3 +5,15 @@
   color: white;
   padding: 1rem;
 }
+
+.active-product {
+  color: white !important;
+  background-color: #0288d1 !important;
+}
+
+.sidebar-section {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+}

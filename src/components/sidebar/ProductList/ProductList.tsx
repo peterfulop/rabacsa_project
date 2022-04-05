@@ -8,21 +8,20 @@ import {
 } from "@mui/material";
 import { Fragment, useEffect, useState } from "react";
 import { Product } from "../../../interfaces/product.interface";
-import usePagination from "../../hooks/usePagination";
+import SidebarItem from "../SidebarItem";
 
 import "../Sidebar.css";
 
 export default function ProductList(props: {
   products: Product[];
   location: string;
+  onSelectProduct: Function;
+  activeProductId?: string;
 }) {
   const [products, setProducts] = useState<Product[]>([]);
-  const [isProducts, setIsProducts] = useState<boolean>(false);
-  const { currentItems, renderPagination } = usePagination({ data: products });
 
   useEffect(() => {
     if (props.products.length > 0) {
-      setIsProducts(true);
       setProducts(props.products);
     }
   }, [props.products]);
@@ -40,7 +39,12 @@ export default function ProductList(props: {
             return (
               <Fragment key={item.id}>
                 <ListItem disablePadding>
-                  <ListItemButton>
+                  <ListItemButton
+                    className={
+                      item.id === props.activeProductId ? "active-product" : ""
+                    }
+                    onClick={() => props.onSelectProduct(item.id)}
+                  >
                     <ListItemText primary={item.title} />
                   </ListItemButton>
                 </ListItem>
@@ -54,10 +58,10 @@ export default function ProductList(props: {
   };
 
   return (
-    <section>
-      <p className="location-heading">{props.location}</p>
-      {renderPagination()}
-      {isProducts && renderProducts(currentItems)}
-    </section>
+    <SidebarItem
+      data={products}
+      location={props.location}
+      renderContent={renderProducts}
+    />
   );
 }

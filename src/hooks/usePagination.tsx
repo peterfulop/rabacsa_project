@@ -1,20 +1,22 @@
 import { useState } from "react";
+import { PRODUCT_PER_PAGE } from "../utils/constans";
 
-import "./Pagination.css";
+import "./UsePagination.css";
 
 export default function usePagination(props: { data: any[] }) {
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [itemsPerPage] = useState(PRODUCT_PER_PAGE);
 
-  const pages: number[] = [
-    ...Array(props.data.length / itemsPerPage).keys(),
-  ].map((num: number) => num + 1);
+  let pages: number[] = [];
+  for (let i = 1; i <= Math.ceil(props.data.length) / itemsPerPage; i++) {
+    pages.push(i);
+  }
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = props.data.slice(indexOfFirstItem, indexOfLastItem);
 
-  const [pageNumberLimit, setPageNumberLimit] = useState(3);
+  const [pageNumberLimit] = useState(3);
   const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(3);
   const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
 
@@ -58,7 +60,10 @@ export default function usePagination(props: { data: any[] }) {
 
   function renderPagination() {
     return (
-      <section className="pagination">
+      <section
+        className="pagination"
+        hidden={pages.length === 0 ? true : false}
+      >
         <button
           className="pagination-nav"
           hidden={currentPage === 1 ? true : false}
@@ -69,7 +74,9 @@ export default function usePagination(props: { data: any[] }) {
         {renderPageNumbers}
         <button
           className="pagination-nav"
-          hidden={currentPage === pages.length ? true : false}
+          hidden={
+            currentPage === pages.length || pages.length === 0 ? true : false
+          }
           onClick={nextBtnHandler}
         >
           Next
