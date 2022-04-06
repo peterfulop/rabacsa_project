@@ -25,3 +25,10 @@ export interface ProductDetails {
   brand: string;
   category: string;
 }
+
+export interface AddNewProduct {
+  id: string;
+  title: string;
+  price: number;
+  description: string;
+}

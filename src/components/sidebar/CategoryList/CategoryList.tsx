@@ -20,9 +20,7 @@ export default function CategoryList(props: {
   const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
-    if (props.categories.length > 0) {
-      setCategories(props.categories);
-    }
+    setCategories(props.categories);
   }, [props.categories]);
 
   const renderCategories = (categories: Category[]) => {

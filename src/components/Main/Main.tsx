@@ -1,15 +1,20 @@
 import { MouseEventHandler, useContext, useEffect, useState } from "react";
 import ProductContext from "../../contexts/product.context";
-import { Category, Product } from "../../interfaces/product.interface";
+import {
+  AddNewProduct,
+  Category,
+  Product,
+} from "../../interfaces/product.interface";
 import Navigation from "../Navigation/Navigation";
 import ProductItem from "../Product/Product";
 import ProductList from "../Sidebar/ProductList/ProductList";
 import CategoryList from "../Sidebar/CategoryList/CategoryList";
-import Content from "../Content/Content";
 
 /**MUI */
 import Grid from "@mui/material/Grid";
 import ProductAsListItem from "../Product/productList/ProductAsListItem";
+import ProductAddDialog from "../Product/actions/ProductAddDialog";
+const { v4: uuidv4 } = require("uuid");
 
 function Main() {
   const productContext = useContext(ProductContext);
@@ -30,7 +35,7 @@ function Main() {
 
   useEffect(() => {
     setProducts(productContext);
-  }, [productContext, activeProduct]);
+  }, [productContext]);
 
   const getProductsHandler: MouseEventHandler = (event) => {
     console.log("getProductsHandler");
@@ -115,6 +120,23 @@ function Main() {
     setIsActiveCategory(true);
   };
 
+  /** ACTIONS */
+
+  const addNewProductHandler = async (
+    title: string,
+    price: number,
+    description: string
+  ) => {
+    const newProduct: AddNewProduct = {
+      title,
+      price,
+      description,
+      id: uuidv4(),
+    };
+
+    console.log(newProduct);
+  };
+
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -152,16 +174,19 @@ function Main() {
         )}
       </Grid>
       <Grid item xs={9}>
-        <Content>
-          {activeProduct && <ProductItem product={activeProduct} />}
-          {isActiveCategory && (
-            <ProductAsListItem
-              product={products}
-              onGetAllProducts={getCategoriesHandler}
-              activeCategory={activeCategory}
-            />
-          )}
-        </Content>
+        {activeProduct && (
+          <section className="content">
+            <ProductItem product={activeProduct} />
+            <ProductAddDialog submitAction={addNewProductHandler} />
+          </section>
+        )}
+        {isActiveCategory && (
+          <ProductAsListItem
+            product={products}
+            onGetAllProducts={getCategoriesHandler}
+            activeCategory={activeCategory}
+          />
+        )}
       </Grid>
     </Grid>
   );

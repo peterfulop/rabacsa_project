@@ -25,36 +25,32 @@ export default function ProductItem(props: { product: Product }) {
   };
 
   return (
-    <section className="products">
-      <CardMedia
-        component="img"
-        height={"300px"}
-        image={props.product.thumbnail}
-        alt="green iguana"
-      />
-      <div className="meta-data">
-        <h2>{props.product.title}</h2>
-        <h4>{props.product.brand}</h4>
-        <small>{props.product.description}</small>
-      </div>
-      <div className="item-deatils">
-        <DetailsTable rows={rows} />
+    <section className="product">
+      <div className="product-container">
+        <div className="product-container-img">
+          <img src={props.product.thumbnail} alt={props.product.title} />
+        </div>
+        <div className="item-deatils">
+          <div className="meta-data">
+            <h2>{props.product.title}</h2>
+            <h4>{props.product.brand}</h4>
+            <small>{props.product.description}</small>
+          </div>
+          <DetailsTable rows={rows} />
+        </div>
       </div>
 
       <div className="actions">
-        <ProductAddDialog submitAction={addProductHandler} />
-        <div className="main">
-          <ProductEditDialog
-            productName={props.product.title}
-            productPrice={props.product.price}
-            productDescription={props.product.description}
-            submitAction={editProductHandler}
-          />
-          <ProductDeleteDialog
-            productName={props.product.title}
-            submitAction={deleteProductHandler}
-          />
-        </div>
+        <ProductEditDialog
+          productName={props.product.title}
+          productPrice={props.product.price}
+          productDescription={props.product.description}
+          submitAction={editProductHandler}
+        />
+        <ProductDeleteDialog
+          productName={props.product.title}
+          submitAction={deleteProductHandler}
+        />
       </div>
     </section>
   );

@@ -3,6 +3,8 @@
   justify-content: flex-end;
   align-items: center;
   border: 1px solid rgb(209, 209, 209);
+  /* border-top: none; */
+  margin-top: 2rem;
 }
 
 [hidden].pagination {

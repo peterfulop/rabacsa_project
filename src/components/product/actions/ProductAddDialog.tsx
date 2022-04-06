@@ -5,25 +5,55 @@ import {
   DialogContent,
   TextField,
   DialogActions,
+  Alert,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
+
+import "./Dialog.css";
+
+import { AlertColor } from "@mui/material";
 
 export default function ProductAddDialog(props: { submitAction: Function }) {
   const [open, setOpen] = React.useState<boolean>(false);
   const [inputName, setInputName] = React.useState<string>();
-  const [inputPrice, setInputPrice] = React.useState<number>();
+  const [inputPrice, setInputPrice] = React.useState<number | null>();
   const [inputDescription, setInputDescription] = React.useState<string>();
+  const [isError, setIsError] = useState<boolean>(false);
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
+  const [alertColor, setAlertColor] = useState<AlertColor>("success");
 
   const handleClickOpen = () => {
+    clearInputs();
     setOpen(true);
   };
 
   const handleClose = () => {
+    clearInputs();
     setOpen(false);
   };
 
+  const clearInputs = () => {
+    setIsError(false);
+    setAlertMessage(null);
+    setInputPrice(null);
+    setInputName("");
+    setInputDescription("");
+  };
+
   const handleAction = async () => {
-    await props.submitAction(inputName);
+    console.log(inputName, inputPrice, inputDescription);
+
+    if (!inputName || !Number(inputPrice) || !inputDescription) {
+      setIsError(true);
+      setAlertMessage("All fields are required!");
+      setAlertColor("error");
+      return;
+    }
+    const res = await props.submitAction(
+      inputName,
+      inputPrice,
+      inputDescription
+    );
     setOpen(false);
   };
 
@@ -49,7 +79,7 @@ export default function ProductAddDialog(props: { submitAction: Function }) {
   };
 
   return (
-    <div>
+    <div className="product-add-dialog">
       <Button variant="contained" color="success" onClick={handleClickOpen}>
         {"Add new Product"}
       </Button>
@@ -58,6 +88,7 @@ export default function ProductAddDialog(props: { submitAction: Function }) {
         <DialogContent>
           <TextField
             autoFocus
+            required
             margin="dense"
             id="name"
             label="title:"
@@ -68,18 +99,18 @@ export default function ProductAddDialog(props: { submitAction: Function }) {
             onChange={(e) => setNameHandler(e)}
           />
           <TextField
-            autoFocus
+            required
             margin="dense"
             id="name"
             label="price:"
-            type="text"
+            type="number"
             fullWidth
             variant="standard"
             defaultValue={inputPrice}
             onChange={(e) => setPriceHandler(e)}
           />
           <TextField
-            autoFocus
+            required
             margin="dense"
             id="name"
             label="description:"
@@ -90,6 +121,18 @@ export default function ProductAddDialog(props: { submitAction: Function }) {
             onChange={(e) => setDescriptionHandler(e)}
           />
         </DialogContent>
+        {isError && (
+          <section className="alert-section">
+            <Alert
+              severity={alertColor}
+              onClose={() => {
+                setIsError(false);
+              }}
+            >
+              <strong>{alertMessage}</strong>
+            </Alert>
+          </section>
+        )}
         <DialogActions>
           <Button variant="outlined" color="primary" onClick={handleClose}>
             Cancel
