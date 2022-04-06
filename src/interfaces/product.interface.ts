@@ -34,3 +34,8 @@ export interface AddNewProduct {
   description: string;
   category: "uncategorized";
 }
+export interface UpdateProduct {
+  title: string;
+  price: number;
+  description: string;
+}

@@ -33,11 +33,10 @@ export default function ProjectEditDialog(props: {
   };
 
   const handleAction = async () => {
-    if (!inputName) {
-    } else if (inputName === props.productName) {
-      setOpen(false);
+    if (!inputName || !inputPrice || !inputDescription) {
+      return;
     }
-    await props.submitAction(inputName);
+    await props.submitAction(inputName, inputPrice, inputDescription);
     setOpen(false);
   };
 

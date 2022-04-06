@@ -49,11 +49,7 @@ export default function ProductAddDialog(props: { submitAction: Function }) {
       setAlertColor("error");
       return;
     }
-    const res = await props.submitAction(
-      inputName,
-      inputPrice,
-      inputDescription
-    );
+    await props.submitAction(inputName, inputPrice, inputDescription);
     setOpen(false);
   };
 

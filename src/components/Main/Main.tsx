@@ -5,7 +5,6 @@ import Navigation from "../Navigation/Navigation";
 import ProductItem from "../Product/Product";
 import ProductList from "../Sidebar/ProductList/ProductList";
 import CategoryList from "../Sidebar/CategoryList/CategoryList";
-import productsJson from "../../data/products.json";
 
 /**MUI */
 import Grid from "@mui/material/Grid";
@@ -28,14 +27,15 @@ function Main() {
   const [activeProduct, setActiveProduct] = useState<Product | null>(
     productContext.items[0]
   );
-  const [activeCategory, setActiveCategory] = useState<string>("smartphones");
+  const [activeCategory, setActiveCategory] = useState<string>("");
 
   useEffect(() => {
+    console.log("Main useEffect");
     setProducts(productContext.items);
+    setActiveProduct(productContext.items[0]);
   }, [productContext.items]);
 
   const getProductsHandler: MouseEventHandler = (event) => {
-    console.log("getProductsHandler");
     setIsProductList(true);
     setLocation(event.currentTarget.textContent as string);
     setProducts(productContext.items);
@@ -46,11 +46,7 @@ function Main() {
   };
 
   const getCategoriesHandler: MouseEventHandler = (event) => {
-    console.log("getCategoriesHandler");
-
-    setActiveCategory("");
     setProducts(productContext.items);
-
     setLocation(event.currentTarget.textContent as string);
 
     const categories = [...productContext.items].map(
@@ -75,7 +71,6 @@ function Main() {
     });
     setCategories(uniqueCategories);
     setActiveCategory("All Products");
-
     setIsCategoryList(true);
     setIsActiveCategory(true);
     setIsProductList(false);
@@ -85,8 +80,8 @@ function Main() {
 
   const getTopListHandler: MouseEventHandler = (event) => {
     setLocation(event.currentTarget.textContent as string);
-    const topList = [...products]
-      .sort((a, b) => b.price - a.price)
+    const topList = [...productContext.items]
+      .sort((a: any, b: any) => b.price - a.price)
       .slice(0, 25);
     setIsCategoryList(false);
     setIsProductList(false);
@@ -97,6 +92,8 @@ function Main() {
   };
 
   const selectProductHandler = (product: Product) => {
+    console.log("Select or Update Product", product);
+    console.log("Products list:", products);
     setActiveProduct(product);
   };
 
@@ -113,8 +110,6 @@ function Main() {
     setIsActiveCategory(true);
   };
 
-  /** ACTIONS */
-
   const addNewProductHandler = async (
     title: string,
     price: number,
@@ -126,8 +121,8 @@ function Main() {
       description,
       id: uuidv4(),
       category: "uncategorized",
+      thumbnail: "https://picsum.photos/200",
     };
-
     productContext.addItem(newProduct);
     setProducts(productContext.items);
   };
@@ -171,7 +166,11 @@ function Main() {
       <Grid item xs={9}>
         {activeProduct && (
           <section className="content">
-            <ProductItem product={activeProduct} />
+            <ProductItem
+              products={products}
+              onUpdateProduct={selectProductHandler}
+              product={activeProduct}
+            />
             <ProductAddDialog submitAction={addNewProductHandler} />
           </section>
         )}

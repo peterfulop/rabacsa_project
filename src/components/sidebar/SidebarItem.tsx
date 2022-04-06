@@ -5,13 +5,9 @@ export default function SidebarItem(props: {
   renderContent: Function;
   location: string;
 }) {
-  console.log("SidebarItem?", props.data);
-
   const { currentItems, renderPagination } = usePagination({
     data: props.data,
   });
-
-  console.log("currentItems", currentItems);
 
   return (
     <section className="sidebar-section">
