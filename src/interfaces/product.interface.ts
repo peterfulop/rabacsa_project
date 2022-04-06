@@ -3,13 +3,13 @@ export type Product = {
   title: string;
   description: string;
   price: number;
-  discountPercentage: number;
-  rating: number;
-  stock: number;
-  brand: string;
-  category: string;
-  thumbnail: string;
-  images: string[];
+  discountPercentage?: number;
+  rating?: number;
+  stock?: number;
+  brand?: string;
+  category?: string;
+  thumbnail?: string;
+  images?: string[];
 };
 export interface Category {
   title: string;
@@ -19,11 +19,12 @@ export interface Category {
 export interface ProductDetails {
   title: string;
   price: number;
-  discountPercentage: number;
-  rating: number;
-  stock: number;
-  brand: string;
-  category: string;
+  description: string;
+  discountPercentage?: number;
+  rating?: number;
+  stock?: number;
+  brand?: string;
+  category?: string;
 }
 
 export interface AddNewProduct {
@@ -31,4 +32,5 @@ export interface AddNewProduct {
   title: string;
   price: number;
   description: string;
+  category: "uncategorized";
 }

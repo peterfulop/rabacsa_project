@@ -6,11 +6,12 @@ import {
   ListItemText,
   Divider,
 } from "@mui/material";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { Product } from "../../../interfaces/product.interface";
 import SidebarItem from "../SidebarItem";
 
 import "../Sidebar.css";
+import ProductContext from "../../../contexts/product.context";
 
 export default function ProductList(props: {
   products: Product[];
@@ -18,13 +19,17 @@ export default function ProductList(props: {
   onSelectProduct: Function;
   activeProductId?: string;
 }) {
+  // const ctx = useContext(ProductContext);
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    if (props.products.length > 0) {
-      setProducts(props.products);
-    }
+    setProducts(props.products);
   }, [props.products]);
+
+  const selectProductHandler = (id: string) => {
+    const activeProduct = [...products].find((product) => product.id === id);
+    props.onSelectProduct(activeProduct);
+  };
 
   const renderProducts = (products: Product[]) => {
     return (
@@ -43,7 +48,7 @@ export default function ProductList(props: {
                     className={
                       item.id === props.activeProductId ? "active-product" : ""
                     }
-                    onClick={() => props.onSelectProduct(item.id)}
+                    onClick={() => selectProductHandler(item.id)}
                   >
                     <ListItemText primary={item.title} />
                   </ListItemButton>

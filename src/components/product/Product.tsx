@@ -8,8 +8,6 @@ import DetailsTable from "./details/ProductDetails";
 import "./Product.css";
 
 export default function ProductItem(props: { product: Product }) {
-  console.log(props.product);
-
   const editProductHandler = () => {};
   const deleteProductHandler = () => {};
   const addProductHandler = () => {};
@@ -22,6 +20,7 @@ export default function ProductItem(props: { product: Product }) {
     price: props.product.price,
     stock: props.product.stock,
     rating: props.product.rating,
+    description: props.product.description,
   };
 
   return (

@@ -8,8 +8,15 @@ export default function usePagination(props: { data: any[] }) {
   const [itemsPerPage] = useState(PRODUCT_PER_PAGE);
 
   let pages: number[] = [];
-  for (let i = 1; i <= Math.ceil(props.data.length) / itemsPerPage; i++) {
-    pages.push(i);
+
+  if (props.data.length <= itemsPerPage) {
+    for (let i = 1; i <= Math.ceil(props.data.length) / itemsPerPage; i++) {
+      pages.push(i);
+    }
+  } else {
+    for (let i = 1; i <= Math.ceil(props.data.length / itemsPerPage); i++) {
+      pages.push(i);
+    }
   }
 
   useEffect(() => {
