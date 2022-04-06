@@ -30,20 +30,22 @@ function Main() {
   const [activeCategory, setActiveCategory] = useState<string>("");
 
   useEffect(() => {
-    console.log("Main useEffect");
     setProducts(productContext.items);
-    setActiveProduct(productContext.items[0]);
   }, [productContext.items]);
 
   const getProductsHandler: MouseEventHandler = (event) => {
-    setIsProductList(true);
     setLocation(event.currentTarget.textContent as string);
+getProducts();
+  };
+
+  const getProducts =()=>{
+    setIsProductList(true);
     setProducts(productContext.items);
     setIsCategoryList(false);
     setIsActiveCategory(false);
     setIsTopList(false);
     setActiveProduct(productContext.items[0]);
-  };
+  }
 
   const getCategoriesHandler: MouseEventHandler = (event) => {
     setProducts(productContext.items);
@@ -92,8 +94,6 @@ function Main() {
   };
 
   const selectProductHandler = (product: Product) => {
-    console.log("Select or Update Product", product);
-    console.log("Products list:", products);
     setActiveProduct(product);
   };
 
@@ -167,7 +167,7 @@ function Main() {
         {activeProduct && (
           <section className="content">
             <ProductItem
-              products={products}
+              onDeleteProduct={getProducts}
               onUpdateProduct={selectProductHandler}
               product={activeProduct}
             />

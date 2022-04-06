@@ -8,9 +8,9 @@ import DetailsTable from "./details/ProductDetails";
 import "./Product.css";
 
 export default function ProductItem(props: {
-  products: Product[];
   product: Product;
   onUpdateProduct: Function;
+  onDeleteProduct: Function;
 }) {
   const ctx = useContext(ProductContext);
   const [activeProductId, setActiveProductId] = useState<string>("");
@@ -18,8 +18,8 @@ export default function ProductItem(props: {
 
   useEffect(() => {
     console.log("Product useEffect");
-    setProduct(props.product);
     setActiveProductId(props.product.id);
+    setProduct(props.product);
   }, [props.product, activeProductId]);
 
   const editProductHandler = (
@@ -33,11 +33,20 @@ export default function ProductItem(props: {
       price: inputPrice,
       description: inputDescription,
     });
-    console.log(props.products);
+
+    const updatedProduct: Product = {
+      ...product,
+      title: inputTitle,
+      price: inputPrice,
+      description: inputDescription,
+    };
+    props.onUpdateProduct(updatedProduct);
   };
 
   const deleteProductHandler = () => {
     ctx.removeItem(activeProductId);
+    props.onUpdateProduct(ctx.items[0]);
+    props.onDeleteProduct();
   };
 
   const rows: ProductDetails = {

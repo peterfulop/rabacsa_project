@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: .5rem;
   background-color: rgb(47, 47, 47);
   border-bottom: 5px solid rebeccapurple;
 }
