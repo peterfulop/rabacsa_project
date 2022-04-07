@@ -1,6 +1,6 @@
 import { MouseEventHandler, useContext, useEffect, useState } from "react";
 import ProductContext from "../../contexts/product.context";
-import { Category, Product } from "../../interfaces/product.interface";
+import { Category, Product } from "../../utils/interfaces/product.interface";
 import Navigation from "../Navigation/Navigation";
 import ProductItem from "../Product/Product";
 import ProductList from "../Sidebar/ProductList/ProductList";
@@ -8,7 +8,7 @@ import CategoryList from "../Sidebar/CategoryList/CategoryList";
 
 /**MUI */
 import Grid from "@mui/material/Grid";
-import ProductAsListItem from "../Product/productList/ProductAsListItem";
+import ProductAsListItem from "../Product/ProductAsListItem";
 import ProductAddDialog from "../Product/actions/ProductAddDialog";
 import { v4 as uuidv4 } from "uuid";
 
@@ -35,17 +35,17 @@ function Main() {
 
   const getProductsHandler: MouseEventHandler = (event) => {
     setLocation(event.currentTarget.textContent as string);
-getProducts();
+    getProducts();
   };
 
-  const getProducts =()=>{
+  const getProducts = () => {
     setIsProductList(true);
     setProducts(productContext.items);
     setIsCategoryList(false);
     setIsActiveCategory(false);
     setIsTopList(false);
     setActiveProduct(productContext.items[0]);
-  }
+  };
 
   const getCategoriesHandler: MouseEventHandler = (event) => {
     setProducts(productContext.items);
@@ -164,21 +164,24 @@ getProducts();
         )}
       </Grid>
       <Grid item xs={9}>
-        {activeProduct && (
+        {(activeProduct && isProductList) || (activeProduct && isTopList) ? (
           <section className="content">
+            <ProductAddDialog submitAction={addNewProductHandler} />
             <ProductItem
               onDeleteProduct={getProducts}
               onUpdateProduct={selectProductHandler}
               product={activeProduct}
             />
-            <ProductAddDialog submitAction={addNewProductHandler} />
           </section>
+        ) : (
+          ""
         )}
         {isActiveCategory && (
           <ProductAsListItem
             product={products}
-            onGetAllProducts={getCategoriesHandler}
             activeCategory={activeCategory}
+            onDeleteProduct={getProducts}
+            onUpdateProduct={selectProductHandler}
           />
         )}
       </Grid>

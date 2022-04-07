@@ -7,7 +7,7 @@ import {
   Divider,
 } from "@mui/material";
 import { Fragment, useEffect, useState } from "react";
-import { Product } from "../../../interfaces/product.interface";
+import { Product } from "../../../utils/interfaces/product.interface";
 import SidebarItem from "../SidebarItem";
 
 import "../Sidebar.css";

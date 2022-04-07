@@ -1,6 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import ProductContext from "../../contexts/product.context";
-import { Product, ProductDetails } from "../../interfaces/product.interface";
+import {
+  Product,
+  ProductDetails,
+} from "../../utils/interfaces/product.interface";
 import ProductDeleteDialog from "./actions/ProductDeleteDialog";
 import ProductEditDialog from "./actions/ProductEditDialog";
 import DetailsTable from "./details/ProductDetails";
@@ -17,7 +20,6 @@ export default function ProductItem(props: {
   const [product, setProduct] = useState<Product>(props.product);
 
   useEffect(() => {
-    console.log("Product useEffect");
     setActiveProductId(props.product.id);
     setProduct(props.product);
   }, [props.product, activeProductId]);
@@ -59,17 +61,6 @@ export default function ProductItem(props: {
     rating: product.rating,
     description: product.description,
   };
-
-  // const rows: ProductDetails = {
-  //   title: props.product.title,
-  //   brand: props.product.brand,
-  //   category: props.product.category,
-  //   discountPercentage: props.product.discountPercentage,
-  //   price: props.product.price,
-  //   stock: props.product.stock,
-  //   rating: props.product.rating,
-  //   description: props.product.description,
-  // };
 
   return (
     <section className="product">

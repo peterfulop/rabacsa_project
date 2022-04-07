@@ -7,7 +7,7 @@ import {
   Divider,
 } from "@mui/material";
 import { useState, useEffect, Fragment } from "react";
-import { Category, Product } from "../../../interfaces/product.interface";
+import { Category, Product } from "../../../utils/interfaces/product.interface";
 import SidebarItem from "../SidebarItem";
 
 export default function CategoryList(props: {

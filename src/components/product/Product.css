@@ -1,5 +1,4 @@
 .product {
-  margin: 2rem;
   background-color: #fafafa;
   max-width: 1500px;
 }
@@ -117,12 +116,20 @@
 }
 
 .product-actions {
-  width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
   margin-left: 1rem;
+}
+
+.product-actions h2{
+  margin-bottom: 1rem;
 }
 
 /* PRODUCT ADD DIALOG */
 
 .product-add-dialog {
-  margin: 2rem;
+  padding: 1rem;
 }

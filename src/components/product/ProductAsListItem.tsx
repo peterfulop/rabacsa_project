@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
-import { Product } from "../../../interfaces/product.interface";
-import ProductEditDialog from "../actions/ProductEditDialog";
+import { Product } from "../../utils/interfaces/product.interface";
+import ProductEditDialog from "./actions/ProductEditDialog";
 
-import usePagination from "../../../hooks/usePagination";
+import usePagination from "../../hooks/usePagination";
+import ProductAsCardItem from "./ProductAsCardItem";
 
 export default function ProductAsListItem(props: {
   product: Product[];
-  onGetAllProducts: Function;
   activeCategory: string;
+  onUpdateProduct: Function;
+  onDeleteProduct: Function;
 }) {
   const [products, setProducts] = useState<Product[]>([]);
   const { currentItems, renderPagination } = usePagination({
@@ -32,11 +34,10 @@ export default function ProductAsListItem(props: {
           </div>
           <div className="product-actions">
             <h2>${product.price}</h2>
-            <ProductEditDialog
-              productName={product.title}
-              productPrice={product.price}
-              productDescription={product.description}
-              submitAction={() => {}}
+            <ProductAsCardItem
+              product={product}
+              onUpdateProduct={props.onUpdateProduct}
+              onDeleteProduct={props.onDeleteProduct}
             />
           </div>
         </div>
