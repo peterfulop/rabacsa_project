@@ -31,6 +31,13 @@ function Main() {
 
   useEffect(() => {
     setProducts(productContext.items);
+    if (isCategoryList) {
+      getCategories();
+      selectProductsByCategoryHandler(activeCategory);
+    }
+    if (isTopList) {
+      getToplist(false);
+    }
   }, [productContext.items]);
 
   const getProductsHandler: MouseEventHandler = (event) => {
@@ -38,19 +45,22 @@ function Main() {
     getProducts();
   };
 
-  const getProducts = () => {
+  const getProducts = (prevProductIndex: number = 0) => {
     setIsProductList(true);
     setProducts(productContext.items);
     setIsCategoryList(false);
     setIsActiveCategory(false);
     setIsTopList(false);
-    setActiveProduct(productContext.items[0]);
+    setActiveProduct(productContext.items[prevProductIndex]);
   };
 
   const getCategoriesHandler: MouseEventHandler = (event) => {
-    setProducts(productContext.items);
     setLocation(event.currentTarget.textContent as string);
+    getCategories();
+  };
 
+  const getCategories = () => {
+    setProducts(productContext.items);
     const categories = [...productContext.items].map(
       (product: Product) => product.category
     );
@@ -82,6 +92,10 @@ function Main() {
 
   const getTopListHandler: MouseEventHandler = (event) => {
     setLocation(event.currentTarget.textContent as string);
+    getToplist();
+  };
+
+  const getToplist = (setActive: boolean = true) => {
     const topList = [...productContext.items]
       .sort((a: any, b: any) => b.price - a.price)
       .slice(0, 25);
@@ -90,7 +104,7 @@ function Main() {
     setIsActiveCategory(false);
     setIsTopList(true);
     setProducts(topList);
-    setActiveProduct(topList[0]);
+    setActive && setActiveProduct(topList[0]);
   };
 
   const selectProductHandler = (product: Product) => {
@@ -127,6 +141,10 @@ function Main() {
     setProducts(productContext.items);
   };
 
+  const onDeleteProductHandler = (activeProduct: Product) => {
+    setActiveProduct(activeProduct);
+  };
+
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -148,8 +166,8 @@ function Main() {
         {isCategoryList && (
           <CategoryList
             location={location}
-            categories={categories}
             products={products}
+            categories={categories}
             onSelectCategory={selectProductsByCategoryHandler}
             activeCategory={activeCategory}
           />
@@ -164,13 +182,15 @@ function Main() {
         )}
       </Grid>
       <Grid item xs={9}>
-        {(activeProduct && isProductList) || (activeProduct && isTopList) ? (
+        {(activeProduct && isProductList && !isCategoryList) ||
+        (activeProduct && isTopList && !isCategoryList) ? (
           <section className="content">
             <ProductAddDialog submitAction={addNewProductHandler} />
             <ProductItem
-              onDeleteProduct={getProducts}
-              onUpdateProduct={selectProductHandler}
+              products={products}
               product={activeProduct}
+              onDeleteProduct={onDeleteProductHandler}
+              onUpdateProduct={selectProductHandler}
             />
           </section>
         ) : (
@@ -180,7 +200,7 @@ function Main() {
           <ProductAsListItem
             product={products}
             activeCategory={activeCategory}
-            onDeleteProduct={getProducts}
+            onDeleteProduct={onDeleteProductHandler}
             onUpdateProduct={selectProductHandler}
           />
         )}

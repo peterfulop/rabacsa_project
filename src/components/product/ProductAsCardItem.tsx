@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import Dialog, { DialogProps } from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -10,7 +9,7 @@ import ProductItem from "./Product";
 import { useTheme } from "@mui/material/styles";
 import { useMediaQuery } from "@mui/material";
 
-export default function ProjectEditDialog(props: {
+export default function ProductEditDialog(props: {
   product: Product;
   onDeleteProduct: Function;
   onUpdateProduct: Function;
@@ -47,6 +46,7 @@ export default function ProjectEditDialog(props: {
         <DialogTitle>{product.title}</DialogTitle>
         <DialogContent>
           <ProductItem
+            products={[]}
             product={product}
             onDeleteProduct={props.onDeleteProduct}
             onUpdateProduct={props.onUpdateProduct}

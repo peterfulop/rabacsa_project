@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { Product } from "../../utils/interfaces/product.interface";
-import ProductEditDialog from "./actions/ProductEditDialog";
-
 import usePagination from "../../hooks/usePagination";
 import ProductAsCardItem from "./ProductAsCardItem";
 

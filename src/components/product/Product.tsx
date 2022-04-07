@@ -12,6 +12,7 @@ import "./Product.css";
 
 export default function ProductItem(props: {
   product: Product;
+  products: Product[];
   onUpdateProduct: Function;
   onDeleteProduct: Function;
 }) {
@@ -47,8 +48,17 @@ export default function ProductItem(props: {
 
   const deleteProductHandler = () => {
     ctx.removeItem(activeProductId);
-    props.onUpdateProduct(ctx.items[0]);
-    props.onDeleteProduct();
+    const activeProductIndex = props.products.findIndex(
+      (prod: Product) => prod.id === activeProductId
+    );
+
+    let activeProduct: Product;
+    if (activeProductIndex === 0) {
+      activeProduct = props.products[activeProductIndex + 1];
+    } else {
+      activeProduct = props.products[activeProductIndex - 1];
+    }
+    props.onDeleteProduct(activeProduct);
   };
 
   const rows: ProductDetails = {
