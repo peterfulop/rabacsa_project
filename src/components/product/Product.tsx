@@ -1,5 +1,7 @@
 import { useContext, useEffect, useState } from "react";
-import ProductContext from "../../contexts/product.context";
+import ProductContext, {
+  ProductContextType,
+} from "../../contexts/product.context";
 import {
   Product,
   ProductDetails,
@@ -16,7 +18,9 @@ export default function ProductItem(props: {
   onUpdateProduct: Function;
   onDeleteProduct: Function;
 }) {
-  const ctx = useContext(ProductContext);
+  const { updateItem, removeItem } = useContext(
+    ProductContext
+  ) as ProductContextType;
   const [activeProductId, setActiveProductId] = useState<string>("");
 
   useEffect(() => {
@@ -28,7 +32,7 @@ export default function ProductItem(props: {
     inputPrice: number,
     inputDescription: string
   ) => {
-    ctx.updateItem({
+    updateItem({
       id: activeProductId,
       title: inputTitle,
       price: inputPrice,
@@ -45,7 +49,7 @@ export default function ProductItem(props: {
   };
 
   const deleteProductHandler = () => {
-    ctx.removeItem(activeProductId);
+    removeItem(activeProductId);
     const activeProductIndex = props.products.findIndex(
       (prod: Product) => prod.id === activeProductId
     );

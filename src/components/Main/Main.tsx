@@ -5,6 +5,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import { ProductContextType } from "../../contexts/product.context";
 import ProductContext from "../../contexts/product.context";
 import { Category, Product } from "../../utils/interfaces/product.interface";
 import Navigation from "../Navigation/Navigation";
@@ -19,7 +20,9 @@ import ProductAddDialog from "../Product/actions/ProductAddDialog";
 import { v4 as uuidv4 } from "uuid";
 
 function Main() {
-  const productContext = useContext(ProductContext);
+  const { items, addItem } = useContext(ProductContext) as ProductContextType;
+
+  console.log(items);
 
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -30,14 +33,12 @@ function Main() {
   const [isActiveCategory, setIsActiveCategory] = useState<boolean>(false);
 
   const [location, setLocation] = useState<string>("Products");
-  const [activeProduct, setActiveProduct] = useState<Product | null>(
-    productContext.items[0]
-  );
+  const [activeProduct, setActiveProduct] = useState<Product | null>(items[0]);
   const [activeCategory, setActiveCategory] = useState<string>("");
 
   useEffect(() => {
-    setProducts(productContext.items);
-  }, [productContext.items]);
+    setProducts(items);
+  }, [items]);
 
   const getProductsHandler: MouseEventHandler = (event) => {
     setLocation(event.currentTarget.textContent as string);
@@ -46,11 +47,11 @@ function Main() {
 
   const getProducts = (prevProductIndex: number = 0) => {
     setIsProductList(true);
-    setProducts(productContext.items);
+    setProducts(items);
     setIsCategoryList(false);
     setIsActiveCategory(false);
     setIsTopList(false);
-    setActiveProduct(productContext.items[prevProductIndex]);
+    setActiveProduct(items[prevProductIndex]);
   };
 
   const getCategoriesHandler: MouseEventHandler = (event) => {
@@ -68,10 +69,8 @@ function Main() {
   };
 
   const getCategories = useCallback(() => {
-    setProducts(productContext.items);
-    const categories = [...productContext.items].map(
-      (product: Product) => product.category
-    );
+    setProducts(items);
+    const categories = [...items].map((product: Product) => product.category);
 
     const uniques = categories.reduce(function (prev: any, cur: any) {
       prev[cur] = (prev[cur] || 0) + 1;
@@ -96,11 +95,11 @@ function Main() {
     setIsProductList(false);
     setIsTopList(false);
     setActiveProduct(null);
-  }, [productContext.items]);
+  }, [items]);
 
   const getToplist = useCallback(
     (setActive: boolean = true) => {
-      const topList = [...productContext.items]
+      const topList = [...items]
         .sort((a: any, b: any) => b.price - a.price)
         .slice(0, 25);
       setIsCategoryList(false);
@@ -110,23 +109,23 @@ function Main() {
       setProducts(topList);
       setActive && setActiveProduct(topList[0]);
     },
-    [productContext.items]
+    [items]
   );
 
   const selectProductsByCategoryHandler = useCallback(
     (category: string) => {
       setActiveCategory(category);
       if (category.toLowerCase() === "all products") {
-        setProducts(productContext.items);
+        setProducts(items);
       } else {
-        const productsByCategory = [...productContext.items].filter(
+        const productsByCategory = [...items].filter(
           (product: Product) => product.category === category
         );
         setProducts(productsByCategory);
       }
       setIsActiveCategory(true);
     },
-    [productContext.items]
+    [items]
   );
 
   const addNewProductHandler = async (
@@ -142,8 +141,8 @@ function Main() {
       category: "uncategorized",
       thumbnail: "https://picsum.photos/200",
     };
-    productContext.addItem(newProduct);
-    setProducts(productContext.items);
+    addItem(newProduct);
+    setProducts(items);
   };
 
   const onDeleteProductHandler = (activeProduct: Product) => {
