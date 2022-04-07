@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "@mui/material/Button";
 import Dialog, { DialogProps } from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -15,14 +15,9 @@ export default function ProductEditDialog(props: {
   onUpdateProduct: Function;
 }) {
   const [open, setOpen] = useState<boolean>(false);
-  const [product, setProduct] = useState<Product>(props.product);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
-  const [maxWidth, setMaxWidth] = useState<DialogProps["maxWidth"]>("xl");
-
-  useEffect(() => {
-    setProduct(props.product);
-  }, [props.product]);
+  const [maxWidth] = useState<DialogProps["maxWidth"]>("xl");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -43,11 +38,11 @@ export default function ProductEditDialog(props: {
         maxWidth={maxWidth}
         onClose={handleClose}
       >
-        <DialogTitle>{product.title}</DialogTitle>
+        <DialogTitle>{props.product.title}</DialogTitle>
         <DialogContent>
           <ProductItem
             products={[]}
-            product={product}
+            product={props.product}
             onDeleteProduct={props.onDeleteProduct}
             onUpdateProduct={props.onUpdateProduct}
           />

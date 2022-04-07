@@ -6,23 +6,16 @@ import {
   ListItemText,
   Divider,
 } from "@mui/material";
-import { useState, useEffect, Fragment } from "react";
-import { Category, Product } from "../../../utils/interfaces/product.interface";
+import { Fragment } from "react";
+import { Category } from "../../../utils/interfaces/product.interface";
 import SidebarItem from "../SidebarItem";
 
 export default function CategoryList(props: {
   categories: Category[];
-  products: Product[];
   location: string;
   activeCategory?: string;
   onSelectCategory: Function;
 }) {
-  const [categories, setCategories] = useState<Category[]>([]);
-
-  useEffect(() => {
-    setCategories(props.categories);
-  }, [props.categories]);
-
   const renderCategories = (categories: Category[]) => {
     return (
       <Box
@@ -59,7 +52,7 @@ export default function CategoryList(props: {
 
   return (
     <SidebarItem
-      data={categories}
+      data={props.categories}
       location={props.location}
       renderContent={renderCategories}
     />

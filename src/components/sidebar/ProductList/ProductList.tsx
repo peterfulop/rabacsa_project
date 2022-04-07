@@ -6,7 +6,7 @@ import {
   ListItemText,
   Divider,
 } from "@mui/material";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment } from "react";
 import { Product } from "../../../utils/interfaces/product.interface";
 import SidebarItem from "../SidebarItem";
 
@@ -18,14 +18,10 @@ export default function ProductList(props: {
   onSelectProduct: Function;
   activeProductId?: string;
 }) {
-  const [products, setProducts] = useState<Product[]>([]);
-
-  useEffect(() => {
-    setProducts(props.products);
-  }, [props.products]);
-
   const selectProductHandler = (id: string) => {
-    const activeProduct = [...products].find((product) => product.id === id);
+    const activeProduct = [...props.products].find(
+      (product) => product.id === id
+    );
     props.onSelectProduct(activeProduct);
   };
 
@@ -62,7 +58,7 @@ export default function ProductList(props: {
 
   return (
     <SidebarItem
-      data={products}
+      data={props.products}
       location={props.location}
       renderContent={renderProducts}
     />

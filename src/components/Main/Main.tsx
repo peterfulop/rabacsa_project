@@ -188,7 +188,6 @@ function Main() {
         {isCategoryList && (
           <CategoryList
             location={location}
-            products={products}
             categories={categories}
             onSelectCategory={selectProductsByCategoryHandler}
             activeCategory={activeCategory}
@@ -220,7 +219,7 @@ function Main() {
         )}
         {isActiveCategory && (
           <ProductAsListItem
-            product={products}
+            products={products}
             activeCategory={activeCategory}
             onDeleteProduct={onDeleteProductHandler}
             onUpdateProduct={selectProductHandler}

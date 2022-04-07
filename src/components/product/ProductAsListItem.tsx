@@ -1,22 +1,16 @@
-import { useEffect, useState } from "react";
 import { Product } from "../../utils/interfaces/product.interface";
 import usePagination from "../../hooks/usePagination";
 import ProductAsCardItem from "./ProductAsCardItem";
 
 export default function ProductAsListItem(props: {
-  product: Product[];
+  products: Product[];
   activeCategory: string;
   onUpdateProduct: Function;
   onDeleteProduct: Function;
 }) {
-  const [products, setProducts] = useState<Product[]>([]);
   const { currentItems, renderPagination } = usePagination({
-    data: products,
+    data: props.products,
   });
-
-  useEffect(() => {
-    setProducts(props.product);
-  }, [props.product]);
 
   function renderProductItem(data: Product[]) {
     return data.map((product: Product) => {

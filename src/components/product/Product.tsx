@@ -18,11 +18,9 @@ export default function ProductItem(props: {
 }) {
   const ctx = useContext(ProductContext);
   const [activeProductId, setActiveProductId] = useState<string>("");
-  const [product, setProduct] = useState<Product>(props.product);
 
   useEffect(() => {
     setActiveProductId(props.product.id);
-    setProduct(props.product);
   }, [props.product, activeProductId]);
 
   const editProductHandler = (
@@ -38,7 +36,7 @@ export default function ProductItem(props: {
     });
 
     const updatedProduct: Product = {
-      ...product,
+      ...props.product,
       title: inputTitle,
       price: inputPrice,
       description: inputDescription,
@@ -62,27 +60,27 @@ export default function ProductItem(props: {
   };
 
   const rows: ProductDetails = {
-    title: product.title,
-    brand: product.brand,
-    category: product.category,
-    discountPercentage: product.discountPercentage,
-    price: product.price,
-    stock: product.stock,
-    rating: product.rating,
-    description: product.description,
+    title: props.product.title,
+    brand: props.product.brand,
+    category: props.product.category,
+    discountPercentage: props.product.discountPercentage,
+    price: props.product.price,
+    stock: props.product.stock,
+    rating: props.product.rating,
+    description: props.product.description,
   };
 
   return (
     <section className="product">
       <div className="product-container">
         <div className="product-container-img">
-          <img src={product.thumbnail} alt={product.title} />
+          <img src={props.product.thumbnail} alt={props.product.title} />
         </div>
         <div className="item-deatils">
           <div className="meta-data">
-            <h2>{product.title}</h2>
-            <h4>{product.brand}</h4>
-            <small>{product.description}</small>
+            <h2>{props.product.title}</h2>
+            <h4>{props.product.brand}</h4>
+            <small>{props.product.description}</small>
           </div>
           <DetailsTable rows={rows} />
         </div>
@@ -90,13 +88,13 @@ export default function ProductItem(props: {
 
       <div className="actions">
         <ProductEditDialog
-          productName={product.title}
-          productPrice={product.price}
-          productDescription={product.description}
+          productName={props.product.title}
+          productPrice={props.product.price}
+          productDescription={props.product.description}
           submitAction={editProductHandler}
         />
         <ProductDeleteDialog
-          productName={product.title}
+          productName={props.product.title}
           submitAction={deleteProductHandler}
         />
       </div>
