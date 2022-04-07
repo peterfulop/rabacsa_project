@@ -1,7 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import ProductContext, {
-  ProductContextType,
-} from "../../contexts/product.context";
+import { ProductContext } from "../../contexts/product.context";
 import {
   Product,
   ProductDetails,
@@ -18,9 +16,7 @@ export default function ProductItem(props: {
   onUpdateProduct: Function;
   onDeleteProduct: Function;
 }) {
-  const { updateItem, removeItem } = useContext(
-    ProductContext
-  ) as ProductContextType;
+  const { updateItem, removeItem } = useContext(ProductContext);
   const [activeProductId, setActiveProductId] = useState<string>("");
 
   useEffect(() => {

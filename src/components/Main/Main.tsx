@@ -5,8 +5,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { ProductContextType } from "../../contexts/product.context";
-import ProductContext from "../../contexts/product.context";
+
 import { Category, Product } from "../../utils/interfaces/product.interface";
 import Navigation from "../Navigation/Navigation";
 import ProductItem from "../Product/Product";
@@ -18,10 +17,10 @@ import Grid from "@mui/material/Grid";
 import ProductAsListItem from "../Product/ProductAsListItem";
 import ProductAddDialog from "../Product/actions/ProductAddDialog";
 import { v4 as uuidv4 } from "uuid";
+import { ProductContext } from "../../contexts/product.context";
 
 function Main() {
-  const { items, addItem } = useContext(ProductContext) as ProductContextType;
-
+  const { items, addItem } = useContext(ProductContext);
   console.log(items);
 
   const [products, setProducts] = useState<Product[]>([]);

@@ -1,35 +1,14 @@
-import React, { useReducer } from "react";
+import { createContext, useReducer } from "react";
 import productsJson from "../data/products.json";
 import { Product } from "../utils/interfaces/product.interface";
 
-export interface ProductContextInterface {
-  items: any[];
-  addItem: (product: Product) => void;
-  updateItem: (product: Product) => void;
-  removeItem: (id: string) => void;
-}
-
-export type ProductContextType = {
-  items: any[];
-  addItem: (product: Product) => void;
-  updateItem: (product: Product) => void;
-  removeItem: (id: string) => void;
+type ProductContextProviderProps = {
+  children: React.ReactNode;
 };
 
 const defaultProductsState = {
   items: [...productsJson.products],
 };
-
-export const ProductContext = React.createContext<ProductContextType | null>(
-  null
-);
-// export const ProductContext =
-//   React.createContext<ProductContextInterface | null>({
-//     items: [],
-//     addItem: (product: Product) => {},
-//     updateItem: (product: Product) => {},
-//     removeItem: (id: string) => {},
-//   });
 
 const productReducer = (state: any, action: any) => {
   if (action.type === "ADD") {
@@ -70,7 +49,16 @@ const productReducer = (state: any, action: any) => {
   }
 };
 
-const ProductContextProvider: any = (props: { children: any }) => {
+export const ProductContext = createContext({
+  items: [],
+  addItem: (product: Product) => {},
+  updateItem: (product: Product) => {},
+  removeItem: (id: string) => {},
+});
+
+export const ProductContextProvider = ({
+  children,
+}: ProductContextProviderProps) => {
   const [productsState, dispatchProductsAction] = useReducer(
     productReducer,
     defaultProductsState
@@ -98,7 +86,7 @@ const ProductContextProvider: any = (props: { children: any }) => {
   };
 
   const productContext = {
-    items: productsState?.items as Product[],
+    items: productsState?.items as never,
     addItem: addItemHandler,
     updateItem: updateItemHandler,
     removeItem: removeItemHandler,
@@ -106,9 +94,7 @@ const ProductContextProvider: any = (props: { children: any }) => {
 
   return (
     <ProductContext.Provider value={productContext}>
-      {props.children}
+      {children}
     </ProductContext.Provider>
   );
 };
-
-export default ProductContextProvider;
