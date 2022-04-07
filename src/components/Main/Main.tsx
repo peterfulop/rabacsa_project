@@ -1,4 +1,10 @@
-import { MouseEventHandler, useContext, useEffect, useState } from "react";
+import {
+  MouseEventHandler,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import ProductContext from "../../contexts/product.context";
 import { Category, Product } from "../../utils/interfaces/product.interface";
 import Navigation from "../Navigation/Navigation";
@@ -31,13 +37,6 @@ function Main() {
 
   useEffect(() => {
     setProducts(productContext.items);
-    if (isCategoryList) {
-      getCategories();
-      selectProductsByCategoryHandler(activeCategory);
-    }
-    if (isTopList) {
-      getToplist(false);
-    }
   }, [productContext.items]);
 
   const getProductsHandler: MouseEventHandler = (event) => {
@@ -59,7 +58,16 @@ function Main() {
     getCategories();
   };
 
-  const getCategories = () => {
+  const getTopListHandler: MouseEventHandler = (event) => {
+    setLocation(event.currentTarget.textContent as string);
+    getToplist();
+  };
+
+  const selectProductHandler = (product: Product) => {
+    setActiveProduct(product);
+  };
+
+  const getCategories = useCallback(() => {
     setProducts(productContext.items);
     const categories = [...productContext.items].map(
       (product: Product) => product.category
@@ -88,41 +96,38 @@ function Main() {
     setIsProductList(false);
     setIsTopList(false);
     setActiveProduct(null);
-  };
+  }, [productContext.items]);
 
-  const getTopListHandler: MouseEventHandler = (event) => {
-    setLocation(event.currentTarget.textContent as string);
-    getToplist();
-  };
+  const getToplist = useCallback(
+    (setActive: boolean = true) => {
+      const topList = [...productContext.items]
+        .sort((a: any, b: any) => b.price - a.price)
+        .slice(0, 25);
+      setIsCategoryList(false);
+      setIsProductList(false);
+      setIsActiveCategory(false);
+      setIsTopList(true);
+      setProducts(topList);
+      setActive && setActiveProduct(topList[0]);
+    },
+    [productContext.items]
+  );
 
-  const getToplist = (setActive: boolean = true) => {
-    const topList = [...productContext.items]
-      .sort((a: any, b: any) => b.price - a.price)
-      .slice(0, 25);
-    setIsCategoryList(false);
-    setIsProductList(false);
-    setIsActiveCategory(false);
-    setIsTopList(true);
-    setProducts(topList);
-    setActive && setActiveProduct(topList[0]);
-  };
-
-  const selectProductHandler = (product: Product) => {
-    setActiveProduct(product);
-  };
-
-  const selectProductsByCategoryHandler = (category: string) => {
-    setActiveCategory(category);
-    if (category.toLowerCase() === "all products") {
-      setProducts(productContext.items);
-    } else {
-      const productsByCategory = [...productContext.items].filter(
-        (product: Product) => product.category === category
-      );
-      setProducts(productsByCategory);
-    }
-    setIsActiveCategory(true);
-  };
+  const selectProductsByCategoryHandler = useCallback(
+    (category: string) => {
+      setActiveCategory(category);
+      if (category.toLowerCase() === "all products") {
+        setProducts(productContext.items);
+      } else {
+        const productsByCategory = [...productContext.items].filter(
+          (product: Product) => product.category === category
+        );
+        setProducts(productsByCategory);
+      }
+      setIsActiveCategory(true);
+    },
+    [productContext.items]
+  );
 
   const addNewProductHandler = async (
     title: string,
@@ -144,6 +149,23 @@ function Main() {
   const onDeleteProductHandler = (activeProduct: Product) => {
     setActiveProduct(activeProduct);
   };
+
+  useEffect(() => {
+    if (isCategoryList) {
+      getCategories();
+      selectProductsByCategoryHandler(activeCategory);
+    }
+    if (isTopList) {
+      getToplist(false);
+    }
+  }, [
+    isCategoryList,
+    activeCategory,
+    isTopList,
+    getCategories,
+    getToplist,
+    selectProductsByCategoryHandler,
+  ]);
 
   return (
     <Grid container>
