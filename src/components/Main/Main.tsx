@@ -1,4 +1,5 @@
 import {
+  Fragment,
   MouseEventHandler,
   useCallback,
   useContext,
@@ -14,9 +15,9 @@ import CategoryList from "../Sidebar/CategoryList/CategoryList";
 
 import { Container, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./Main.css";
 
 /**MUI */
-import Grid from "@mui/material/Grid";
 import ProductAsListItem from "../Product/ProductAsListItem";
 import ProductAddDialog from "../Product/actions/ProductAddDialog";
 import { v4 as uuidv4 } from "uuid";
@@ -168,16 +169,14 @@ function Main() {
   ]);
 
   return (
-    <Container fluid>
-      <Row>
-        <Navigation
-          onGetAllProducts={getProductsHandler}
-          onGetAllCategories={getCategoriesHandler}
-          onGetTopList={getTopListHandler}
-        />
-      </Row>
-      <Row>
-        <Col sm={3} className="p-0">
+    <Fragment>
+      <Navigation
+        onGetAllProducts={getProductsHandler}
+        onGetAllCategories={getCategoriesHandler}
+        onGetTopList={getTopListHandler}
+      />
+      <section className="main">
+        <Fragment>
           {isProductList && (
             <ProductList
               products={products}
@@ -202,12 +201,11 @@ function Main() {
               activeProductId={activeProduct?.id}
             />
           )}
-        </Col>
-        <Col sm={9} className="p-3">
+        </Fragment>
+        <section className="content">
           {(activeProduct && isProductList && !isCategoryList) ||
           (activeProduct && isTopList && !isCategoryList) ? (
-            // <section className="content">
-            <Row>
+            <Fragment>
               <ProductAddDialog submitAction={addNewProductHandler} />
               <ProductItem
                 products={products}
@@ -215,9 +213,8 @@ function Main() {
                 onDeleteProduct={onDeleteProductHandler}
                 onUpdateProduct={selectProductHandler}
               />
-            </Row>
+            </Fragment>
           ) : (
-            // </section>
             ""
           )}
           {isActiveCategory && (
@@ -228,9 +225,9 @@ function Main() {
               onUpdateProduct={selectProductHandler}
             />
           )}
-        </Col>
-      </Row>
-    </Container>
+        </section>
+      </section>
+    </Fragment>
   );
 }
 

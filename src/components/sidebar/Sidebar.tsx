@@ -1,5 +1,11 @@
-import { Fragment } from "react";
+import { useState } from "react";
 import usePagination from "../../hooks/usePagination";
+import { HiArrowRight } from "react-icons/hi";
+
+enum ScreenSize {
+  wide = "wide",
+  narrow = "narrow",
+}
 
 export default function SidebarItem(props: {
   data: any[];
@@ -10,13 +16,31 @@ export default function SidebarItem(props: {
     data: props.data,
   });
 
+  const [wideSize, setWideSzize] = useState<boolean>(true);
+
+  const setSidebarWidthHandler = () => {
+    setWideSzize((prevSize) => !prevSize);
+    console.log(wideSize);
+  };
+
+  const buttonText = wideSize ? (
+    <span>{`${props.location} (${props.data.length})`}</span>
+  ) : (
+    <HiArrowRight className="d-flex justfy-content-center text-center h4 m-0 p-0" />
+  );
+
   return (
-    <Fragment>
-      <p className="sidebar-location-heading">
-        {props.location} ({props.data.length})
-      </p>
-      {currentItems && props.renderContent(currentItems)}
-      {renderPagination()}
-    </Fragment>
+    <section
+      className={`sidebar ${wideSize ? ScreenSize.wide : ScreenSize.narrow}`}
+    >
+      <button
+        onClick={setSidebarWidthHandler}
+        className={`sidebar-location-heading ${!wideSize ? "full-height" : ""}`}
+      >
+        {buttonText}
+      </button>
+      {currentItems && wideSize && props.renderContent(currentItems)}
+      {currentItems && wideSize && renderPagination()}
+    </section>
   );
 }

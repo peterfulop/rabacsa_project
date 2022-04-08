@@ -12,6 +12,7 @@ import React, { useState } from "react";
 import "./Dialog.css";
 
 import { AlertColor } from "@mui/material";
+import { Col } from "react-bootstrap";
 
 export default function ProductAddDialog(props: { submitAction: Function }) {
   const [open, setOpen] = React.useState<boolean>(false);
@@ -75,7 +76,7 @@ export default function ProductAddDialog(props: { submitAction: Function }) {
   };
 
   return (
-    <div className="product-add-dialog">
+    <Col className="product-add-dialog">
       <Button variant="contained" color="success" onClick={handleClickOpen}>
         {"Add new Product"}
       </Button>
@@ -138,6 +139,6 @@ export default function ProductAddDialog(props: { submitAction: Function }) {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </Col>
   );
 }

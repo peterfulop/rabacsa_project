@@ -1,5 +1,4 @@
 import React, { MouseEventHandler } from "react";
-import "./SidebarListItem.css";
 
 export default function SidebarListItem(props: {
   children?: React.ReactNode;

@@ -16,15 +16,17 @@ export default function ProductAsListItem(props: {
     return data.map((product: Product) => {
       return (
         <div className="product-list-item" key={product.id}>
-          <div className="product-image">
-            <img src={product.thumbnail} alt={product.title} />
+          <div className="product-list-meta-data">
+            <div className="product-image">
+              <img src={product.thumbnail} alt={product.title} />
+            </div>
+            <div className="product-list-data">
+              <h4>{product.title}</h4>
+              <p>{product.rating}</p>
+              <small>{product.description}</small>
+            </div>
           </div>
-          <div className="product-details">
-            <h4>{product.title}</h4>
-            <p>{product.rating}</p>
-            <small>{product.description}</small>
-          </div>
-          <div className="product-actions">
+          <div className="product-list-actions">
             <h2>${product.price}</h2>
             <ProductAsCardItem
               product={product}

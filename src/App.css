@@ -7,6 +7,11 @@
   font-family: "Roboto", sans-serif;
 }
 
+body {
+  height: 100vh;
+  background-color: aliceblue !important;
+}
+
 /* GRID LAYOUT */
 /* .container {
   display: grid;

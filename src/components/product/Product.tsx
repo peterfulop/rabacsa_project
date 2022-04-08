@@ -1,14 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { ProductContext } from "../../contexts/product.context";
-import {
-  Product,
-  ProductDetails,
-} from "../../utils/interfaces/product.interface";
+import { Product } from "../../utils/interfaces/product.interface";
 import ProductDeleteDialog from "./actions/ProductDeleteDialog";
 import ProductEditDialog from "./actions/ProductEditDialog";
-import DetailsTable from "./details/ProductDetails";
+import ProductDetails from "./details/ProductDetails";
 
 import "./Product.css";
+import ProductImageList from "./ProductImageList";
 
 export default function ProductItem(props: {
   product: Product;
@@ -59,7 +57,7 @@ export default function ProductItem(props: {
     props.onDeleteProduct(activeProduct);
   };
 
-  const rows: ProductDetails = {
+  const rows = {
     title: props.product.title,
     brand: props.product.brand,
     category: props.product.category,
@@ -72,21 +70,19 @@ export default function ProductItem(props: {
 
   return (
     <section className="product">
-      <div className="product-container">
-        <div className="product-container-img">
+      <div className="product-meta-data">
+        <div className="data">
+          <h2>{props.product.title}</h2>
+          <h4>{props.product.brand}</h4>
+          <small>{props.product.description}</small>
+          <ProductImageList images={props.product.images} />
+        </div>
+        <div className="thumbnail">
           <img src={props.product.thumbnail} alt={props.product.title} />
         </div>
-        <div className="item-deatils">
-          <div className="meta-data">
-            <h2>{props.product.title}</h2>
-            <h4>{props.product.brand}</h4>
-            <small>{props.product.description}</small>
-          </div>
-          <DetailsTable rows={rows} />
-        </div>
       </div>
-
-      <div className="actions">
+      <ProductDetails rows={rows} />
+      <div className="product-actions">
         <ProductEditDialog
           productName={props.product.title}
           productPrice={props.product.price}

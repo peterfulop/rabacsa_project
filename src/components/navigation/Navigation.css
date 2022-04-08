@@ -2,9 +2,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: .5rem;
+  padding: 0.5rem;
   background-color: rgb(47, 47, 47);
   border-bottom: 5px solid rebeccapurple;
+  height: 76px;
 }
 
 .navigation h1 {

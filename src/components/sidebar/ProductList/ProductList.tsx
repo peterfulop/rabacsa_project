@@ -1,12 +1,4 @@
-import {
-  Box,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  Divider,
-} from "@mui/material";
-import { Fragment } from "react";
+import { ListItemText } from "@mui/material";
 import { Product } from "../../../utils/interfaces/product.interface";
 import SidebarItem from "../Sidebar";
 

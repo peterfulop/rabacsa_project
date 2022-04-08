@@ -1,10 +1,26 @@
+.sidebar {
+  width: 100%;
+  background-color: #424242;
+  max-width: 250px;
+  min-width: 200px;
+  transition: 0.5s;
+}
+
 .sidebar-location-heading {
+  display: flex;
+  justify-content: center;
+  border: none;
+  width: 100%;
   text-transform: uppercase;
   text-align: center;
-  background-color: rgb(139, 139, 139);
+  background-color: #424242;
   color: white;
   padding: 1rem;
   margin-bottom: 0;
+}
+
+.sidebar-location-heading:hover {
+  background-color: #707070;
 }
 
 .active-product {
@@ -12,9 +28,39 @@
   background-color: #0288d1 !important;
 }
 
-.sidebar-section {
+.narrow {
+  width: 60px;
+  max-width: 60px;
+  min-width: 60px;
+}
+
+/* SIDEBAR LIST ITEM */
+.sidebar-list {
+  background-color: white;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar-list-item {
+  display: flex;
+  justify-content: flex-start;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  border-top: 1px solid rgb(210, 210, 210);
+}
+
+.sidebar-list-item:hover {
+  background-color: rgb(245, 245, 245);
+}
+
+.full-height {
   display: flex;
   height: 100%;
-  flex-direction: column;
-  justify-content: flex-start;
+  background-color: #424242;
+}
+@media (max-width: 625px) {
+  .sidebar {
+    display: none;
+  }
 }
