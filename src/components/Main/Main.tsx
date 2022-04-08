@@ -12,6 +12,9 @@ import ProductItem from "../Product/Product";
 import ProductList from "../Sidebar/ProductList/ProductList";
 import CategoryList from "../Sidebar/CategoryList/CategoryList";
 
+import { Container, Row, Col } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 /**MUI */
 import Grid from "@mui/material/Grid";
 import ProductAsListItem from "../Product/ProductAsListItem";
@@ -21,7 +24,6 @@ import { ProductContext } from "../../contexts/product.context";
 
 function Main() {
   const { items, addItem } = useContext(ProductContext);
-  console.log(items);
 
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -166,65 +168,69 @@ function Main() {
   ]);
 
   return (
-    <Grid container>
-      <Grid item xs={12}>
+    <Container fluid>
+      <Row>
         <Navigation
           onGetAllProducts={getProductsHandler}
           onGetAllCategories={getCategoriesHandler}
           onGetTopList={getTopListHandler}
         />
-      </Grid>
-      <Grid item xs={3} className="sidebar">
-        {isProductList && (
-          <ProductList
-            products={products}
-            location={location}
-            onSelectProduct={selectProductHandler}
-            activeProductId={activeProduct?.id}
-          />
-        )}
-        {isCategoryList && (
-          <CategoryList
-            location={location}
-            categories={categories}
-            onSelectCategory={selectProductsByCategoryHandler}
-            activeCategory={activeCategory}
-          />
-        )}
-        {isTopList && (
-          <ProductList
-            products={products}
-            location={location}
-            onSelectProduct={selectProductHandler}
-            activeProductId={activeProduct?.id}
-          />
-        )}
-      </Grid>
-      <Grid item xs={9}>
-        {(activeProduct && isProductList && !isCategoryList) ||
-        (activeProduct && isTopList && !isCategoryList) ? (
-          <section className="content">
-            <ProductAddDialog submitAction={addNewProductHandler} />
-            <ProductItem
+      </Row>
+      <Row>
+        <Col sm={3} className="p-0">
+          {isProductList && (
+            <ProductList
               products={products}
-              product={activeProduct}
+              location={location}
+              onSelectProduct={selectProductHandler}
+              activeProductId={activeProduct?.id}
+            />
+          )}
+          {isCategoryList && (
+            <CategoryList
+              location={location}
+              categories={categories}
+              onSelectCategory={selectProductsByCategoryHandler}
+              activeCategory={activeCategory}
+            />
+          )}
+          {isTopList && (
+            <ProductList
+              products={products}
+              location={location}
+              onSelectProduct={selectProductHandler}
+              activeProductId={activeProduct?.id}
+            />
+          )}
+        </Col>
+        <Col sm={9} className="p-3">
+          {(activeProduct && isProductList && !isCategoryList) ||
+          (activeProduct && isTopList && !isCategoryList) ? (
+            // <section className="content">
+            <Row>
+              <ProductAddDialog submitAction={addNewProductHandler} />
+              <ProductItem
+                products={products}
+                product={activeProduct}
+                onDeleteProduct={onDeleteProductHandler}
+                onUpdateProduct={selectProductHandler}
+              />
+            </Row>
+          ) : (
+            // </section>
+            ""
+          )}
+          {isActiveCategory && (
+            <ProductAsListItem
+              products={products}
+              activeCategory={activeCategory}
               onDeleteProduct={onDeleteProductHandler}
               onUpdateProduct={selectProductHandler}
             />
-          </section>
-        ) : (
-          ""
-        )}
-        {isActiveCategory && (
-          <ProductAsListItem
-            products={products}
-            activeCategory={activeCategory}
-            onDeleteProduct={onDeleteProductHandler}
-            onUpdateProduct={selectProductHandler}
-          />
-        )}
-      </Grid>
-    </Grid>
+          )}
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

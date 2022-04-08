@@ -1,9 +1,10 @@
-.sidebar .location-heading {
+.sidebar-location-heading {
   text-transform: uppercase;
   text-align: center;
   background-color: rgb(139, 139, 139);
   color: white;
   padding: 1rem;
+  margin-bottom: 0;
 }
 
 .active-product {

@@ -8,9 +8,10 @@ import {
 } from "@mui/material";
 import { Fragment } from "react";
 import { Product } from "../../../utils/interfaces/product.interface";
-import SidebarItem from "../SidebarItem";
+import SidebarItem from "../Sidebar";
 
 import "../Sidebar.css";
+import SidebarListItem from "../SidebarListItem";
 
 export default function ProductList(props: {
   products: Product[];
@@ -27,32 +28,21 @@ export default function ProductList(props: {
 
   const renderProducts = (products: Product[]) => {
     return (
-      <Box
-        sx={{
-          width: "100%",
-          bgcolor: "background.paper",
-        }}
-      >
-        <List sx={{ padding: 0 }}>
-          {products.map((item) => {
-            return (
-              <Fragment key={item.id}>
-                <ListItem disablePadding>
-                  <ListItemButton
-                    className={
-                      item.id === props.activeProductId ? "active-product" : ""
-                    }
-                    onClick={() => selectProductHandler(item.id)}
-                  >
-                    <ListItemText primary={item.title} />
-                  </ListItemButton>
-                </ListItem>
-                <Divider />
-              </Fragment>
-            );
-          })}
-        </List>
-      </Box>
+      <ul className="sidebar-list">
+        {products.map((item) => {
+          return (
+            <SidebarListItem
+              key={item.id}
+              className={
+                item.id === props.activeProductId ? "active-product" : ""
+              }
+              onClick={() => selectProductHandler(item.id)}
+            >
+              <ListItemText primary={item.title} />
+            </SidebarListItem>
+          );
+        })}
+      </ul>
     );
   };
 

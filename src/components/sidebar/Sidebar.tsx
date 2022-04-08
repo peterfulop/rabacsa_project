@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import usePagination from "../../hooks/usePagination";
 
 export default function SidebarItem(props: {
@@ -10,14 +11,12 @@ export default function SidebarItem(props: {
   });
 
   return (
-    <section className="sidebar-section">
-      <div>
-        <p className="location-heading">
-          {props.location} ({props.data.length})
-        </p>
-        {currentItems && props.renderContent(currentItems)}
-      </div>
+    <Fragment>
+      <p className="sidebar-location-heading">
+        {props.location} ({props.data.length})
+      </p>
+      {currentItems && props.renderContent(currentItems)}
       {renderPagination()}
-    </section>
+    </Fragment>
   );
 }

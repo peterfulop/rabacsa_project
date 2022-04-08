@@ -1,0 +1,17 @@
+.sidebar-list{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar-list-item{
+    display: flex;
+    justify-content: flex-start;
+    padding: .5rem .75rem;
+    cursor: pointer;
+    border-top: 1px solid lightgray;
+}
+
+.sidebar-list-item:hover{
+background-color: rgb(245, 245, 245);
+}

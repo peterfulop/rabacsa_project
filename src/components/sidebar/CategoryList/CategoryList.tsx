@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { Fragment } from "react";
 import { Category } from "../../../utils/interfaces/product.interface";
-import SidebarItem from "../SidebarItem";
+import SidebarItem from "../Sidebar";
 
 export default function CategoryList(props: {
   categories: Category[];
