@@ -1,4 +1,4 @@
-import "./App.css";
+import "./Styles/App.css";
 import Main from "./components/Main/Main";
 import { ProductContextProvider } from "./contexts/product.context";
 
