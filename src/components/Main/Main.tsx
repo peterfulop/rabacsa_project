@@ -12,8 +12,8 @@ import Navigation from "../Navigation/Navigation";
 import ProductItem from "../Product/Product";
 import ProductList from "../Sidebar/ProductList/ProductList";
 import CategoryList from "../Sidebar/CategoryList/CategoryList";
+import productsJson from "../../data/products.json";
 
-import { Container, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Main.css";
 
@@ -22,9 +22,11 @@ import ProductAsListItem from "../Product/ProductAsListItem";
 import ProductAddDialog from "../Product/actions/ProductAddDialog";
 import { v4 as uuidv4 } from "uuid";
 import { ProductContext } from "../../contexts/product.context";
+import useProductReloader from "../../hooks/useProductReloader";
 
 function Main() {
   const { items, addItem } = useContext(ProductContext);
+  const [firstLoad, setFirstLoad] = useState<boolean>(true);
 
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -38,9 +40,33 @@ function Main() {
   const [activeProduct, setActiveProduct] = useState<Product | null>(items[0]);
   const [activeCategory, setActiveCategory] = useState<string>("");
 
+  let reloadedData = useProductReloader({ data: items });
+
   useEffect(() => {
     setProducts(items);
   }, [items]);
+
+  useEffect(() => {
+    if (firstLoad) {
+      setProducts(items);
+      setFirstLoad(false);
+    }
+  }, [firstLoad, items]);
+
+  useEffect(() => {
+    if (!firstLoad && reloadedData.freshData.length) {
+      if (!isActiveCategory) {
+        setProducts(reloadedData.freshData);
+        console.log("reloaded at:", reloadedData.timeStamp.toLocaleString());
+      }
+    }
+  }, [
+    reloadedData.freshData,
+    reloadedData.timeStamp,
+    firstLoad,
+    items,
+    isActiveCategory,
+  ]);
 
   const getProductsHandler: MouseEventHandler = (event) => {
     setLocation(event.currentTarget.textContent as string);

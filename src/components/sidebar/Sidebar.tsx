@@ -20,7 +20,6 @@ export default function SidebarItem(props: {
 
   const setSidebarWidthHandler = () => {
     setWideSzize((prevSize) => !prevSize);
-    console.log(wideSize);
   };
 
   const buttonText = wideSize ? (
