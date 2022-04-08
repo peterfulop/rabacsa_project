@@ -5,7 +5,7 @@ import ProductDeleteDialog from "./actions/ProductDeleteDialog";
 import ProductEditDialog from "./actions/ProductEditDialog";
 import ProductDetails from "./details/ProductDetails";
 
-import "./Product.css";
+import "../../Styles/Product/Product.css";
 import ProductImageList from "./ProductImageList";
 
 export default function ProductItem(props: {

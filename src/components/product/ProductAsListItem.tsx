@@ -2,6 +2,8 @@ import { Product } from "../../utils/interfaces/product.interface";
 import usePagination from "../../hooks/usePagination";
 import ProductAsCardItem from "./ProductAsCardItem";
 
+import "../../Styles/Product/ProductList.css";
+
 export default function ProductAsListItem(props: {
   products: Product[];
   activeCategory: string;

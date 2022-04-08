@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 
-import "./Dialog.css";
+import "../../../Styles/Dialog/Dialog.css";
 
 import { AlertColor } from "@mui/material";
 import { Col } from "react-bootstrap";
@@ -19,7 +19,8 @@ export default function ProductAddDialog(props: { submitAction: Function }) {
   const [inputName, setInputName] = React.useState<string>();
   const [inputPrice, setInputPrice] = React.useState<number | null>();
   const [inputDescription, setInputDescription] = React.useState<string>();
-  const [isError, setIsError] = useState<boolean>(false);
+
+  const [isAlert, setIsAlert] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState<string | null>(null);
   const [alertColor, setAlertColor] = useState<AlertColor>("success");
 
@@ -34,7 +35,7 @@ export default function ProductAddDialog(props: { submitAction: Function }) {
   };
 
   const clearInputs = () => {
-    setIsError(false);
+    setIsAlert(false);
     setAlertMessage(null);
     setInputPrice(null);
     setInputName("");
@@ -45,7 +46,7 @@ export default function ProductAddDialog(props: { submitAction: Function }) {
     console.log(inputName, inputPrice, inputDescription);
 
     if (!inputName || !Number(inputPrice) || !inputDescription) {
-      setIsError(true);
+      setIsAlert(true);
       setAlertMessage("All fields are required!");
       setAlertColor("error");
       return;
@@ -118,12 +119,12 @@ export default function ProductAddDialog(props: { submitAction: Function }) {
             onChange={(e) => setDescriptionHandler(e)}
           />
         </DialogContent>
-        {isError && (
+        {isAlert && (
           <section className="alert-section">
             <Alert
               severity={alertColor}
               onClose={() => {
-                setIsError(false);
+                setIsAlert(false);
               }}
             >
               <strong>{alertMessage}</strong>

@@ -2,6 +2,8 @@ import { useState } from "react";
 import usePagination from "../../hooks/usePagination";
 import { HiArrowRight } from "react-icons/hi";
 
+import "../../Styles/Sidebar/Sidebar.css";
+
 enum ScreenSize {
   wide = "wide",
   narrow = "narrow",

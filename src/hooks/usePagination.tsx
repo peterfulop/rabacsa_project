@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { PRODUCT_PER_PAGE } from "../utils/constans";
 
-import "./UsePagination.css";
+import "../Styles/Pagination/UsePagination.css";
 
 export default function usePagination(props: { data: any[] }) {
   const [currentPage, setCurrentPage] = useState(1);

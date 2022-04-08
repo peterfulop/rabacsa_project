@@ -1,5 +1,5 @@
-import { Button } from "@mui/material";
-import "./Navigation.css";
+import DropDownButton from "../UI/DropDownButton";
+import "../../Styles/Navigation/Navigation.css";
 
 export default function Navigation(props: {
   onGetAllProducts: Function;
@@ -10,27 +10,18 @@ export default function Navigation(props: {
     <section className="navigation">
       <h1>Rabacsa Project</h1>
       <div>
-        <Button
-          variant="contained"
-          color="info"
-          onClick={(e) => props.onGetAllProducts(e)}
-        >
-          Products
-        </Button>
-        <Button
-          variant="contained"
-          color="info"
-          onClick={(e) => props.onGetAllCategories(e)}
-        >
-          Categories
-        </Button>
-        <Button
-          variant="contained"
-          color="info"
-          onClick={(e) => props.onGetTopList(e)}
-        >
-          TopList
-        </Button>
+        <DropDownButton
+          buttonTitle={"Menu"}
+          onGetProducts={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
+            props.onGetAllProducts(e)
+          }
+          onGetCategories={(
+            e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+          ) => props.onGetAllCategories(e)}
+          onGetTopList={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
+            props.onGetTopList(e)
+          }
+        />
       </div>
     </section>
   );

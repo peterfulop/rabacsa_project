@@ -1,3 +1,4 @@
+import "bootstrap/dist/css/bootstrap.min.css";
 import {
   Fragment,
   MouseEventHandler,
@@ -9,15 +10,9 @@ import {
 
 import { Category, Product } from "../../utils/interfaces/product.interface";
 import Navigation from "../Navigation/Navigation";
-import ProductItem from "../Product/Product";
 import ProductList from "../Sidebar/ProductList/ProductList";
 import CategoryList from "../Sidebar/CategoryList/CategoryList";
-import productsJson from "../../data/products.json";
-
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./Main.css";
-
-/**MUI */
+import ProductItem from "../Product/Product";
 import ProductAsListItem from "../Product/ProductAsListItem";
 import ProductAddDialog from "../Product/actions/ProductAddDialog";
 import { v4 as uuidv4 } from "uuid";
@@ -56,7 +51,7 @@ function Main() {
   useEffect(() => {
     if (!firstLoad && reloadedData.freshData.length) {
       if (!isActiveCategory) {
-        setProducts(reloadedData.freshData);
+        //setProducts(reloadedData.freshData);
         console.log("reloaded at:", reloadedData.timeStamp.toLocaleString());
       }
     }
@@ -73,15 +68,6 @@ function Main() {
     getProducts();
   };
 
-  const getProducts = (prevProductIndex: number = 0) => {
-    setIsProductList(true);
-    setProducts(items);
-    setIsCategoryList(false);
-    setIsActiveCategory(false);
-    setIsTopList(false);
-    setActiveProduct(items[prevProductIndex]);
-  };
-
   const getCategoriesHandler: MouseEventHandler = (event) => {
     setLocation(event.currentTarget.textContent as string);
     getCategories();
@@ -94,6 +80,15 @@ function Main() {
 
   const selectProductHandler = (product: Product) => {
     setActiveProduct(product);
+  };
+
+  const getProducts = (prevProductIndex: number = 0) => {
+    setIsProductList(true);
+    setProducts(items);
+    setIsCategoryList(false);
+    setIsActiveCategory(false);
+    setIsTopList(false);
+    setActiveProduct(items[prevProductIndex]);
   };
 
   const getCategories = useCallback(() => {

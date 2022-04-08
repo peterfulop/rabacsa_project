@@ -2,7 +2,7 @@ import { ListItemText } from "@mui/material";
 import { Product } from "../../../utils/interfaces/product.interface";
 import SidebarItem from "../Sidebar";
 
-import "../Sidebar.css";
+import "../../../Styles/Sidebar/Sidebar.css";
 import SidebarListItem from "../SidebarListItem";
 
 export default function ProductList(props: {
