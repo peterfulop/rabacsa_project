@@ -51,7 +51,6 @@ export default function ProductDeleteDialog(props: {
             <Alert />
           </section>
         )}
-        (
         <DialogActions>
           <Button variant="outlined" color="primary" onClick={handleClose}>
             Cancel
