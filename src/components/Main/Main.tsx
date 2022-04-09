@@ -166,6 +166,15 @@ function Main() {
     };
     addItem(newProduct);
     setProducts(items);
+    if (items) {
+      return {
+        status: "success",
+      };
+    } else {
+      return {
+        status: "error",
+      };
+    }
   };
 
   const onDeleteProductHandler = (activeProduct: Product) => {

@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -6,20 +6,22 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 
+import useAlert from "../../../hooks/useAlert";
+
 export default function ProjectEditDialog(props: {
   productName: string;
   productPrice: number;
   productDescription: string;
   submitAction: Function;
 }) {
-  const [open, setOpen] = React.useState<boolean>(false);
-  const [inputName, setInputName] = React.useState<string>(props.productName);
-  const [inputPrice, setInputPrice] = React.useState<number>(
-    props.productPrice
-  );
-  const [inputDescription, setInputDescription] = React.useState<string>(
+  const [open, setOpen] = useState<boolean>(false);
+  const [inputName, setInputName] = useState<string>(props.productName);
+  const [inputPrice, setInputPrice] = useState<number>(props.productPrice);
+  const [inputDescription, setInputDescription] = useState<string>(
     props.productDescription
   );
+
+  const { setAlert, hideAlert, alert: Alert, isAlert } = useAlert();
 
   const handleClickOpen = () => {
     setInputName(props.productName);
@@ -29,15 +31,25 @@ export default function ProjectEditDialog(props: {
   };
 
   const handleClose = () => {
+    hideAlert();
     setOpen(false);
   };
 
   const handleAction = async () => {
     if (!inputName || !inputPrice || !inputDescription) {
+      setAlert("warning", "A product must have name, price, and description!");
       return;
     }
-    await props.submitAction(inputName, inputPrice, inputDescription);
-    setOpen(false);
+    const res = await props.submitAction(
+      inputName,
+      inputPrice,
+      inputDescription
+    );
+    if (res.status === "success") {
+      setAlert("success", "The product has been updated!");
+    } else {
+      setAlert("error", "Something went wrong!");
+    }
   };
 
   const setNameHandler = (
@@ -71,6 +83,7 @@ export default function ProjectEditDialog(props: {
         <DialogContent>
           <TextField
             autoFocus
+            required
             margin="dense"
             id="name"
             label="title:"
@@ -82,6 +95,7 @@ export default function ProjectEditDialog(props: {
           />
           <TextField
             autoFocus
+            required
             margin="dense"
             id="name"
             label="price:"
@@ -93,6 +107,7 @@ export default function ProjectEditDialog(props: {
           />
           <TextField
             autoFocus
+            required
             margin="dense"
             id="name"
             label="description:"
@@ -103,6 +118,11 @@ export default function ProjectEditDialog(props: {
             onChange={(e) => setDescriptionHandler(e)}
           />
         </DialogContent>
+        {isAlert && (
+          <section className="alert-section">
+            <Alert />
+          </section>
+        )}
         <DialogActions>
           <Button variant="outlined" color="primary" onClick={handleClose}>
             Cancel

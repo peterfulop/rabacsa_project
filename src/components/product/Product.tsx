@@ -40,6 +40,15 @@ export default function ProductItem(props: {
       description: inputDescription,
     };
     props.onUpdateProduct(updatedProduct);
+    if (updatedProduct) {
+      return {
+        status: "success",
+      };
+    } else {
+      return {
+        status: "error",
+      };
+    }
   };
 
   const deleteProductHandler = () => {
@@ -55,6 +64,15 @@ export default function ProductItem(props: {
       activeProduct = props.products[activeProductIndex - 1];
     }
     props.onDeleteProduct(activeProduct);
+    if (activeProduct) {
+      return {
+        status: "success",
+      };
+    } else {
+      return {
+        status: "error",
+      };
+    }
   };
 
   const rows = {

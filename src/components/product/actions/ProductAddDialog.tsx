@@ -5,54 +5,52 @@ import {
   DialogContent,
   TextField,
   DialogActions,
-  Alert,
 } from "@mui/material";
 import React, { useState } from "react";
 
 import "../../../Styles/Dialog/Dialog.css";
-
-import { AlertColor } from "@mui/material";
-import { Col } from "react-bootstrap";
+import useAlert from "../../../hooks/useAlert";
 
 export default function ProductAddDialog(props: { submitAction: Function }) {
-  const [open, setOpen] = React.useState<boolean>(false);
-  const [inputName, setInputName] = React.useState<string>();
-  const [inputPrice, setInputPrice] = React.useState<number | null>();
-  const [inputDescription, setInputDescription] = React.useState<string>();
+  const [open, setOpen] = useState<boolean>(false);
+  const [inputName, setInputName] = useState<string>("");
+  const [inputPrice, setInputPrice] = useState<number | string>("");
+  const [inputDescription, setInputDescription] = useState<string>("");
 
-  const [isAlert, setIsAlert] = useState<boolean>(false);
-  const [alertMessage, setAlertMessage] = useState<string | null>(null);
-  const [alertColor, setAlertColor] = useState<AlertColor>("success");
+  const { setAlert, hideAlert, alert: Alert, isAlert } = useAlert();
 
   const handleClickOpen = () => {
-    clearInputs();
     setOpen(true);
   };
 
   const handleClose = () => {
+    hideAlert();
     clearInputs();
     setOpen(false);
   };
 
   const clearInputs = () => {
-    setIsAlert(false);
-    setAlertMessage(null);
-    setInputPrice(null);
+    setInputPrice("");
     setInputName("");
     setInputDescription("");
   };
 
   const handleAction = async () => {
-    console.log(inputName, inputPrice, inputDescription);
-
     if (!inputName || !Number(inputPrice) || !inputDescription) {
-      setIsAlert(true);
-      setAlertMessage("All fields are required!");
-      setAlertColor("error");
+      setAlert("warning", "All fields are required!");
       return;
     }
-    await props.submitAction(inputName, inputPrice, inputDescription);
-    setOpen(false);
+    const res = await props.submitAction(
+      inputName,
+      inputPrice,
+      inputDescription
+    );
+    if (res.status === "success") {
+      clearInputs();
+      setAlert("success", "Product has been added!");
+    } else {
+      setAlert("error", "Something went wrong!");
+    }
   };
 
   const setNameHandler = (
@@ -77,7 +75,7 @@ export default function ProductAddDialog(props: { submitAction: Function }) {
   };
 
   return (
-    <Col className="product-add-dialog">
+    <div className="product-add-dialog">
       <Button variant="contained" color="success" onClick={handleClickOpen}>
         {"Add new Product"}
       </Button>
@@ -93,7 +91,7 @@ export default function ProductAddDialog(props: { submitAction: Function }) {
             type="text"
             fullWidth
             variant="standard"
-            defaultValue={inputName}
+            value={inputName}
             onChange={(e) => setNameHandler(e)}
           />
           <TextField
@@ -104,7 +102,7 @@ export default function ProductAddDialog(props: { submitAction: Function }) {
             type="number"
             fullWidth
             variant="standard"
-            defaultValue={inputPrice}
+            value={inputPrice}
             onChange={(e) => setPriceHandler(e)}
           />
           <TextField
@@ -115,20 +113,13 @@ export default function ProductAddDialog(props: { submitAction: Function }) {
             type="text"
             fullWidth
             variant="standard"
-            defaultValue={inputDescription}
+            value={inputDescription}
             onChange={(e) => setDescriptionHandler(e)}
           />
         </DialogContent>
         {isAlert && (
           <section className="alert-section">
-            <Alert
-              severity={alertColor}
-              onClose={() => {
-                setIsAlert(false);
-              }}
-            >
-              <strong>{alertMessage}</strong>
-            </Alert>
+            <Alert />
           </section>
         )}
         <DialogActions>
@@ -140,6 +131,6 @@ export default function ProductAddDialog(props: { submitAction: Function }) {
           </Button>
         </DialogActions>
       </Dialog>
-    </Col>
+    </div>
   );
 }
