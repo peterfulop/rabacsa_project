@@ -23,4 +23,13 @@
 .navigation button {
   margin: 0.5rem 1rem;
 }
+
+.navigation .navigation-actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
 /*# sourceMappingURL=Navigation.css.map */

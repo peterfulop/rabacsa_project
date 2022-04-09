@@ -77,7 +77,7 @@ export default function ProductAddDialog(props: { submitAction: Function }) {
   return (
     <div className="product-add-dialog">
       <Button variant="contained" color="success" onClick={handleClickOpen}>
-        {"Add new Product"}
+        {"Add new"}
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{"Add new product"}</DialogTitle>

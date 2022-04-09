@@ -32,7 +32,7 @@ export interface AddNewProduct {
   title: string;
   price: number;
   description: string;
-  category: "uncategorized";
+  category: string;
 }
 export interface UpdateProduct {
   title: string;

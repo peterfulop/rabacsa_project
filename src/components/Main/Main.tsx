@@ -201,6 +201,7 @@ function Main() {
   return (
     <Fragment>
       <Navigation
+        onSubmitAddProduct={addNewProductHandler}
         onGetAllProducts={getProductsHandler}
         onGetAllCategories={getCategoriesHandler}
         onGetTopList={getTopListHandler}
@@ -236,7 +237,6 @@ function Main() {
           {(activeProduct && isProductList && !isCategoryList) ||
           (activeProduct && isTopList && !isCategoryList) ? (
             <Fragment>
-              <ProductAddDialog submitAction={addNewProductHandler} />
               <ProductItem
                 products={products}
                 product={activeProduct}
