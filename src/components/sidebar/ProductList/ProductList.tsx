@@ -1,9 +1,9 @@
-import { ListItemText } from "@mui/material";
 import { Product } from "../../../utils/interfaces/product.interface";
 import SidebarItem from "../Sidebar";
 
 import "../../../Styles/Sidebar/Sidebar.css";
 import SidebarListItem from "../SidebarListItem";
+import { useParams } from "react-router-dom";
 
 export default function ProductList(props: {
   products: Product[];
@@ -11,12 +11,10 @@ export default function ProductList(props: {
   onSelectProduct: Function;
   activeProductId?: string;
 }) {
-  const selectProductHandler = (id: string) => {
-    const activeProduct = [...props.products].find(
-      (product) => product.id === id
-    );
-    props.onSelectProduct(activeProduct);
-  };
+  const params = useParams();
+  const { productId } = params;
+
+  console.log(props.location);
 
   const renderProducts = (products: Product[]) => {
     return (
@@ -25,12 +23,10 @@ export default function ProductList(props: {
           return (
             <SidebarListItem
               key={item.id}
-              className={
-                item.id === props.activeProductId ? "active-product" : ""
-              }
-              onClick={() => selectProductHandler(item.id)}
+              className={item.id === productId ? "active-product" : ""}
+              href={`/${props.location}/${item.id}`}
             >
-              <ListItemText primary={item.title} />
+              {item.title}
             </SidebarListItem>
           );
         })}

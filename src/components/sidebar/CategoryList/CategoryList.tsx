@@ -16,6 +16,7 @@ export default function CategoryList(props: {
           const categoryTitle = `${item.title} (${item.count})`;
           return (
             <SidebarListItem
+              href="/"
               key={item.title}
               className={
                 item.title === props.activeCategory ? "active-product" : ""

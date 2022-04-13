@@ -1,0 +1,14 @@
+.main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.main .sidebar {
+  width: 30%;
+}
+
+.main .content {
+  background-color: #9a9a9a;
+}
+/*# sourceMappingURL=Main.css.map */

@@ -6,7 +6,9 @@ interface Row {
 export default function ProductDetails(props: { rows: any }) {
   let rows: Row[] = [];
   for (const key in props.rows) {
-    rows.push({ name: key, data: props.rows[key] });
+    if (key !== "images" && key !== "thumbnail") {
+      rows.push({ name: key, data: props.rows[key] });
+    }
   }
 
   return (

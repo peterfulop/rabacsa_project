@@ -1,20 +1,52 @@
 @import "../Variables/Variables.scss";
 
+// .navigation {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   padding: 0.5rem;
+//   background-color: $mainBlack;
+//   border-bottom: 5px solid $mainPurple;
+//   height: 76px;
+
+//   h1 {
+//     color: white;
+//     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+//     text-transform: uppercase;
+//   }
+//   button {
+//     margin: 0.5rem 1rem;
+//   }
+// }
+
 .navigation {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem;
+  margin: 0px auto;
   background-color: $mainBlack;
   border-bottom: 5px solid $mainPurple;
-  height: 76px;
+  ul {
+    margin: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
 
-  h1 {
+  li {
+    list-style: none;
+    padding: 0.5rem 1rem;
+    margin: 1rem 0.5rem;
+  }
+
+  a {
     color: white;
-    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    text-decoration: none;
     text-transform: uppercase;
   }
-  button {
-    margin: 0.5rem 1rem;
+
+  a:hover {
+    color: purple;
+  }
+
+  .active {
+    color: rgb(192, 9, 192) !important;
   }
 }

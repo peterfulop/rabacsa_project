@@ -1,26 +1,39 @@
 .navigation {
+  margin: 0px auto;
+  background-color: #2f2f2f;
+  border-bottom: 5px solid rebeccapurple;
+}
+
+.navigation ul {
+  margin: 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding: 0.5rem;
-  background-color: #2f2f2f;
-  border-bottom: 5px solid rebeccapurple;
-  height: 76px;
 }
 
-.navigation h1 {
+.navigation li {
+  list-style: none;
+  padding: 0.5rem 1rem;
+  margin: 1rem 0.5rem;
+}
+
+.navigation a {
   color: white;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  text-decoration: none;
   text-transform: uppercase;
 }
 
-.navigation button {
-  margin: 0.5rem 1rem;
+.navigation a:hover {
+  color: purple;
+}
+
+.navigation .active {
+  color: #c009c0 !important;
 }
 /*# sourceMappingURL=Navigation.css.map */

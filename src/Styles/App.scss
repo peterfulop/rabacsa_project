@@ -14,7 +14,7 @@ body {
 
 .main {
   display: flex;
-  min-height: calc(100vh - 76px);
+  min-height: calc(100vh - 77px);
 }
 
 .content {
@@ -24,4 +24,11 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.centered {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  text-align: center;
 }
