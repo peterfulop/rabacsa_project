@@ -1,19 +1,18 @@
-import { useState, useEffect } from "react";
-import { Product } from "../utils/interfaces/product.interface";
+import { useEffect, useContext } from "react";
+import { ProductContext } from "../contexts/product.context";
+import { getAllProducts } from "../lib/api";
 
-const useProductReloader = (props: { data: any }) => {
-  const [freshData, setFreshData] = useState<Product[]>([]);
-  const [timeStamp, setTimeStamp] = useState<Date>(new Date());
+const useProductReloader = () => {
+  const ctx = useContext(ProductContext);
   useEffect(() => {
-    const interval = setInterval(() => {
-      console.log("useProductReloader...");
-      setFreshData(props.data);
-      setTimeStamp(new Date(Date.now()));
+    const interval = setInterval(async () => {
+      const data = await getAllProducts();
+      const timeStamp = new Date(Date.now()).toLocaleString();
+      console.log("useProductReloader...", timeStamp);
+      ctx.setItems(data);
     }, 20000);
     return () => clearInterval(interval);
-  }, [props.data]);
-
-  return { freshData, timeStamp };
+  }, [ctx]);
 };
 
 export default useProductReloader;

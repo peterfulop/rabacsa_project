@@ -87,11 +87,12 @@ export default function ProductItem(props: {
           productName={props.product.title}
           productPrice={props.product.price}
           productDescription={props.product.description}
-          submitAction={editProductHandler}
+          // submitAction={()=>{}}
         />
         <ProductDeleteDialog
+          productId=""
           productName={props.product.title}
-          submitAction={deleteProductHandler}
+          // submitAction={()=>{}}
         />
       </div>
     </section>

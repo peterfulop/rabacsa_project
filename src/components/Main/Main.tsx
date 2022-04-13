@@ -35,7 +35,7 @@ function Main() {
   const [activeProduct, setActiveProduct] = useState<Product | null>(items[0]);
   const [activeCategory, setActiveCategory] = useState<string>("");
 
-  let reloadedData = useProductReloader({ data: items });
+  // let reloadedData = useProductReloader({ data: items });
 
   useEffect(() => {
     setProducts(items);
@@ -48,20 +48,20 @@ function Main() {
     }
   }, [firstLoad, items]);
 
-  useEffect(() => {
-    if (!firstLoad && reloadedData.freshData.length) {
-      if (!isActiveCategory) {
-        //setProducts(reloadedData.freshData);
-        console.log("reloaded at:", reloadedData.timeStamp.toLocaleString());
-      }
-    }
-  }, [
-    reloadedData.freshData,
-    reloadedData.timeStamp,
-    firstLoad,
-    items,
-    isActiveCategory,
-  ]);
+  // useEffect(() => {
+  //   if (!firstLoad && reloadedData.freshData.length) {
+  //     if (!isActiveCategory) {
+  //       //setProducts(reloadedData.freshData);
+  //       console.log("reloaded at:", reloadedData.timeStamp.toLocaleString());
+  //     }
+  //   }
+  // }, [
+  //   reloadedData.freshData,
+  //   reloadedData.timeStamp,
+  //   firstLoad,
+  //   items,
+  //   isActiveCategory,
+  // ]);
 
   const getProductsHandler: MouseEventHandler = (event) => {
     setLocation(event.currentTarget.textContent as string);
@@ -191,7 +191,7 @@ function Main() {
 
   return (
     <Fragment>
-      <Navigation
+      {/* <Navigation
         onGetAllProducts={getProductsHandler}
         onGetAllCategories={getCategoriesHandler}
         onGetTopList={getTopListHandler}
@@ -247,7 +247,7 @@ function Main() {
             />
           )}
         </section>
-      </section>
+      </section> */}
     </Fragment>
   );
 }

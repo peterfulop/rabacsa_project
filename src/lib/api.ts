@@ -76,24 +76,17 @@ export async function updateProduct(
 
   return null;
 }
-export async function deleteProduct(
-  productData: UpdateProduct,
-  productId: string
-) {
+export async function deleteProduct(productId: string) {
   const response = await fetch(
     `${FIREBASE_DOMAIN}/products/${productId}.json`,
     {
       method: "DELETE",
-      body: JSON.stringify(productData),
-      headers: {
-        "Content-Type": "application/json",
-      },
     }
   );
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || "Could not update product.");
+    throw new Error(data.message || "Could not delete product.");
   }
 
   return null;

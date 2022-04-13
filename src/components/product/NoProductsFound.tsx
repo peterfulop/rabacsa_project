@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 
-const NoQuotesFound = (props: { plural?: boolean }) => {
+const NoProductsFound = (props: { plural?: boolean }) => {
   return (
-    <div className={""}>
+    <div className="no-products-found">
       <p>No {props.plural ? "products" : "product"} found!</p>
-      {/* <Link to="/new-quote" className="btn">
-        Add a Quote
-      </Link> */}
+      <Link to="/new-product" className="btn btn-primary">
+        Add Product
+      </Link>
     </div>
   );
 };
 
-export default NoQuotesFound;
+export default NoProductsFound;

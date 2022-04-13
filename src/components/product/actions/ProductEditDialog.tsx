@@ -10,7 +10,6 @@ export default function ProjectEditDialog(props: {
   productName: string;
   productPrice: number;
   productDescription: string;
-  submitAction: Function;
 }) {
   const [open, setOpen] = React.useState<boolean>(false);
   const [inputName, setInputName] = React.useState<string>(props.productName);
@@ -36,7 +35,7 @@ export default function ProjectEditDialog(props: {
     if (!inputName || !inputPrice || !inputDescription) {
       return;
     }
-    await props.submitAction(inputName, inputPrice, inputDescription);
+    // await props.submitAction(inputName, inputPrice, inputDescription);
     setOpen(false);
   };
 

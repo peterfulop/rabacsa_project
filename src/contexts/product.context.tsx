@@ -1,16 +1,25 @@
 import { createContext, useReducer } from "react";
 import productsJson from "../data/products.json";
 import { Product } from "../utils/interfaces/product.interface";
+import { useContext } from "react";
+import { getAllProducts } from "../lib/api";
 
 type ProductContextProviderProps = {
   children: React.ReactNode;
 };
 
 const defaultProductsState = {
-  items: [...productsJson.products],
+  items: [],
 };
 
 const productReducer = (state: any, action: any) => {
+  if (action.type === "SET") {
+    console.log("SET ITEMS");
+    let newItems = [...action.items];
+    return {
+      items: newItems,
+    };
+  }
   if (action.type === "ADD") {
     let updatedItems = [...state.items];
     updatedItems = state.items.concat(action.item);
@@ -51,6 +60,7 @@ const productReducer = (state: any, action: any) => {
 
 export const ProductContext = createContext({
   items: [],
+  setItems: (products: Product[]) => {},
   addItem: (product: Product) => {},
   updateItem: (product: Product) => {},
   removeItem: (id: string) => {},
@@ -71,6 +81,13 @@ export const ProductContextProvider = ({
     });
   };
 
+  const setItemsHandler = (items: Product[]) => {
+    dispatchProductsAction({
+      type: "SET",
+      items: items,
+    });
+  };
+
   const updateItemHandler = (item: Product) => {
     dispatchProductsAction({
       type: "UPDATE",
@@ -88,6 +105,7 @@ export const ProductContextProvider = ({
   const productContext = {
     items: productsState?.items as never,
     addItem: addItemHandler,
+    setItems: setItemsHandler,
     updateItem: updateItemHandler,
     removeItem: removeItemHandler,
   };

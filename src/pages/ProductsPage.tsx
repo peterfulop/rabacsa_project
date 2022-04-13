@@ -1,51 +1,26 @@
-import { stat } from "fs";
-import { Fragment, useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Fragment, useContext, useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
 import NoProductsFound from "../components/Product/NoProductsFound";
 import ProductList from "../components/Sidebar/ProductList/ProductList";
-import LoadingSpinner from "../components/UI/LoadingSpinner";
-import useHttp from "../hooks/use-http";
+import { ProductContext } from "../contexts/product.context";
 import { getAllProducts } from "../lib/api";
 
 export default function ProductsPage() {
-  const navigate = useNavigate();
-  const {
-    sendRequest,
-    status,
-    data: loadedProducts,
-    error,
-  } = useHttp(getAllProducts, true);
+  const ctx = useContext(ProductContext);
+  const [firstInit, setFirstInit] = useState(true);
 
   useEffect(() => {
-    sendRequest();
-  }, [sendRequest]);
-
-  if (status === "pending") {
-    return (
-      <div className="centered">
-        <LoadingSpinner />
-      </div>
-    );
-  }
-
-  if (error) {
-    return <p>{error}</p>;
-  }
-
-  if (
-    status === "completed" &&
-    (!loadedProducts || loadedProducts.length === 0)
-  ) {
-    return <NoProductsFound />;
-  }
+    if (firstInit) {
+      getAllProducts().then((data) => {
+        ctx.setItems(data);
+        setFirstInit(false);
+      });
+    }
+  });
 
   return (
     <Fragment>
-      <ProductList
-        products={loadedProducts}
-        location={"products"}
-        onSelectProduct={() => {}}
-      />
+      <ProductList products={ctx.items} location={"products"} />
       <section className="content">
         <Outlet />
       </section>

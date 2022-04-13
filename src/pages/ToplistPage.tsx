@@ -1,56 +1,44 @@
-import { Fragment, useEffect } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import NoProductsFound from "../components/Product/NoProductsFound";
 import ProductList from "../components/Sidebar/ProductList/ProductList";
-import LoadingSpinner from "../components/UI/LoadingSpinner";
-import useHttp from "../hooks/use-http";
+import { ProductContext } from "../contexts/product.context";
 import { getAllProducts } from "../lib/api";
+import { Product } from "../utils/interfaces/product.interface";
 
 export default function ToplistPage() {
-  const {
-    sendRequest,
-    status,
-    data: loadedProducts,
-    error,
-  } = useHttp(getAllProducts, true);
+  const ctx = useContext(ProductContext);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [firstInit, setFirstInit] = useState(true);
 
-  useEffect(() => {
-    sendRequest();
-  }, [sendRequest]);
-
-  if (status === "pending") {
-    return (
-      <div className="centered">
-        <LoadingSpinner />
-      </div>
-    );
-  }
-
-  if (error) {
-    return <p>{error}</p>;
-  }
-
-  if (
-    status === "completed" &&
-    (!loadedProducts || loadedProducts.length === 0)
-  ) {
-    return <NoProductsFound />;
-  }
-
-  const getToplist = () => {
-    const topList = [...loadedProducts]
+  const createToplist = (data: Product[]) => {
+    const topList = [...data]
       .sort((a: any, b: any) => b.price - a.price)
       .slice(0, 25);
     return topList;
   };
 
+  useEffect(() => {
+    if (firstInit) {
+      getAllProducts()
+        .then((data) => {
+          ctx.setItems(data);
+          return createToplist(data);
+        })
+        .then((toplist) => {
+          setProducts(toplist);
+          setFirstInit(false);
+        });
+    }
+  });
+
+  if (products.length === 0) {
+    return <NoProductsFound />;
+  }
+
   return (
     <Fragment>
-      <ProductList
-        products={getToplist()}
-        location={"toplist"}
-        onSelectProduct={() => {}}
-      />
+      <ProductList products={products} location={"toplist"} />
       <section className="content">
         <Outlet />
       </section>

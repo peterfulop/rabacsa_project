@@ -9,12 +9,8 @@ import LoadingSpinner from "../UI/LoadingSpinner";
 import NoProductsFound from "./NoProductsFound";
 import ProductAsListItem from "./ProductAsListItem";
 
-export default function CategoryDetails(props: {
-  onUpdateProduct?: Function;
-  onDeleteProduct?: Function;
-}) {
+export default function CategoryDetails() {
   const params = useParams();
-
   const {
     sendRequest,
     status,

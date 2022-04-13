@@ -9,8 +9,26 @@ import ToplistPage from "./pages/ToplistPage";
 import NewProductPage from "./pages/NewProductPage";
 import NotFound from "./pages/NotFoundPage";
 import CategoryDetails from "./components/Product/CategoryDetails";
+import { useContext, useEffect, useState } from "react";
+import { Product } from "./utils/interfaces/product.interface";
+import useProductReloader from "./hooks/useProductReloader";
+import { getAllProducts } from "./lib/api";
+import { ProductContext } from "./contexts/product.context";
 
 function App() {
+  useProductReloader();
+  const ctx = useContext(ProductContext);
+  const [firstInit, setFirstInit] = useState(true);
+
+  useEffect(() => {
+    if (firstInit) {
+      getAllProducts().then((data) => {
+        ctx.setItems(data);
+      });
+      setFirstInit(false);
+    }
+  }, [ctx, firstInit]);
+
   return (
     <MainLayout>
       <Routes>

@@ -6,13 +6,19 @@ import {
   DialogContentText,
   DialogActions,
 } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { ProductContext } from "../../../contexts/product.context";
+import { deleteProduct, getAllProducts } from "../../../lib/api";
 
 export default function ProductDeleteDialog(props: {
   productName: string;
-  submitAction: Function;
+  productId: string;
 }) {
   const [open, setOpen] = React.useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const ctx = useContext(ProductContext);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -23,7 +29,10 @@ export default function ProductDeleteDialog(props: {
   };
 
   const handleAction = async () => {
-    await props.submitAction();
+    await deleteProduct(props.productId);
+    const data = await getAllProducts();
+    ctx.setItems(data);
+    navigate(`/${location.pathname.split("/")[1]}`);
     setOpen(false);
   };
 

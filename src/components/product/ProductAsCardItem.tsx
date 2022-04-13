@@ -8,6 +8,7 @@ import { Product } from "../../utils/interfaces/product.interface";
 import ProductItem from "./Product";
 import { useTheme } from "@mui/material/styles";
 import { useMediaQuery } from "@mui/material";
+import ProductsDetails from "./ProductsDetails";
 
 export default function ProductEditDialog(props: {
   product: Product;
@@ -40,12 +41,7 @@ export default function ProductEditDialog(props: {
       >
         <DialogTitle>{props.product.title}</DialogTitle>
         <DialogContent>
-          <ProductItem
-            products={[]}
-            product={props.product}
-            onDeleteProduct={props.onDeleteProduct}
-            onUpdateProduct={props.onUpdateProduct}
-          />
+          <ProductsDetails />
         </DialogContent>
         <DialogActions>
           <Button variant="outlined" color="primary" onClick={handleClose}>

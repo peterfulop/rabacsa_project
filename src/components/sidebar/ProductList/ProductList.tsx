@@ -8,7 +8,6 @@ import { useParams } from "react-router-dom";
 export default function ProductList(props: {
   products: Product[];
   location: string;
-  onSelectProduct: Function;
   activeProductId?: string;
 }) {
   const params = useParams();

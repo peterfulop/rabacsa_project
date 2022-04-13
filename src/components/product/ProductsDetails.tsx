@@ -1,10 +1,7 @@
-import { useContext, useEffect, useState } from "react";
-import { ProductContext } from "../../contexts/product.context";
-import { Product } from "../../utils/interfaces/product.interface";
+import { useEffect } from "react";
 import ProductDeleteDialog from "./actions/ProductDeleteDialog";
 import ProductEditDialog from "./actions/ProductEditDialog";
 import ProductDetails from "./details/ProductDetails";
-
 import "../../Styles/Product/Product.css";
 import ProductImageList from "./ProductImageList";
 import { useParams } from "react-router-dom";
@@ -39,6 +36,7 @@ export default function ProductsDetails() {
   if (error) {
     return <p>{error}</p>;
   }
+
   if (status === "completed" && !loadedProduct.title) {
     return <NoProductsFound plural={true} />;
   }
@@ -62,11 +60,10 @@ export default function ProductsDetails() {
           productName={loadedProduct.title}
           productPrice={loadedProduct.price}
           productDescription={loadedProduct.description}
-          submitAction={() => {}}
         />
         <ProductDeleteDialog
+          productId={loadedProduct.id}
           productName={loadedProduct.title}
-          submitAction={() => {}}
         />
       </div>
     </section>
