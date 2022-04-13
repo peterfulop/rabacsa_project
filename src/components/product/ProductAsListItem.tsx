@@ -7,8 +7,8 @@ import "../../Styles/Product/ProductList.css";
 export default function ProductAsListItem(props: {
   products: Product[];
   activeCategory: string;
-  onUpdateProduct: Function;
-  onDeleteProduct: Function;
+  onUpdateProduct?: Function;
+  onDeleteProduct?: Function;
 }) {
   const { currentItems, renderPagination } = usePagination({
     data: props.products,
@@ -32,8 +32,8 @@ export default function ProductAsListItem(props: {
             <h2>${product.price}</h2>
             <ProductAsCardItem
               product={product}
-              onUpdateProduct={props.onUpdateProduct}
-              onDeleteProduct={props.onDeleteProduct}
+              onUpdateProduct={() => {}}
+              onDeleteProduct={() => {}}
             />
           </div>
         </div>
@@ -45,7 +45,7 @@ export default function ProductAsListItem(props: {
     <section className="product-list">
       <div className="product-list-header">
         <h2>Products</h2>
-        <small>{props.activeCategory}</small>
+        <p>{props.activeCategory}</p>
       </div>
       <section className="product-list-pagination">
         {renderPagination()}

@@ -1,0 +1,41 @@
+.new-product {
+  margin: 2rem 5rem;
+}
+
+.new-product h1 {
+  text-align: center;
+}
+
+.new-product form {
+  padding: 2rem;
+  border-radius: 1rem;
+  border: 1px solid lightgray;
+  margin: 2rem auto;
+  max-width: 800px;
+}
+
+.new-product form button {
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.form-input {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.form-input .invalidText {
+  margin: 0.5rem 0.25rem;
+  color: tomato;
+}
+
+.form-input .invalid input {
+  border-radius: 5px;
+  border: 2px solid tomato !important;
+}
+/*# sourceMappingURL=NewProductForm.css.map */

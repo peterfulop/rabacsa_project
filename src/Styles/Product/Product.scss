@@ -1,5 +1,7 @@
+@import "../Variables/Variables.scss";
+
 .product {
-  background-color: white;
+  background-color: $mainCard;
   padding: 1.5rem;
   margin: 1rem;
   border-radius: 1rem;
@@ -42,13 +44,15 @@
   object-fit: cover;
 }
 
+.product-details table {
+  background-color: white;
+}
 .product-details h5 {
   margin: 1rem 0rem;
 }
 
 .product-actions {
   display: flex;
-  background-color: white;
   margin-top: 1rem;
   flex-direction: row;
   align-content: center;

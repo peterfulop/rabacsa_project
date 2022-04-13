@@ -1,5 +1,5 @@
 .product {
-  background-color: white;
+  background-color: #fafafa;
   padding: 1.5rem;
   margin: 1rem;
   border-radius: 1rem;
@@ -61,6 +61,10 @@
      object-fit: cover;
 }
 
+.product-details table {
+  background-color: white;
+}
+
 .product-details h5 {
   margin: 1rem 0rem;
 }
@@ -69,7 +73,6 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  background-color: white;
   margin-top: 1rem;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;

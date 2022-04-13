@@ -1,5 +1,6 @@
+import { stat } from "fs";
 import { Fragment, useEffect } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import NoProductsFound from "../components/Product/NoProductsFound";
 import ProductList from "../components/Sidebar/ProductList/ProductList";
 import LoadingSpinner from "../components/UI/LoadingSpinner";
@@ -7,6 +8,7 @@ import useHttp from "../hooks/use-http";
 import { getAllProducts } from "../lib/api";
 
 export default function ProductsPage() {
+  const navigate = useNavigate();
   const {
     sendRequest,
     status,

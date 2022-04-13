@@ -27,12 +27,13 @@ export interface ProductDetails {
   category?: string;
 }
 
-export interface AddNewProduct {
+export interface NewProduct {
   id: string;
   title: string;
   price: number;
   description: string;
-  category: "uncategorized";
+  category: string;
+  thumbnail?: string;
 }
 export interface UpdateProduct {
   title: string;

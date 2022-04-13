@@ -1,4 +1,5 @@
 import { ListItemText } from "@mui/material";
+import { useParams } from "react-router-dom";
 import { Category } from "../../../utils/interfaces/product.interface";
 import SidebarItem from "../Sidebar";
 import SidebarListItem from "../SidebarListItem";
@@ -6,9 +7,12 @@ import SidebarListItem from "../SidebarListItem";
 export default function CategoryList(props: {
   categories: Category[];
   location: string;
+  onSelectCategory?: Function;
   activeCategory?: string;
-  onSelectCategory: Function;
 }) {
+  const params = useParams();
+  const { productCategory } = params;
+
   const renderCategories = (categories: Category[]) => {
     return (
       <ul className="sidebar-list">
@@ -16,12 +20,9 @@ export default function CategoryList(props: {
           const categoryTitle = `${item.title} (${item.count})`;
           return (
             <SidebarListItem
-              href="/"
               key={item.title}
-              className={
-                item.title === props.activeCategory ? "active-product" : ""
-              }
-              onClick={() => props.onSelectCategory(item.title)}
+              href={`/${props.location}/${item.title}`}
+              className={item.title === productCategory ? "active-product" : ""}
             >
               <ListItemText primary={categoryTitle} />
             </SidebarListItem>

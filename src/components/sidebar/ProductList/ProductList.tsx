@@ -14,8 +14,6 @@ export default function ProductList(props: {
   const params = useParams();
   const { productId } = params;
 
-  console.log(props.location);
-
   const renderProducts = (products: Product[]) => {
     return (
       <ul className="sidebar-list">
