@@ -5,9 +5,14 @@ import "../../../Styles/Sidebar/Sidebar.css";
 import SidebarListItem from "../SidebarListItem";
 import { useParams } from "react-router-dom";
 
-const getNeighbourIndex = (index: number): number => {
-  const neighbourIndex: number = index === 0 ? index + 1 : index - 1;
-  return neighbourIndex;
+const getNeighbourIndex = (index: number, length: number): number => {
+  if (length === 1) {
+    return 0;
+  } else if (index === 0 && length > 0) {
+    return index + 1;
+  } else {
+    return index - 1;
+  }
 };
 
 export default function ProductList(props: {
@@ -21,7 +26,10 @@ export default function ProductList(props: {
     return (
       <ul className="sidebar-list">
         {products.map((item) => {
-          const index = getNeighbourIndex(products.indexOf(item));
+          const index = getNeighbourIndex(
+            products.indexOf(item),
+            products.length
+          );
           return (
             <SidebarListItem
               key={item.id}
