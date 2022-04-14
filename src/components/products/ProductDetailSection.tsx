@@ -6,7 +6,8 @@ import { Product } from "../../utils/interfaces/product.interface";
 
 import "../../Styles/Product/Product.css";
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { ProductContext } from "../../contexts/product.context";
 
 export default function ProductDetailSection(props: {
   product: Product;
@@ -14,6 +15,14 @@ export default function ProductDetailSection(props: {
 }) {
   const [activeProduct, setActiveProduct] = useState<Product>(props.product);
   const location = useLocation();
+  const ctx = useContext(ProductContext);
+
+  useEffect(() => {
+    const activeProd = ctx.items.find(
+      (item: Product) => item.id === activeProduct.id
+    );
+    if (activeProd) setActiveProduct(activeProd);
+  }, [ctx.items, activeProduct.id]);
 
   const editProductHandler = (updatedProduct: Product) => {
     setActiveProduct(updatedProduct);

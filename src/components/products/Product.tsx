@@ -8,7 +8,7 @@ import ProductDetailSection from "./ProductDetailSection";
 
 import "../../Styles/Product/Product.css";
 
-export default function ProductsDetails() {
+export default function Product() {
   const params = useParams();
   const { productId } = params;
 

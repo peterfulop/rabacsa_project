@@ -1,8 +1,8 @@
 export default function NotFoundPage() {
   return (
-    <section>
+    <section className="d-flex justify-content-center m-5">
       <h2>404</h2>
-      <p>Not Found</p>
+      <p className="ms-2">Page Not Found</p>
     </section>
   );
 }

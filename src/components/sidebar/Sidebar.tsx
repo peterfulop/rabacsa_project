@@ -1,5 +1,5 @@
 import { useState } from "react";
-import usePagination from "../../hooks/usePagination";
+import usePagination from "../../hooks/use-Pagination";
 
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 

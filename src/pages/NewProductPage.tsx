@@ -11,7 +11,6 @@ export default function NewProductPage() {
 
   useEffect(() => {
     if (status === "completed") {
-      // navigate("/categories");
     }
   }, [status, navigate]);
 

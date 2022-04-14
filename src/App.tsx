@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import MainLayout from "./components/layout/MainLayout";
-import ProductsDetails from "./components/products/ProductDetail";
+import ProductsDetails from "./components/products/Product";
 import CategoryDetails from "./components/products/CategoryDetails";
 
 import CategoriesPage from "./pages/CategoriesPage";
@@ -10,7 +10,7 @@ import ToplistPage from "./pages/ToplistPage";
 import NewProductPage from "./pages/NewProductPage";
 import NotFound from "./pages/NotFoundPage";
 
-import useProductReloader from "./hooks/useProductReloader";
+import useProductReloader from "./hooks/use-productReloader";
 import { getAllProducts } from "./lib/api";
 import { ProductContext } from "./contexts/product.context";
 

@@ -1,14 +1,15 @@
 import { Fragment, useContext, useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import NoProductsFound from "../components/products/NoProductsFound";
-import CategoryList from "../components/sidebar/CategoryList/CategoryList";
+import CategoryList from "../components/sidebar/categories/CategoryList";
 import { ProductContext } from "../contexts/product.context";
 import { getAllProducts } from "../lib/api";
 import { Category, Product } from "../utils/interfaces/product.interface";
 
 export default function CategoriesPage() {
   const [firstInit, setFirstInit] = useState(true);
-  const [isData, setIsData] = useState(false);
+  const [isData, setIsData] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   const ctx = useContext(ProductContext);
   const navigation = useNavigate();
@@ -36,19 +37,24 @@ export default function CategoriesPage() {
 
   useEffect(() => {
     if (firstInit) {
-      getAllProducts().then((data) => {
-        ctx.setItems(data);
-        if (data.length === 0) {
-          setIsData(false);
-        } else {
-          setIsData(true);
-          navigation(`/categories/All Products`);
-        }
-        setFirstInit(false);
-      });
+      getAllProducts()
+        .then((data) => {
+          ctx.setItems(data);
+          if (data.length === 0) {
+            setIsData(false);
+          } else {
+            navigation(`/categories/All Products`);
+            setIsData(true);
+          }
+          setFirstInit(false);
+        })
+        .then(() => {
+          setIsLoading(false);
+        });
     }
   });
-  if (!isData) {
+
+  if (!isLoading && !isData) {
     return (
       <section className="d-flex justify-content-center w-100">
         <NoProductsFound />
