@@ -1,8 +1,5 @@
 import { createContext, useReducer } from "react";
-import productsJson from "../data/products.json";
 import { Product } from "../utils/interfaces/product.interface";
-import { useContext } from "react";
-import { getAllProducts } from "../lib/api";
 
 type ProductContextProviderProps = {
   children: React.ReactNode;

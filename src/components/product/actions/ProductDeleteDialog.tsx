@@ -7,18 +7,21 @@ import {
   DialogActions,
 } from "@mui/material";
 import React, { useContext } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { GlobalContext } from "../../../contexts/global.context";
 import { ProductContext } from "../../../contexts/product.context";
 import { deleteProduct, getAllProducts } from "../../../lib/api";
 
 export default function ProductDeleteDialog(props: {
   productName: string;
   productId: string;
+  neighbourId?: string;
 }) {
   const [open, setOpen] = React.useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const ctx = useContext(ProductContext);
+  const globalCtx = useContext(GlobalContext);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -29,10 +32,13 @@ export default function ProductDeleteDialog(props: {
   };
 
   const handleAction = async () => {
-    await deleteProduct(props.productId);
-    const data = await getAllProducts();
-    ctx.setItems(data);
-    navigate(`/${location.pathname.split("/")[1]}`);
+    // await deleteProduct(props.productId);
+    // const data = await getAllProducts();
+    // ctx.setItems(data);
+    if (location.pathname.split("/")[1].includes("categories")) {
+      navigate(`/${location.pathname.split("/")[1]}/All Products`);
+    }
+    navigate(`/${location.pathname.split("/")[1]}/${globalCtx.neighbour}`);
     setOpen(false);
   };
 

@@ -5,11 +5,15 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import { getAllProducts, updateProduct } from "../../../lib/api";
+import { useContext } from "react";
+import { ProductContext } from "../../../contexts/product.context";
 
 export default function ProjectEditDialog(props: {
   productName: string;
   productPrice: number;
   productDescription: string;
+  productId: string;
 }) {
   const [open, setOpen] = React.useState<boolean>(false);
   const [inputName, setInputName] = React.useState<string>(props.productName);
@@ -19,6 +23,7 @@ export default function ProjectEditDialog(props: {
   const [inputDescription, setInputDescription] = React.useState<string>(
     props.productDescription
   );
+  const ctx = useContext(ProductContext);
 
   const handleClickOpen = () => {
     setInputName(props.productName);
@@ -35,7 +40,15 @@ export default function ProjectEditDialog(props: {
     if (!inputName || !inputPrice || !inputDescription) {
       return;
     }
-    // await props.submitAction(inputName, inputPrice, inputDescription);
+
+    const updatedData = {
+      title: inputName.trim(),
+      price: inputPrice,
+      description: inputDescription.trim(),
+    };
+    await updateProduct(updatedData, props.productId);
+    const data = await getAllProducts();
+    ctx.setItems(data);
     setOpen(false);
   };
 
@@ -82,7 +95,7 @@ export default function ProjectEditDialog(props: {
           <TextField
             autoFocus
             margin="dense"
-            id="name"
+            id="price"
             label="price:"
             type="text"
             fullWidth
@@ -93,7 +106,7 @@ export default function ProjectEditDialog(props: {
           <TextField
             autoFocus
             margin="dense"
-            id="name"
+            id="description"
             label="description:"
             type="text"
             fullWidth

@@ -1,12 +1,14 @@
-import { Fragment, useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Fragment, useContext, useEffect, useState } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 import CategoryList from "../components/Sidebar/CategoryList/CategoryList";
+import { ProductContext } from "../contexts/product.context";
 import { getAllProducts } from "../lib/api";
 import { Category, Product } from "../utils/interfaces/product.interface";
 
 export default function CategoriesPage() {
-  const [categories, setCategoires] = useState<Category[]>([]);
   const [firstInit, setFirstInit] = useState(true);
+  const ctx = useContext(ProductContext);
+  const navigation = useNavigate();
 
   const createCategories = (data: Product[]) => {
     const categories = [...data].map((product: Product) => product.category);
@@ -31,20 +33,20 @@ export default function CategoriesPage() {
 
   useEffect(() => {
     if (firstInit) {
-      getAllProducts()
-        .then((data) => {
-          return createCategories(data);
-        })
-        .then((toplist) => {
-          setCategoires(toplist);
-          setFirstInit(false);
-        });
+      getAllProducts().then((data) => {
+        ctx.setItems(data);
+        navigation(`/categories/All Products`);
+        setFirstInit(false);
+      });
     }
   });
 
   return (
     <Fragment>
-      <CategoryList categories={categories} location={"categories"} />
+      <CategoryList
+        categories={createCategories(ctx.items)}
+        location={"categories"}
+      />
       <section className="content">
         <Outlet />
       </section>

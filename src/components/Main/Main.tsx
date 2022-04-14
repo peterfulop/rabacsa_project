@@ -14,7 +14,7 @@ import ProductList from "../Sidebar/ProductList/ProductList";
 import CategoryList from "../Sidebar/CategoryList/CategoryList";
 import ProductItem from "../Product/Product";
 import ProductAsListItem from "../Product/ProductAsListItem";
-import ProductAddDialog from "../Product/actions/ProductAddDialog";
+// import ProductAddDialog from "../Product/actions/ProductAddDialog";
 import { v4 as uuidv4 } from "uuid";
 import { ProductContext } from "../../contexts/product.context";
 import useProductReloader from "../../hooks/useProductReloader";

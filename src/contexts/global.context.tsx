@@ -5,19 +5,17 @@ type ContextProviderProps = {
 };
 
 const defaultGlobalState = {
-  spinner: false,
+  neighbour: "",
 };
 
 export const GlobalContext = createContext({
-  spinner: true || false,
-  setSpinner: (status: boolean) => {},
+  neighbour: "",
+  setNeighbour: (id: string) => {},
 });
 
 const globalReducer = (state: any, action: any) => {
-  if (action.type === "SPINNER") {
-    console.log("set spinner status:", action.status);
-    console.log("actual status:", state.spinner);
-    state.spinner = action.status;
+  if (action.type === "NEIGHBOUR") {
+    state.neighbour = action.id;
     return state;
   }
   return state;
@@ -29,16 +27,16 @@ export const GlobalContextProvider = ({ children }: ContextProviderProps) => {
     defaultGlobalState
   );
 
-  const setSpinnerStatusHandler = (status: boolean) => {
+  const setNeighbourHandler = (id: string) => {
     dispatchGlobalAction({
-      type: "SPINNER",
-      status: status,
+      type: "NEIGHBOUR",
+      id: id,
     });
   };
 
   const globalContext = {
-    spinner: globalState.spinner,
-    setSpinner: setSpinnerStatusHandler,
+    neighbour: globalState.neighbour as never,
+    setNeighbour: setNeighbourHandler,
   };
 
   return (

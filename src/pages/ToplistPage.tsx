@@ -1,6 +1,5 @@
 import { Fragment, useContext, useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
-import NoProductsFound from "../components/Product/NoProductsFound";
+import { Outlet, useNavigate } from "react-router-dom";
 import ProductList from "../components/Sidebar/ProductList/ProductList";
 import { ProductContext } from "../contexts/product.context";
 import { getAllProducts } from "../lib/api";
@@ -8,8 +7,8 @@ import { Product } from "../utils/interfaces/product.interface";
 
 export default function ToplistPage() {
   const ctx = useContext(ProductContext);
-  const [products, setProducts] = useState<Product[]>([]);
   const [firstInit, setFirstInit] = useState(true);
+  const navigation = useNavigate();
 
   const createToplist = (data: Product[]) => {
     const topList = [...data]
@@ -26,19 +25,15 @@ export default function ToplistPage() {
           return createToplist(data);
         })
         .then((toplist) => {
-          setProducts(toplist);
+          navigation(`/toplist/${toplist[0].id}`);
           setFirstInit(false);
         });
     }
   });
 
-  if (products.length === 0) {
-    return <NoProductsFound />;
-  }
-
   return (
     <Fragment>
-      <ProductList products={products} location={"toplist"} />
+      <ProductList products={createToplist(ctx.items)} location={"toplist"} />
       <section className="content">
         <Outlet />
       </section>

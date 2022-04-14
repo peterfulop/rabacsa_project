@@ -5,16 +5,11 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Product } from "../../utils/interfaces/product.interface";
-import ProductItem from "./Product";
 import { useTheme } from "@mui/material/styles";
 import { useMediaQuery } from "@mui/material";
-import ProductsDetails from "./ProductsDetails";
+import ProductDetailSection from "./ProductDetailSection";
 
-export default function ProductEditDialog(props: {
-  product: Product;
-  onDeleteProduct: Function;
-  onUpdateProduct: Function;
-}) {
+export default function ProductEditDialog(props: { product: Product }) {
   const [open, setOpen] = useState<boolean>(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
@@ -41,7 +36,7 @@ export default function ProductEditDialog(props: {
       >
         <DialogTitle>{props.product.title}</DialogTitle>
         <DialogContent>
-          <ProductsDetails />
+          <ProductDetailSection product={props.product} />
         </DialogContent>
         <DialogActions>
           <Button variant="outlined" color="primary" onClick={handleClose}>

@@ -7,8 +7,6 @@ import SidebarListItem from "../SidebarListItem";
 export default function CategoryList(props: {
   categories: Category[];
   location: string;
-  onSelectCategory?: Function;
-  activeCategory?: string;
 }) {
   const params = useParams();
   const { productCategory } = params;

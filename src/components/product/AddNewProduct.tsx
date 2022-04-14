@@ -8,8 +8,6 @@ import { NewProduct } from "../../utils/interfaces/product.interface";
 import { AlertColor } from "@mui/material";
 
 export default function AddNewProduct(props: { onAddNewProduct: Function }) {
-  const [isCheckoutSuccess, setIsCheckoutSuccess] = useState(false);
-
   const [isAlert, setIsAlert] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState<string | null>(null);
   const [alertColor, setAlertColor] = useState<AlertColor>("success");
