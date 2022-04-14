@@ -2,7 +2,6 @@ import "./Styles/App.css";
 import { Routes, Route, Navigate } from "react-router-dom";
 import MainLayout from "./components/Layout/MainLayout";
 import ProductsDetails from "./components/Product/ProductDetail";
-
 import CategoriesPage from "./pages/CategoriesPage";
 import ProductsPage from "./pages/ProductsPage";
 import ToplistPage from "./pages/ToplistPage";
