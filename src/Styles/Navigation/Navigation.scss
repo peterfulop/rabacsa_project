@@ -1,0 +1,63 @@
+@import "../Variables/Variables.scss";
+
+.navigation {
+  margin: 0px auto;
+  background-color: $mainBlack;
+  border-bottom: 5px solid $mainPurple;
+  ul {
+    margin: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  h3 {
+    white-space: nowrap;
+  }
+
+  li {
+    list-style: none;
+    padding: 0.5rem 1rem;
+    margin: 1rem 0.25rem;
+  }
+
+  a {
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  a:hover {
+    color: $mainPurple;
+  }
+
+  .active {
+    color: rgb(192, 9, 192) !important;
+  }
+}
+
+.drop-down-button li a {
+  padding: 1rem !important;
+  text-decoration: none;
+  width: 100% !important;
+}
+
+.drop-down-button li {
+  padding: 0;
+  margin: 0;
+}
+
+@media (max-width: 992px) {
+  .navigation nav {
+    max-width: 100% !important;
+  }
+
+  .navigation h3 {
+    font-size: 20px;
+    white-space: nowrap;
+  }
+
+  .desktop-menu {
+    display: none;
+  }
+}

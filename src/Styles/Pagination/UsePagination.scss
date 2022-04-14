@@ -1,0 +1,46 @@
+@import "../Variables/Variables.scss";
+
+.pagination {
+  background-color: white;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  border: 1px solid $mainBorder;
+  margin-top: -1px;
+
+  button {
+    font-size: 0.75rem;
+    background-color: transparent;
+    border: none;
+    padding: 0.75rem;
+    border-left: 1px solid $mainBorder;
+  }
+
+  button:hover {
+    cursor: pointer;
+    color: white;
+    background-color: $mainBlack;
+  }
+
+  button:nth-child(2) {
+    border: none;
+  }
+}
+
+[hidden].pagination {
+  border: none !important;
+}
+
+.pagination .pages {
+  margin-left: 0.5rem;
+}
+
+.pagination-nav:nth-child(1) {
+  border-left: none;
+  border-right: 1px solid $mainBorder !important;
+}
+
+.active {
+  background-color: $mainBlack !important;
+  color: white !important;
+}
