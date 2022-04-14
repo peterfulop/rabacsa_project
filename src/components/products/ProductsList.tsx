@@ -3,14 +3,30 @@ import usePagination from "../../hooks/use-Pagination";
 
 import "../../Styles/Product/ProductList.css";
 import ProductAsListItem from "./ProductAsListItem";
+import { useContext, useEffect, useState } from "react";
+import { ProductContext } from "../../contexts/product.context";
 
 export default function ProductsList(props: {
   products: Product[];
   activeCategory: string;
 }) {
+  const [products, setProducts] = useState<Product[]>([]);
+
+  const ctx = useContext(ProductContext);
+
   const { currentItems, renderPagination } = usePagination({
-    data: props.products,
+    data: products,
   });
+
+  useEffect(() => {
+    const products =
+      props.activeCategory !== "All Products"
+        ? ctx.items.filter(
+            (product: Product) => product.category === props.activeCategory
+          )
+        : ctx.items;
+    setProducts(products);
+  }, [ctx.items, props.activeCategory]);
 
   function renderProductItem(data: Product[]) {
     return data.map((product: Product) => {
