@@ -8,6 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { getAllProducts, updateProduct } from "../../../lib/api";
 import { useContext } from "react";
 import { ProductContext } from "../../../contexts/product.context";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function ProjectEditDialog(props: {
   productName: string;

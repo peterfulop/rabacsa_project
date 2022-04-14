@@ -8,7 +8,6 @@ import {
 } from "@mui/material";
 import React, { useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { GlobalContext } from "../../../contexts/global.context";
 import { ProductContext } from "../../../contexts/product.context";
 import { deleteProduct, getAllProducts } from "../../../lib/api";
 
@@ -21,7 +20,6 @@ export default function ProductDeleteDialog(props: {
   const location = useLocation();
   const navigate = useNavigate();
   const ctx = useContext(ProductContext);
-  const globalCtx = useContext(GlobalContext);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -32,13 +30,14 @@ export default function ProductDeleteDialog(props: {
   };
 
   const handleAction = async () => {
-    // await deleteProduct(props.productId);
-    // const data = await getAllProducts();
-    // ctx.setItems(data);
+    await deleteProduct(props.productId);
+    const data = await getAllProducts();
+    ctx.setItems(data);
+    const neighborId = localStorage.getItem("neighbourid");
     if (location.pathname.split("/")[1].includes("categories")) {
       navigate(`/${location.pathname.split("/")[1]}/All Products`);
     }
-    navigate(`/${location.pathname.split("/")[1]}/${globalCtx.neighbour}`);
+    navigate(`/${location.pathname.split("/")[1]}/${neighborId}`);
     setOpen(false);
   };
 

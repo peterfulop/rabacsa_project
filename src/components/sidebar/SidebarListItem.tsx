@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { GlobalContext } from "../../contexts/global.context";
 
 export default function SidebarListItem(props: {
   children?: React.ReactNode;
@@ -8,15 +7,11 @@ export default function SidebarListItem(props: {
   href: string;
   neighbourId?: string;
 }) {
-  const globalCtx = useContext(GlobalContext);
-
   const linkClickHandler = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
     const id = event.currentTarget.dataset["neighbourid"] as string;
-    console.log(id);
-
-    globalCtx.setNeighbour(id as string);
+    localStorage.setItem("neighbourid", id);
   };
 
   return (
