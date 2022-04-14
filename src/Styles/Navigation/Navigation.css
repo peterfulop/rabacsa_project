@@ -17,6 +17,10 @@
           align-items: center;
 }
 
+.navigation h3 {
+  white-space: nowrap;
+}
+
 .navigation li {
   list-style: none;
   padding: 0.5rem 1rem;
@@ -30,10 +34,44 @@
 }
 
 .navigation a:hover {
-  color: purple;
+  color: rebeccapurple;
 }
 
 .navigation .active {
   color: #c009c0 !important;
+}
+
+.drop-down-button li a {
+  padding: 0.75rem 1rem !important;
+  width: 100% !important;
+  text-decoration: none;
+}
+
+.drop-down-button li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100% !important;
+}
+
+.drop-down-button li:hover a {
+  background-color: rebeccapurple;
+  color: white !important;
+}
+
+@media (max-width: 768px) {
+  .navigation nav {
+    max-width: 100% !important;
+  }
+  .navigation h3 {
+    font-size: 20px;
+    white-space: nowrap;
+  }
+  .desktop-menu {
+    display: none;
+  }
 }
 /*# sourceMappingURL=Navigation.css.map */

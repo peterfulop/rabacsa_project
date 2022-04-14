@@ -10,7 +10,7 @@ export default function Navigation(props: {
     <section className="navigation">
       <h1>Rabacsa Project</h1>
       <div>
-        <DropDownButton
+        {/* <DropDownButton
           buttonTitle={"Menu"}
           onGetProducts={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
             props.onGetAllProducts(e)
@@ -21,7 +21,7 @@ export default function Navigation(props: {
           onGetTopList={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
             props.onGetTopList(e)
           }
-        />
+        /> */}
       </div>
     </section>
   );

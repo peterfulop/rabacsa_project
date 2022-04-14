@@ -4,12 +4,11 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
 import { RiArrowDownSLine } from "react-icons/ri";
+import { NavLink } from "react-router-dom";
 
 export default function FadeMenu(props: {
   buttonTitle: string;
-  onGetProducts: Function;
-  onGetTopList: Function;
-  onGetCategories: Function;
+  children?: React.ReactNode;
 }) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -21,7 +20,7 @@ export default function FadeMenu(props: {
   };
 
   return (
-    <div>
+    <React.Fragment>
       <Button
         variant="contained"
         color="info"
@@ -35,40 +34,29 @@ export default function FadeMenu(props: {
         {props.buttonTitle}
       </Button>
       <Menu
-        id="fade-menu"
-        MenuListProps={{
-          "aria-labelledby": "fade-button",
-        }}
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
         TransitionComponent={Fade}
+        className={"drop-down-button"}
       >
-        <MenuItem
-          onClick={(e) => {
-            props.onGetProducts(e);
-            handleClose();
-          }}
-        >
-          Products
-        </MenuItem>
-        <MenuItem
-          onClick={(e) => {
-            props.onGetCategories(e);
-            handleClose();
-          }}
-        >
-          Categories
-        </MenuItem>
-        <MenuItem
-          onClick={(e) => {
-            props.onGetTopList(e);
-            handleClose();
-          }}
-        >
-          TopList
-        </MenuItem>
+        {props.children}
       </Menu>
-    </div>
+    </React.Fragment>
   );
+}
+
+{
+  /* <MenuItem
+onClick={(e) => {
+  handleClose();
+}}
+>
+<NavLink
+  className={(navData) => (navData.isActive ? "active" : "")}
+  to={"/toplist"}
+>
+  Toplist
+</NavLink>
+</MenuItem> */
 }

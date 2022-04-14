@@ -1,24 +1,5 @@
 @import "../Variables/Variables.scss";
 
-// .navigation {
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-//   padding: 0.5rem;
-//   background-color: $mainBlack;
-//   border-bottom: 5px solid $mainPurple;
-//   height: 76px;
-
-//   h1 {
-//     color: white;
-//     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-//     text-transform: uppercase;
-//   }
-//   button {
-//     margin: 0.5rem 1rem;
-//   }
-// }
-
 .navigation {
   margin: 0px auto;
   background-color: $mainBlack;
@@ -28,6 +9,10 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
+  }
+
+  h3 {
+    white-space: nowrap;
   }
 
   li {
@@ -43,10 +28,42 @@
   }
 
   a:hover {
-    color: purple;
+    color: $mainPurple;
   }
 
   .active {
     color: rgb(192, 9, 192) !important;
+  }
+}
+
+.drop-down-button li a {
+  padding: 0.75rem 1rem !important;
+  width: 100% !important;
+  text-decoration: none;
+}
+
+.drop-down-button li {
+  display: flex;
+  justify-content: center;
+  width: 100% !important;
+}
+
+.drop-down-button li:hover a {
+  background-color: $mainPurple;
+  color: white !important;
+}
+
+@media (max-width: 768px) {
+  .navigation nav {
+    max-width: 100% !important;
+  }
+
+  .navigation h3 {
+    font-size: 20px;
+    white-space: nowrap;
+  }
+
+  .desktop-menu {
+    display: none;
   }
 }

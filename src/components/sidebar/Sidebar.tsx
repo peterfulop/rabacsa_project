@@ -18,30 +18,26 @@ export default function SidebarItem(props: {
     data: props.data,
   });
 
-  const [wideSize, setWideSzize] = useState<boolean>(true);
+  const [mobileView, setMobileView] = useState<boolean>(true);
 
   const setSidebarWidthHandler = () => {
-    setWideSzize((prevSize) => !prevSize);
+    setMobileView((prevSize) => !prevSize);
   };
 
-  const buttonText = wideSize ? (
-    <span>{`${props.location} (${props.data.length})`}</span>
-  ) : (
-    <HiArrowRight className="d-flex justfy-content-center text-center h4 m-0 p-0" />
-  );
-
   return (
-    <section
-      className={`sidebar ${wideSize ? ScreenSize.wide : ScreenSize.narrow}`}
-    >
+    <section className={`sidebar`}>
       <button
         onClick={setSidebarWidthHandler}
-        className={`sidebar-location-heading ${!wideSize ? "full-height" : ""}`}
+        className={`sidebar-location-heading`}
       >
-        {buttonText}
+        {`${props.location} (${props.data.length})`}
       </button>
-      {currentItems && wideSize && props.renderContent(currentItems)}
-      {currentItems && wideSize && renderPagination()}
+      {currentItems && mobileView && (
+        <section className="sidebar-list-content">
+          {props.renderContent(currentItems)}
+          {renderPagination()}
+        </section>
+      )}
     </section>
   );
 }

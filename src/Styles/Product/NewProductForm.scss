@@ -32,3 +32,9 @@
     border: 2px solid tomato !important;
   }
 }
+
+@media (max-width: 768px) {
+  .new-product {
+    margin: 0;
+  }
+}

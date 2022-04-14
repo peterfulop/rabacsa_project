@@ -7,7 +7,9 @@ export default function MainLayout(props: { children: React.ReactNode }) {
   return (
     <Fragment>
       <MainNavigation />
-      <main className="container main">{props.children}</main>
+      <main className="container main flex-wrap flex-md-nowrap">
+        {props.children}
+      </main>
     </Fragment>
   );
 }
