@@ -1,5 +1,6 @@
 import { Fragment, useContext, useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
+import NoProductsFound from "../components/Product/NoProductsFound";
 import CategoryList from "../components/Sidebar/CategoryList/CategoryList";
 import { ProductContext } from "../contexts/product.context";
 import { getAllProducts } from "../lib/api";
@@ -7,6 +8,8 @@ import { Category, Product } from "../utils/interfaces/product.interface";
 
 export default function CategoriesPage() {
   const [firstInit, setFirstInit] = useState(true);
+  const [isData, setIsData] = useState(false);
+
   const ctx = useContext(ProductContext);
   const navigation = useNavigate();
 
@@ -35,12 +38,23 @@ export default function CategoriesPage() {
     if (firstInit) {
       getAllProducts().then((data) => {
         ctx.setItems(data);
-        navigation(`/categories/All Products`);
+        if (data.length === 0) {
+          setIsData(false);
+        } else {
+          setIsData(true);
+          navigation(`/categories/All Products`);
+        }
         setFirstInit(false);
       });
     }
   });
-
+  if (!isData) {
+    return (
+      <section className="d-flex justify-content-center w-100">
+        <NoProductsFound />
+      </section>
+    );
+  }
   return (
     <Fragment>
       <CategoryList
