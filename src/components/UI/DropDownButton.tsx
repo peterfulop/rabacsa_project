@@ -4,7 +4,6 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
 import { RiArrowDownSLine } from "react-icons/ri";
-import { NavLink } from "react-router-dom";
 
 export default function FadeMenu(props: {
   buttonTitle: string;
@@ -40,23 +39,18 @@ export default function FadeMenu(props: {
         TransitionComponent={Fade}
         className={"drop-down-button"}
       >
-        {props.children}
+        {React.Children.map(props.children, (child: any) => {
+          return (
+            <MenuItem
+              onClick={(e) => {
+                handleClose();
+              }}
+            >
+              {React.cloneElement(child)}
+            </MenuItem>
+          );
+        })}
       </Menu>
     </React.Fragment>
   );
-}
-
-{
-  /* <MenuItem
-onClick={(e) => {
-  handleClose();
-}}
->
-<NavLink
-  className={(navData) => (navData.isActive ? "active" : "")}
-  to={"/toplist"}
->
-  Toplist
-</NavLink>
-</MenuItem> */
 }

@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import MainNavigation from "./MainNavigation";
+import MainNavigation from "../navigation/MainNavigation";
 
 import "../../Styles/Main/Main.css";
 

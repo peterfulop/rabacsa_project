@@ -24,7 +24,7 @@
 .navigation li {
   list-style: none;
   padding: 0.5rem 1rem;
-  margin: 1rem 0.5rem;
+  margin: 1rem 0.25rem;
 }
 
 .navigation a {
@@ -42,24 +42,14 @@
 }
 
 .drop-down-button li a {
-  padding: 0.75rem 1rem !important;
-  width: 100% !important;
+  padding: 1rem !important;
   text-decoration: none;
+  width: 100% !important;
 }
 
 .drop-down-button li {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  width: 100% !important;
-}
-
-.drop-down-button li:hover a {
-  background-color: rebeccapurple;
-  color: white !important;
+  padding: 0;
+  margin: 0;
 }
 
 @media (max-width: 992px) {

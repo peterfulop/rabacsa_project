@@ -40,3 +40,8 @@ export interface UpdateProduct {
   price: number;
   description: string;
 }
+
+export interface NavigationItem {
+  to: string;
+  title: string;
+}
