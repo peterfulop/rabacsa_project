@@ -1,17 +1,20 @@
-import "./Styles/App.css";
+import { useContext, useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import MainLayout from "./components/layout/MainLayout";
 import ProductsDetails from "./components/products/ProductDetail";
+import CategoryDetails from "./components/products/CategoryDetails";
+
 import CategoriesPage from "./pages/CategoriesPage";
 import ProductsPage from "./pages/ProductsPage";
 import ToplistPage from "./pages/ToplistPage";
 import NewProductPage from "./pages/NewProductPage";
 import NotFound from "./pages/NotFoundPage";
-import CategoryDetails from "./components/products/CategoryDetails";
-import { useContext, useEffect, useState } from "react";
+
 import useProductReloader from "./hooks/useProductReloader";
 import { getAllProducts } from "./lib/api";
 import { ProductContext } from "./contexts/product.context";
+
+import "./Styles/App.css";
 
 function App() {
   useProductReloader();

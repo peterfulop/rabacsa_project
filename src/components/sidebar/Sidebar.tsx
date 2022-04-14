@@ -1,6 +1,8 @@
 import { useState } from "react";
 import usePagination from "../../hooks/usePagination";
 
+import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
+
 import "../../Styles/Sidebar/Sidebar.css";
 
 export default function SidebarItem(props: {
@@ -12,21 +14,28 @@ export default function SidebarItem(props: {
     data: props.data,
   });
 
-  const [mobileView, setMobileView] = useState<boolean>(true);
+  const [smallSize, setSmallSize] = useState<boolean>(true);
 
   const setSidebarWidthHandler = () => {
-    setMobileView((prevSize) => !prevSize);
+    setSmallSize((size) => !size);
   };
 
   return (
     <section className={`sidebar`}>
       <button
         onClick={setSidebarWidthHandler}
-        className={`sidebar-location-heading`}
+        className={`sidebar-location-heading ${
+          smallSize ? "active" : "inactive"
+        }`}
       >
         {`${props.location} (${props.data.length})`}
+        {smallSize ? (
+          <BsFillCaretUpFill size={20} />
+        ) : (
+          <BsFillCaretDownFill size={20} />
+        )}
       </button>
-      {currentItems && mobileView && (
+      {currentItems && smallSize && (
         <section className="sidebar-list-content">
           {props.renderContent(currentItems)}
           {renderPagination()}

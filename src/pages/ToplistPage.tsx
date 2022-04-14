@@ -49,11 +49,7 @@ export default function ToplistPage() {
 
   return (
     <Fragment>
-      <ProductList
-        activeProduct={null}
-        products={createToplist(ctx.items)}
-        location={"toplist"}
-      />
+      <ProductList products={createToplist(ctx.items)} location={"toplist"} />
       <section className="content">
         <Outlet />
       </section>

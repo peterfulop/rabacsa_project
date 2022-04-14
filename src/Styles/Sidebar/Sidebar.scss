@@ -8,7 +8,7 @@
 
 .sidebar-location-heading {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   border: none;
   width: 100%;
   text-transform: uppercase;
@@ -20,6 +20,10 @@
 }
 
 .sidebar-location-heading:hover {
+  background-color: $sidebarGrayHover;
+}
+
+.sidebar-location-heading.inactive {
   background-color: $sidebarGrayHover;
 }
 

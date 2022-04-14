@@ -33,7 +33,7 @@ export default function AddNewProduct(props: { onAddNewProduct: Function }) {
     valueChangeHandler: priceChangeHandler,
     valueBlurHandler: priceBlurHandler,
     reset: resetPrice,
-  } = useInput((value: string) => value.trim() !== "" && parseInt(value) >= 0);
+  } = useInput((value: string) => value.trim() !== "" && parseInt(value) > 0);
 
   const {
     value: descriptionInput,

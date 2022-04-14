@@ -1,6 +1,5 @@
 import { Product } from "../../../utils/interfaces/product.interface";
 import SidebarItem from "../Sidebar";
-
 import "../../../Styles/Sidebar/Sidebar.css";
 import SidebarListItem from "../SidebarListItem";
 import { useParams } from "react-router-dom";
@@ -16,14 +15,11 @@ const getNeighbourIndex = (index: number, length: number): number => {
 };
 
 export default function ProductList(props: {
-  activeProduct: Product | null;
   products: Product[];
   location: string;
 }) {
   const params = useParams();
   const { productId } = params;
-
-  console.log(props.activeProduct);
 
   const renderProducts = (products: Product[]) => {
     return (

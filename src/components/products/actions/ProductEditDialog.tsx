@@ -5,11 +5,17 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { getAllProducts, updateProduct } from "../../../lib/api";
+import {
+  getAllProducts,
+  getSingleProduct,
+  updateProduct,
+} from "../../../lib/api";
 import { useContext } from "react";
 import { ProductContext } from "../../../contexts/product.context";
+import { UpdateProduct } from "../../../utils/interfaces/product.interface";
 
 export default function ProjectEditDialog(props: {
+  onEditProduct: Function;
   productName: string;
   productPrice: number;
   productDescription: string;
@@ -40,7 +46,7 @@ export default function ProjectEditDialog(props: {
     if (!inputName || !inputPrice || !inputDescription) {
       return;
     }
-    const updatedData = {
+    const updatedData: UpdateProduct = {
       title: inputName.trim(),
       price: inputPrice,
       description: inputDescription.trim(),
@@ -48,6 +54,10 @@ export default function ProjectEditDialog(props: {
     await updateProduct(updatedData, props.productId);
     const data = await getAllProducts();
     ctx.setItems(data);
+
+    const updatedProduct = await getSingleProduct(props.productId);
+    props.onEditProduct(updatedProduct);
+
     setOpen(false);
   };
 

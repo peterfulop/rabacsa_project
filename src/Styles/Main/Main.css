@@ -2,14 +2,20 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .main .content {
   background-color: white;
   padding: 1rem;
+}
+
+@media (max-width: 992px) {
+  .content {
+    max-width: 65% !important;
+  }
 }
 
 @media (max-width: 768px) {
@@ -24,6 +30,8 @@
   }
   .content {
     border-top: 2px solid #585858;
+    max-width: 100% !important;
+    padding: 0 !important;
   }
 }
 /*# sourceMappingURL=Main.css.map */

@@ -4,7 +4,6 @@ import NoProductsFound from "../components/products/NoProductsFound";
 import ProductList from "../components/sidebar/ProductList/ProductList";
 import { ProductContext } from "../contexts/product.context";
 import { getAllProducts } from "../lib/api";
-import { Product } from "../utils/interfaces/product.interface";
 
 export default function ProductsPage() {
   const ctx = useContext(ProductContext);
@@ -12,12 +11,9 @@ export default function ProductsPage() {
   const [isData, setIsData] = useState(true);
   const navigation = useNavigate();
 
-  const [activeProduct, setActiveProduct] = useState<Product | null>(null);
-
   useEffect(() => {
     if (firstInit) {
       getAllProducts().then((data) => {
-        setActiveProduct(data[0]);
         ctx.setItems(data);
         if (data.length === 0) {
           setIsData(false);
@@ -40,13 +36,7 @@ export default function ProductsPage() {
 
   return (
     <Fragment>
-      {isData && (
-        <ProductList
-          activeProduct={activeProduct}
-          products={ctx.items}
-          location={"products"}
-        />
-      )}
+      {isData && <ProductList products={ctx.items} location={"products"} />}
       <section className="content">
         <Outlet />
       </section>

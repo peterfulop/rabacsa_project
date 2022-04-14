@@ -6,39 +6,46 @@ import { Product } from "../../utils/interfaces/product.interface";
 
 import "../../Styles/Product/Product.css";
 import { useLocation } from "react-router-dom";
+import { useState } from "react";
 
 export default function ProductDetailSection(props: {
   product: Product;
   neighbourId?: string;
 }) {
+  const [activeProduct, setActiveProduct] = useState<Product>(props.product);
   const location = useLocation();
+
+  const editProductHandler = (updatedProduct: Product) => {
+    setActiveProduct(updatedProduct);
+  };
 
   return (
     <section className="product">
       <div className="product-meta-data">
         <div className="data">
-          <h2>{props.product.title}</h2>
-          <h4>{props.product.brand}</h4>
-          <small>{props.product.description}</small>
-          <ProductImageList images={props.product.images} />
+          <h2>{activeProduct.title}</h2>
+          <h4>{activeProduct.brand}</h4>
+          <small>{activeProduct.description}</small>
+          <ProductImageList images={activeProduct.images} />
         </div>
         <div className="thumbnail">
-          <img src={props.product.thumbnail} alt={props.product.title} />
+          <img src={activeProduct.thumbnail} alt={activeProduct.title} />
         </div>
       </div>
-      <ProductDetails rows={props.product} />
+      <ProductDetails rows={activeProduct} />
       {!location.pathname.includes("/categories/") && (
         <div className="product-actions">
           <ProductEditDialog
-            productId={props.product.id}
-            productName={props.product.title}
-            productPrice={props.product.price}
-            productDescription={props.product.description}
+            onEditProduct={editProductHandler}
+            productId={activeProduct.id}
+            productName={activeProduct.title}
+            productPrice={activeProduct.price}
+            productDescription={activeProduct.description}
           />
           <ProductDeleteDialog
             neighbourId={props.neighbourId}
-            productId={props.product.id}
-            productName={props.product.title}
+            productId={activeProduct.id}
+            productName={activeProduct.title}
           />
         </div>
       )}

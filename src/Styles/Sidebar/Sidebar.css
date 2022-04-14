@@ -9,9 +9,9 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   border: none;
   width: 100%;
   text-transform: uppercase;
@@ -23,6 +23,10 @@
 }
 
 .sidebar-location-heading:hover {
+  background-color: #707070;
+}
+
+.sidebar-location-heading.inactive {
   background-color: #707070;
 }
 

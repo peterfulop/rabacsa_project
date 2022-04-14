@@ -18,7 +18,7 @@ export default function ProductDetails(props: { rows: any }) {
         <tbody>
           {rows.map((row: Row) => (
             <tr key={row.name}>
-              <th className="w-25">{row.name.toUpperCase()}</th>
+              <th>{row.name.toUpperCase()}</th>
               <td>{row.data}</td>
             </tr>
           ))}

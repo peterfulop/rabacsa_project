@@ -1,5 +1,8 @@
 .new-product {
   margin: 2rem 5rem;
+  border: 1px solid lightgray;
+  border-radius: 1rem;
+  padding: 2rem;
 }
 
 .new-product h1 {
@@ -7,9 +10,6 @@
 }
 
 .new-product form {
-  padding: 2rem;
-  border-radius: 1rem;
-  border: 1px solid lightgray;
   margin: 2rem auto;
   max-width: 800px;
 }
@@ -39,9 +39,9 @@
   border: 2px solid tomato !important;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   .new-product {
-    margin: 0;
+    margin: 1rem;
   }
 }
 /*# sourceMappingURL=NewProductForm.css.map */
