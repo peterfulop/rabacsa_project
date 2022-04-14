@@ -11,7 +11,6 @@ const defaultProductsState = {
 
 const productReducer = (state: any, action: any) => {
   if (action.type === "SET") {
-    console.log("SET ITEMS");
     let newItems = [...action.items];
     return {
       items: newItems,
