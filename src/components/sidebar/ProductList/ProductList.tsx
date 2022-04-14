@@ -16,11 +16,14 @@ const getNeighbourIndex = (index: number, length: number): number => {
 };
 
 export default function ProductList(props: {
+  activeProduct: Product | null;
   products: Product[];
   location: string;
 }) {
   const params = useParams();
   const { productId } = params;
+
+  console.log(props.activeProduct);
 
   const renderProducts = (products: Product[]) => {
     return (

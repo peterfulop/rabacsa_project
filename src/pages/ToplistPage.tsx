@@ -1,7 +1,7 @@
 import { Fragment, useContext, useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import NoProductsFound from "../components/Product/NoProductsFound";
-import ProductList from "../components/Sidebar/ProductList/ProductList";
+import NoProductsFound from "../components/products/NoProductsFound";
+import ProductList from "../components/sidebar/ProductList/ProductList";
 import { ProductContext } from "../contexts/product.context";
 import { getAllProducts } from "../lib/api";
 import { Product } from "../utils/interfaces/product.interface";
@@ -49,7 +49,11 @@ export default function ToplistPage() {
 
   return (
     <Fragment>
-      <ProductList products={createToplist(ctx.items)} location={"toplist"} />
+      <ProductList
+        activeProduct={null}
+        products={createToplist(ctx.items)}
+        location={"toplist"}
+      />
       <section className="content">
         <Outlet />
       </section>

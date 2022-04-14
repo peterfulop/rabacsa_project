@@ -1,6 +1,6 @@
 import { Fragment, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import AddNewProduct from "../components/Product/AddNewProduct";
+import AddNewProduct from "../components/products/AddNewProduct";
 import useHttp from "../hooks/use-http";
 import { addProduct } from "../lib/api";
 import { NewProduct } from "../utils/interfaces/product.interface";
