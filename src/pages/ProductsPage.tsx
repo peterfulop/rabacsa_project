@@ -1,6 +1,7 @@
 import { Fragment, useContext, useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import NoProductsFound from "../components/products/NoProductsFound";
+import Product from "../components/products/Product";
 import ProductList from "../components/sidebar/products/ProductList";
 import { ProductContext } from "../contexts/product.context";
 import { getAllProducts } from "../lib/api";

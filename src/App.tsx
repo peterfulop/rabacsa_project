@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import MainLayout from "./components/layout/MainLayout";
-import ProductsDetails from "./components/products/Product";
+import Product from "./components/products/Product";
 import CategoryDetails from "./components/products/CategoryDetails";
 
 import CategoriesPage from "./pages/CategoriesPage";
@@ -37,7 +37,7 @@ function App() {
         <Route path={"/new-product"} element={<NewProductPage />} />
         <Route path={"/products"} element={<ProductsPage />} />
         <Route path={"/products/:productId"} element={<ProductsPage />}>
-          <Route path={""} element={<ProductsDetails />} />
+          <Route path={""} element={<Product />} />
         </Route>
         <Route path={"/categories"} element={<CategoriesPage />} />
         <Route
@@ -48,7 +48,7 @@ function App() {
         </Route>
         <Route path={"/toplist"} element={<ToplistPage />} />
         <Route path={"/toplist/:productId"} element={<ToplistPage />}>
-          <Route path={""} element={<ProductsDetails />} />
+          <Route path={""} element={<Product />} />
         </Route>
         <Route path={"*"} element={<NotFound />} />
       </Routes>
