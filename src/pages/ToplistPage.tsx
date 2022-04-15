@@ -8,7 +8,6 @@ import { Product } from "../utils/interfaces/product.interface";
 
 export default function ToplistPage() {
   const ctx = useContext(ProductContext);
-  const [firstInit, setFirstInit] = useState(true);
   const [isData, setIsData] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -22,26 +21,19 @@ export default function ToplistPage() {
   };
 
   useEffect(() => {
-    if (firstInit) {
-      getAllProducts()
-        .then((data) => {
-          ctx.setItems(data);
-          return createToplist(data);
-        })
-        .then((toplist) => {
-          if (toplist.length === 0) {
-            setIsData(false);
-          } else {
-            setIsData(true);
-            navigation(`/toplist/${toplist[0].id}`);
-          }
-          setFirstInit(false);
-        })
-        .then(() => {
-          setIsLoading(false);
-        });
-    }
-  });
+    const loadData = async () => {
+      console.log("loading...");
+      const products = await getAllProducts();
+      if (products.length === 0) {
+        setIsData(false);
+      } else {
+        navigation(`/toplist/${products[0].id}`);
+        setIsData(true);
+      }
+      setIsLoading(false);
+    };
+    loadData();
+  }, []);
 
   if (!isLoading && !isData) {
     return (

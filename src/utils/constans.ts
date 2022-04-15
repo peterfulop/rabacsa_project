@@ -1,6 +1,7 @@
 import { NavigationItem } from "./interfaces/product.interface";
 
 export const PRODUCT_PER_PAGE = 10;
+export const ALL_PRODUCTS_TITLE = "all-products";
 
 export const NAVIGATION_ITEMS: NavigationItem[] = [
   {

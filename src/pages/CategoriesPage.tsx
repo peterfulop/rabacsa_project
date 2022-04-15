@@ -4,10 +4,10 @@ import NoProductsFound from "../components/products/NoProductsFound";
 import CategoryList from "../components/sidebar/categories/CategoryList";
 import { ProductContext } from "../contexts/product.context";
 import { getAllProducts } from "../lib/api";
+import { ALL_PRODUCTS_TITLE } from "../utils/constans";
 import { Category, Product } from "../utils/interfaces/product.interface";
 
 export default function CategoriesPage() {
-  const [firstInit, setFirstInit] = useState(true);
   const [isData, setIsData] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -29,30 +29,26 @@ export default function CategoriesPage() {
       });
     }
     uniqueCategories.push({
-      title: "All Products",
+      title: ALL_PRODUCTS_TITLE,
       count: categories.length,
     });
     return uniqueCategories;
   };
 
   useEffect(() => {
-    if (firstInit) {
-      getAllProducts()
-        .then((data) => {
-          ctx.setItems(data);
-          if (data.length === 0) {
-            setIsData(false);
-          } else {
-            navigation(`/categories/All Products`);
-            setIsData(true);
-          }
-          setFirstInit(false);
-        })
-        .then(() => {
-          setIsLoading(false);
-        });
-    }
-  });
+    const loadData = async () => {
+      console.log("loading...");
+      const products = await getAllProducts();
+      if (products.length === 0) {
+        setIsData(false);
+      } else {
+        navigation(`/categories/${ALL_PRODUCTS_TITLE}`);
+        setIsData(true);
+      }
+      setIsLoading(false);
+    };
+    loadData();
+  }, []);
 
   if (!isLoading && !isData) {
     return (

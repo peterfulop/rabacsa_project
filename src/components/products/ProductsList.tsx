@@ -5,6 +5,7 @@ import "../../Styles/Product/ProductList.css";
 import ProductAsListItem from "./ProductAsListItem";
 import { useContext, useEffect, useState } from "react";
 import { ProductContext } from "../../contexts/product.context";
+import { ALL_PRODUCTS_TITLE } from "../../utils/constans";
 
 export default function ProductsList(props: {
   products: Product[];
@@ -20,7 +21,7 @@ export default function ProductsList(props: {
 
   useEffect(() => {
     const products =
-      props.activeCategory !== "All Products"
+      props.activeCategory !== ALL_PRODUCTS_TITLE
         ? ctx.items.filter(
             (product: Product) => product.category === props.activeCategory
           )

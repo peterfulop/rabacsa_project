@@ -7,30 +7,25 @@ import { getAllProducts } from "../lib/api";
 
 export default function ProductsPage() {
   const ctx = useContext(ProductContext);
-  const [firstInit, setFirstInit] = useState(true);
   const [isData, setIsData] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
 
   const navigation = useNavigate();
 
   useEffect(() => {
-    if (firstInit) {
-      getAllProducts()
-        .then((data) => {
-          ctx.setItems(data);
-          if (data.length === 0) {
-            setIsData(false);
-          } else {
-            navigation(`/products/${data[0].id}`);
-            setIsData(true);
-          }
-          setFirstInit(false);
-        })
-        .then(() => {
-          setIsLoading(false);
-        });
-    }
-  });
+    const loadData = async () => {
+      console.log("loading...");
+      const products = await getAllProducts();
+      if (products.length === 0) {
+        setIsData(false);
+      } else {
+        navigation(`/products/${products[0].id}`);
+        setIsData(true);
+      }
+      setIsLoading(false);
+    };
+    loadData();
+  }, []);
 
   if (!isLoading && !isData) {
     return (
