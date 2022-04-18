@@ -27,7 +27,10 @@ export default function ToplistPage() {
       if (products.length === 0) {
         setIsData(false);
       } else {
-        navigation(`/toplist/${products[0].id}`);
+        const highestPrice = [...products].sort(
+          (a: any, b: any) => b.price - a.price
+        );
+        navigation(`/toplist/${String(highestPrice[0].id)}`);
         setIsData(true);
       }
       setIsLoading(false);

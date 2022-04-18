@@ -49,6 +49,34 @@
   text-decoration: none;
 }
 
+.sidebar-list-content {
+  -webkit-transition: 2s;
+  transition: 2s;
+}
+
+.sidebar-list-content.inactive {
+  height: 0px;
+  -webkit-transform: scaleY(0);
+          transform: scaleY(0);
+  -webkit-transform-origin: top;
+          transform-origin: top;
+  -webkit-transition: -webkit-transform 0.26s ease;
+  transition: -webkit-transform 0.26s ease;
+  transition: transform 0.26s ease;
+  transition: transform 0.26s ease, -webkit-transform 0.26s ease;
+}
+
+.sidebar-list-content.active {
+  -webkit-transform: scaleY(1);
+          transform: scaleY(1);
+  -webkit-transform-origin: top;
+          transform-origin: top;
+  -webkit-transition: -webkit-transform 0.26s ease;
+  transition: -webkit-transform 0.26s ease;
+  transition: transform 0.26s ease;
+  transition: transform 0.26s ease, -webkit-transform 0.26s ease;
+}
+
 .sidebar-list-item {
   display: -webkit-box;
   display: -ms-flexbox;

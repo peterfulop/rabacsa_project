@@ -71,6 +71,10 @@
 }
 
 @media (max-width: 992px) {
+    .product-details table tr {
+      display: flex;
+      flex-direction: column;
+    }
   .product-meta-data {
     display: block;
   }
@@ -113,8 +117,5 @@
     justify-content: center;
     display: none;
   }
-  .product-details table tr {
-    display: flex;
-    flex-direction: column;
-  }
+
 }

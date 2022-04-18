@@ -35,20 +35,14 @@ function App() {
       <Routes>
         <Route path={"/"} element={<Navigate replace to={"/products"} />} />
         <Route path={"/new-product"} element={<NewProductPage />} />
-        <Route path={"/products"} element={<ProductsPage />} />
-        <Route path={"/products/:productId"} element={<ProductsPage />}>
-          <Route path={""} element={<Product />} />
+        <Route path={"/products"} element={<ProductsPage />}>
+          <Route path={":productId"} element={<Product />} />
         </Route>
-        <Route path={"/categories"} element={<CategoriesPage />} />
-        <Route
-          path={"/categories/:productCategory"}
-          element={<CategoriesPage />}
-        >
-          <Route path={""} element={<CategoryDetails />} />
+        <Route path={"/categories"} element={<CategoriesPage />}>
+          <Route path={":productCategory"} element={<CategoryDetails />} />
         </Route>
-        <Route path={"/toplist"} element={<ToplistPage />} />
-        <Route path={"/toplist/:productId"} element={<ToplistPage />}>
-          <Route path={""} element={<Product />} />
+        <Route path={"/toplist"} element={<ToplistPage />}>
+          <Route path={":productId"} element={<Product />} />
         </Route>
         <Route path={"*"} element={<NotFound />} />
       </Routes>

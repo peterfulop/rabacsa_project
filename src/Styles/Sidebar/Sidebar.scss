@@ -46,6 +46,24 @@
   }
 }
 
+.sidebar-list-content{
+  transition: 2s;
+}
+
+.sidebar-list-content.inactive {
+height: 0px ;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.26s ease;
+
+}
+
+.sidebar-list-content.active {
+  transform: scaleY(1);
+    transform-origin: top;
+    transition: transform 0.26s ease;
+}
+
 .sidebar-list-item {
   display: flex;
   justify-content: flex-start;

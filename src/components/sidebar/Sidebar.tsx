@@ -20,6 +20,11 @@ export default function SidebarItem(props: {
     setSmallSize((size) => !size);
   };
 
+  const sidebarListContentClasses =
+    currentItems && smallSize
+      ? `sidebar-list-content active`
+      : `sidebar-list-content inactive`;
+
   return (
     <section className={`sidebar`}>
       <button
@@ -35,12 +40,10 @@ export default function SidebarItem(props: {
           <BsFillCaretDownFill size={20} />
         )}
       </button>
-      {currentItems && smallSize && (
-        <section className="sidebar-list-content">
-          {props.renderContent(currentItems)}
-          {renderPagination()}
-        </section>
-      )}
+      <section className={sidebarListContentClasses}>
+        {props.renderContent(currentItems)}
+        {renderPagination()}
+      </section>
     </section>
   );
 }
