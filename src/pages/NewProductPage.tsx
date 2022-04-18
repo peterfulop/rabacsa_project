@@ -7,12 +7,6 @@ import { NewProduct } from "../utils/interfaces/product.interface";
 
 export default function NewProductPage() {
   const { sendRequest, status } = useHttp(addProduct);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (status === "completed") {
-    }
-  }, [status, navigate]);
 
   const addNewProductHandler = (productData: NewProduct) => {
     sendRequest(productData);

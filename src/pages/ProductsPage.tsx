@@ -15,18 +15,18 @@ export default function ProductsPage() {
   const [isData, setIsData] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
 
+  const loadData = async () => {
+    const products = await getAllProducts();
+    if (products.length === 0) {
+      setIsData(false);
+    } else {
+      navigation(`/products/${products[0].id}`);
+      setIsData(true);
+    }
+    setIsLoading(false);
+  };
+
   useEffect(() => {
-    const loadData = async () => {
-      console.log("loading...");
-      const products = await getAllProducts();
-      if (products.length === 0) {
-        setIsData(false);
-      } else {
-        navigation(`/products/${products[0].id}`);
-        setIsData(true);
-      }
-      setIsLoading(false);
-    };
     loadData();
   }, []);
 
@@ -37,6 +37,7 @@ export default function ProductsPage() {
       </section>
     );
   }
+
   const loadFirstProduct = () => {
     const product = ctx.items[0] as Product;
     navigation(`/products/${product.id}`);
