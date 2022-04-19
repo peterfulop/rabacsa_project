@@ -103,7 +103,7 @@ export default function usePagination(props: { data: any[] }) {
   const data = pages.length === 0 ? [...props.data] : [...currentItems];
 
   if (currentItems.length === 0 && currentPage > 1) {
-    setCurrentPage((prevCurrentPage) => prevCurrentPage - 1);
+    setCurrentPage((prevPage) => prevPage - 1);
   }
 
   return {

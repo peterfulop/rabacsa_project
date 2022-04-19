@@ -8,7 +8,7 @@ const useProductReloader = () => {
     const interval = setInterval(async () => {
       const data = await getAllProducts();
       const timeStamp = new Date(Date.now()).toLocaleString();
-      console.log("useProductReloader...", timeStamp);
+      console.log("Products reloded at:", timeStamp);
       ctx.setItems(data);
     }, 20000);
     return () => clearInterval(interval);
