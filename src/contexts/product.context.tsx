@@ -16,50 +16,11 @@ const productReducer = (state: any, action: any) => {
       items: newItems,
     };
   }
-  if (action.type === "ADD") {
-    let updatedItems = [...state.items];
-    updatedItems = state.items.concat(action.item);
-    return {
-      items: updatedItems,
-    };
-  }
-  if (action.type === "UPDATE") {
-    const existingItemIndex = state.items.findIndex(
-      (item: Product) => item.id === action.item.id
-    );
-    const existingItem = state.items.find(
-      (item: Product) => item.id === action.item.id
-    );
-    let updatedItems;
-
-    const updatedItem = {
-      ...existingItem,
-      title: action.item.title,
-      price: action.item.price,
-      description: action.item.description,
-    };
-
-    updatedItems = [...state.items];
-    updatedItems[existingItemIndex] = updatedItem;
-    return {
-      items: updatedItems,
-    };
-  }
-  if (action.type === "REMOVE") {
-    let updatedItems;
-    updatedItems = [...state.items].filter((item) => item.id !== action.id);
-    return {
-      items: updatedItems,
-    };
-  }
 };
 
 export const ProductContext = createContext({
   items: [],
   setItems: (products: Product[]) => {},
-  addItem: (product: Product) => {},
-  updateItem: (product: Product) => {},
-  removeItem: (id: string) => {},
 });
 
 export const ProductContextProvider = ({
@@ -70,13 +31,6 @@ export const ProductContextProvider = ({
     defaultProductsState
   );
 
-  const addItemHandler = (item: Product) => {
-    dispatchProductsAction({
-      type: "ADD",
-      item: item,
-    });
-  };
-
   const setItemsHandler = (items: Product[]) => {
     dispatchProductsAction({
       type: "SET",
@@ -84,26 +38,9 @@ export const ProductContextProvider = ({
     });
   };
 
-  const updateItemHandler = (item: Product) => {
-    dispatchProductsAction({
-      type: "UPDATE",
-      item: item,
-    });
-  };
-
-  const removeItemHandler = (id: string) => {
-    dispatchProductsAction({
-      type: "REMOVE",
-      id: id,
-    });
-  };
-
   const productContext = {
     items: productsState?.items as never,
-    addItem: addItemHandler,
     setItems: setItemsHandler,
-    updateItem: updateItemHandler,
-    removeItem: removeItemHandler,
   };
 
   return (

@@ -1,15 +1,14 @@
-import { Fragment, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Fragment } from "react";
 import AddNewProduct from "../components/products/AddNewProduct";
 import useHttp from "../hooks/use-http";
 import { addProduct } from "../lib/api";
 import { NewProduct } from "../utils/interfaces/product.interface";
 
 export default function NewProductPage() {
-  const { sendRequest, status } = useHttp(addProduct);
+  const { sendRequest } = useHttp(addProduct);
 
-  const addNewProductHandler = (productData: NewProduct) => {
-    sendRequest(productData);
+  const addNewProductHandler = async (productData: NewProduct) => {
+    await sendRequest(productData);
   };
 
   return (
