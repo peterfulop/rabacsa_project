@@ -1,5 +1,5 @@
-import { Fragment, useContext, useEffect, useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Fragment, useCallback, useContext, useEffect, useState } from "react";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import NoProductsFound from "../components/products/NoProductsFound";
 import CategoryList from "../components/sidebar/categories/CategoryList";
 import { ProductContext } from "../contexts/product.context";
@@ -13,6 +13,8 @@ export default function CategoriesPage() {
 
   const ctx = useContext(ProductContext);
   const navigation = useNavigate();
+  const params = useParams();
+  const { productCategory } = params;
 
   const createCategories = (data: Product[]) => {
     const categories = [...data].map((product: Product) => product.category);
@@ -35,20 +37,24 @@ export default function CategoriesPage() {
     return uniqueCategories;
   };
 
-  useEffect(() => {
-    const loadData = async () => {
-      console.log("loading...");
-      const products = await getAllProducts();
-      if (products.length === 0) {
-        setIsData(false);
+  const loadData = useCallback(async () => {
+    const products = await getAllProducts();
+    if (products.length === 0) {
+      setIsData(false);
+    } else {
+      if (productCategory) {
+        navigation(`/categories/${productCategory}`);
       } else {
         navigation(`/categories/${ALL_PRODUCTS_TITLE}`);
-        setIsData(true);
       }
-      setIsLoading(false);
-    };
+      setIsData(true);
+    }
+    setIsLoading(false);
+  }, [navigation, productCategory]);
+
+  useEffect(() => {
     loadData();
-  }, []);
+  }, [loadData]);
 
   if (!isLoading && !isData) {
     return (

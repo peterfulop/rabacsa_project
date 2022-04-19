@@ -1,10 +1,9 @@
-import { Fragment, useContext, useEffect, useState } from "react";
+import { Fragment, useCallback, useContext, useEffect, useState } from "react";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import NoProductsFound from "../components/products/NoProductsFound";
 import ProductList from "../components/sidebar/products/ProductList";
 import { ProductContext } from "../contexts/product.context";
 import { getAllProducts } from "../lib/api";
-import { Product } from "../utils/interfaces/product.interface";
 
 export default function ProductsPage() {
   const navigation = useNavigate();
@@ -15,20 +14,24 @@ export default function ProductsPage() {
   const [isData, setIsData] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
 
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     const products = await getAllProducts();
     if (products.length === 0) {
       setIsData(false);
     } else {
-      navigation(`/products/${products[0].id}`);
+      if (productId) {
+        navigation(`/products/${productId}`);
+      } else {
+        navigation(`/products/${products[0].id}`);
+      }
       setIsData(true);
     }
     setIsLoading(false);
-  };
+  }, [navigation, productId]);
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [loadData]);
 
   if (!isLoading && !isData) {
     return (
@@ -37,11 +40,6 @@ export default function ProductsPage() {
       </section>
     );
   }
-
-  const loadFirstProduct = () => {
-    const product = ctx.items[0] as Product;
-    navigation(`/products/${product.id}`);
-  };
 
   return (
     <Fragment>

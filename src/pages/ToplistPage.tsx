@@ -1,5 +1,5 @@
-import { Fragment, useContext, useEffect, useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Fragment, useCallback, useContext, useEffect, useState } from "react";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import NoProductsFound from "../components/products/NoProductsFound";
 import ProductList from "../components/sidebar/products/ProductList";
 import { ProductContext } from "../contexts/product.context";
@@ -12,6 +12,8 @@ export default function ToplistPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   const navigation = useNavigate();
+  const params = useParams();
+  const { productId } = params;
 
   const createToplist = (data: Product[]) => {
     const topList = [...data]
@@ -20,23 +22,27 @@ export default function ToplistPage() {
     return topList;
   };
 
-  useEffect(() => {
-    const loadData = async () => {
-      console.log("loading...");
-      const products = await getAllProducts();
-      if (products.length === 0) {
-        setIsData(false);
+  const loadData = useCallback(async () => {
+    const products = await getAllProducts();
+    if (products.length === 0) {
+      setIsData(false);
+    } else {
+      const highestPrice = [...products].sort(
+        (a: any, b: any) => b.price - a.price
+      );
+      if (productId) {
+        navigation(`/toplist/${productId}`);
       } else {
-        const highestPrice = [...products].sort(
-          (a: any, b: any) => b.price - a.price
-        );
-        navigation(`/toplist/${String(highestPrice[0].id)}`);
-        setIsData(true);
+        navigation(`/toplist/${highestPrice[0].id}`);
       }
-      setIsLoading(false);
-    };
+      setIsData(true);
+    }
+    setIsLoading(false);
+  }, [navigation, productId]);
+
+  useEffect(() => {
     loadData();
-  }, []);
+  }, [loadData]);
 
   if (!isLoading && !isData) {
     return (
